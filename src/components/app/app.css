@@ -1,0 +1,15 @@
+body {
+    width: 100%;
+}
+
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 88px;
+    background: #1C1C21;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    z-index: 1;
+}

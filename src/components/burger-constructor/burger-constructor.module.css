@@ -1,7 +1,7 @@
 .grid {
     display: grid;
     grid-template-columns: 16px 32px 536px 16px;
-    grid-template-rows: 88px 480px 88px;
+    grid-template-rows: 88px 480px 88px 40px 64px;
 }
 
 .upper_cover {
@@ -34,4 +34,21 @@
     width: 8px;
     height: 492px;
     background: #8585AD;
+}
+
+.amount {
+    grid-row: -1/-2;
+    grid-column: 2/-2;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.currency_icon {
+    margin-right: 42px;
+    margin-left: 8px;
+}
+.currency_icon svg{
+    width: 33px;
+    height: 33px;
 }

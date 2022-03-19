@@ -1,5 +1,5 @@
 import constructorStyle from './burger-constructor.module.css';
-import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
+import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import FillingIngredient from '../filling-ingredient/filling-ingredient'
 
 function BurgerConstructor(props: any) {
@@ -32,17 +32,15 @@ function BurgerConstructor(props: any) {
         />
       </section>
       <section className={constructorStyle.filling}>
-        {/*<div className={constructorStyle.ingredient}>*/}
-          <FillingIngredient />
-          <FillingIngredient />
-          <FillingIngredient />
-          <FillingIngredient />
-          <FillingIngredient />
-          <FillingIngredient />
-          <FillingIngredient />
-          <FillingIngredient />
-          <FillingIngredient />
-        {/*</div>*/}
+        <FillingIngredient/>
+        <FillingIngredient/>
+        <FillingIngredient/>
+        <FillingIngredient/>
+        <FillingIngredient/>
+        <FillingIngredient/>
+        <FillingIngredient/>
+        <FillingIngredient/>
+        <FillingIngredient/>
       </section>
       <section className={constructorStyle.bottom_cover}>
         <ConstructorElement
@@ -52,6 +50,15 @@ function BurgerConstructor(props: any) {
           price={200}
           thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
         />
+      </section>
+      <section className={constructorStyle.amount}>
+        <p className="text text_type_digits-medium">620</p>
+        <div className={constructorStyle.currency_icon}>
+           <CurrencyIcon type="primary"/>
+        </div>
+        <Button type="primary" size="large">
+          Оформить заказ
+        </Button>
       </section>
     </section>
   )

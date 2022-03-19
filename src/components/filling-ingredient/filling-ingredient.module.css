@@ -1,0 +1,13 @@
+.wrapper {
+    display: flex;
+    align-items: center;
+    margin: 8px 0;
+}
+
+.element_wrapper {
+    min-width: 536px;
+}
+
+.handle_wrapper {
+    min-width: 32px;
+}

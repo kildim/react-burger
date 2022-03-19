@@ -6,6 +6,10 @@ function IngredientsList() {
     <div className={ingredientsListStyle.ingredients}>
       <Ingredient/>
       <Ingredient/>
+      <Ingredient/>
+      <Ingredient/>
+      <Ingredient/>
+      <Ingredient/>
     </div>
 
   )

@@ -1,15 +1,12 @@
 import ingredientsListStyle from './ingredients-list.module.css';
 import Ingredient from '../ingredient/ingredient';
+import { Key } from 'react';
 
-function IngredientsList() {
+function IngredientsList(props: any) {
+  const {data = []} = {...props};
   return (
     <div className={ingredientsListStyle.ingredients}>
-      <Ingredient/>
-      <Ingredient/>
-      <Ingredient/>
-      <Ingredient/>
-      <Ingredient/>
-      <Ingredient/>
+      {data.map((item: { _id: Key | null | undefined; }) => <Ingredient key={item._id} data={item}/>)}
     </div>
 
   )

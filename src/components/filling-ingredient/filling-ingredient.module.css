@@ -8,6 +8,10 @@
     min-width: 536px;
 }
 
+.element_wrapper div {
+    width: 536px;
+}
+
 .handle_wrapper {
     min-width: 32px;
 }

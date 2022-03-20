@@ -10,9 +10,9 @@ function FillingIngredient () {
       </div>
       <div className={fillingIngredientStyle.element_wrapper}>
         <ConstructorElement
-          text="Краторная булка N-200i (верх)"
+          text="Соус Spicy-X"
           price={50}
-          thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
+          thumbnail={'https://code.s3.yandex.net/react/code/sauce-02.png'}
         />
       </div>
 

@@ -8,6 +8,7 @@ import fillingIngredientStyle from '../filling-ingredient/filling-ingredient.mod
 function BurgerConstructor(props) {
 
   const {upside, fillings, downside} = {...props.burger};
+  console.log(upside.thumbnail)
 
   return (
     <section className={constructorStyle.grid}>
@@ -18,7 +19,7 @@ function BurgerConstructor(props) {
             isLocked={true}
             text={upside.text}
             price={upside.price}
-            thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
+            thumbnail={upside.thumbnail}
           />
         </div>
       </section>
@@ -31,9 +32,9 @@ function BurgerConstructor(props) {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text="Краторная булка N-200i (верх)"
-            price={200}
-            thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
+            text={downside.text}
+            price={downside.price}
+            thumbnail={downside.thumbnail}
           />
         </div>
       </section>

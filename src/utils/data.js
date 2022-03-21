@@ -216,7 +216,7 @@ const burger = {
     type: 'top',
     text: 'Флюоресцентная булка R2-D3',
     price: 988,
-    thumbnail: 'hhttps://code.s3.yandex.net/react/code/bun-01.png',
+    thumbnail: 'https://code.s3.yandex.net/react/code/bun-01.png',
   },
   fillings: [
     {

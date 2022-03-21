@@ -4,8 +4,16 @@ import ingredientStyle from './ingredient.module.css';
 
 const DESCRIPTION_STYLE = `${ingredientStyle.description} text text_type_main-default`
 
-function Ingredient(props: any) {
-  const {price = '', name = '', image = ''} = {...props.data}
+type IngredientProps = {
+  data: {
+    price: string,
+    name: string,
+    image: string
+  }
+}
+
+function Ingredient(props: IngredientProps) {
+  const {price = '', name = '', image = ''} = props.data
   return (
     <article className={ingredientStyle.grid}>
       <Counter count={1} size="default" />

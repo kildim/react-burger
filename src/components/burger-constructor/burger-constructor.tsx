@@ -8,7 +8,7 @@ import constructorStyle from './burger-constructor.module.css';
 
 function BurgerConstructor(props) {
 
-  const {upside, fillings, downside} = {...props.burger};
+  const {upside, fillings, downside} = props.burger;
 
   return (
     <section className={constructorStyle.grid}>
@@ -58,20 +58,22 @@ BurgerConstructor.protoTypes = {
       text: PropTypes.string,
       price: PropTypes.number,
       thumbnail: PropTypes.string,
+      _id: PropTypes.string,
     }),
   fillings: PropTypes.arrayOf(
     PropTypes.shape({
       text: PropTypes.string,
       price: PropTypes.number,
       thumbnail: PropTypes.string,
+      _id: PropTypes.string,
     })
   ),
   downside: PropTypes.shape({
-
     type: PropTypes.string,
     text: PropTypes.string,
     price: PropTypes.number,
     thumbnail: PropTypes.string,
+    _id: PropTypes.string,
   }),
 };
 

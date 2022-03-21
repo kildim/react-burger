@@ -5,7 +5,7 @@ import {DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import fillingIngredientStyle from './filling-ingredient.module.css';
 
 function FillingIngredient (props) {
-  const {text, price, thumbnail}={...props.filling}
+  const {text, price, thumbnail} = props.filling;
 
   return (
     <div className={fillingIngredientStyle.wrapper}>

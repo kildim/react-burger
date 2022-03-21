@@ -217,67 +217,80 @@ const burger = {
     text: 'Флюоресцентная булка R2-D3',
     price: 988,
     thumbnail: 'https://code.s3.yandex.net/react/code/bun-01.png',
+    _id: '60666c42cc7b410027a1a9b2',
   },
   fillings: [
     {
       text: 'Филе Люминесцентного тетраодонтимформа',
       price: 4142,
       thumbnail: 'https://code.s3.yandex.net/react/code/meat-03.png',
+      _id: '60666c42cc7b410027a1a9b3',
     },
     {
       text: 'Сыр с астероидной плесенью',
       price: 4400,
       thumbnail: 'https://code.s3.yandex.net/react/code/sauce-01.png',
+      _id: '60666c42cc7b410027a1a9b4',
     },
     {
       text: 'Филе Люминесцентного тетраодонтимформа',
       price: 4142,
       thumbnail: 'https://code.s3.yandex.net/react/code/meat-03.png',
+      _id: '60666c42cc7b410027a1a9b5',
     },
     {
       text: 'Сыр с астероидной плесенью',
       price: 4400,
       thumbnail: 'https://code.s3.yandex.net/react/code/sauce-01.png',
+      _id: '60666c42cc7b410027a1a9b6',
     },
     {
       text: 'Филе Люминесцентного тетраодонтимформа',
       price: 4142,
       thumbnail: 'https://code.s3.yandex.net/react/code/meat-03.png',
+      _id: '60666c42cc7b410027a1a9b7',
     },
     {
       text: 'Сыр с астероидной плесенью',
       price: 4400,
       thumbnail: 'https://code.s3.yandex.net/react/code/sauce-01.png',
+      _id: '60666c42cc7b410027a1a9b8',
     },
     {
       text: 'Филе Люминесцентного тетраодонтимформа',
       price: 4142,
       thumbnail: 'https://code.s3.yandex.net/react/code/meat-03.png',
+      _id: '60666c42cc7b410027a1a9b9',
     },
     {
       text: 'Сыр с астероидной плесенью',
       price: 4400,
       thumbnail: 'https://code.s3.yandex.net/react/code/sauce-01.png',
+      _id: '60666c42cc7b410027a2a9b2',
     },
     {
       text: 'Филе Люминесцентного тетраодонтимформа',
       price: 4142,
       thumbnail: 'https://code.s3.yandex.net/react/code/meat-03.png',
+      _id: '60666c42cc7b410027a3a9b2',
     },
     {
       text: 'Сыр с астероидной плесенью',
       price: 4400,
       thumbnail: 'https://code.s3.yandex.net/react/code/sauce-01.png',
+      _id: '60666c42cc7b410027a4a9b2',
     },
     {
       text: 'Филе Люминесцентного тетраодонтимформа',
       price: 4142,
       thumbnail: 'https://code.s3.yandex.net/react/code/meat-03.png',
+      _id: '60666c42cc7b410027a5a9b2',
     },
     {
       text: 'Сыр с астероидной плесенью',
       price: 4400,
       thumbnail: 'https://code.s3.yandex.net/react/code/sauce-01.png',
+      _id: '60666c42cc7b410027a6a9b2',
     },
   ],
   downside: {
@@ -285,6 +298,7 @@ const burger = {
     text: 'Краторная булка N-200i',
     price: 1255,
     thumbnail: 'https://code.s3.yandex.net/react/code/bun-02.png',
+    _id: '60666c42cc7b410027a7a9b2',
   },
 }
 

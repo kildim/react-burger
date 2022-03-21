@@ -3,13 +3,11 @@ import {BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-b
 import logo from '../../images/logo.png';
 import menuStyle from './menu.module.css';
 
+const INACTIVE_REF = `${menuStyle.menu_ref} text text_type_main-default text_color_inactive`;
+const ACTIVE_REF = `${menuStyle.menu_ref} text text_type_main-default`;
+const INACTIVE_PROFILE = `${menuStyle.menu_profile} text text_type_main-default text_color_inactive`
 
 function Menu() {
-  const INACTIVE_REF = `${menuStyle.menu_ref} text text_type_main-default text_color_inactive`;
-  const ACTIVE_REF = `${menuStyle.menu_ref} text text_type_main-default`;
-
-  const INACTIVE_PROFILE = `${menuStyle.menu_profile} text text_type_main-default text_color_inactive`
-
   return (
     <nav className={menuStyle.container}>
       <ul className={menuStyle.menu_list}>

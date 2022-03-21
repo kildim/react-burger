@@ -5,15 +5,13 @@ import IngredientsList from '../ingredients-list/ingredients-list';
 
 import ingredientsStyle from './burger-ingredients.module.css';
 
+const SELECTED_PART_ITEM = `${ingredientsStyle.part_item} ${ingredientsStyle.part_item__selected}`;
+const INACTIVE_PART_ITEM = `${ingredientsStyle.part_item}`;
+const UNSELECTED_REF = `${ingredientsStyle.part_ref__unselected} text text_type_main-default text_color_inactive`;
+const SELECTED_REF = `${ingredientsStyle.part_ref} text text_type_main-default`;
 
 function BurgerIngredients(props) {
-  const {data} = {...props};
-
-  const SELECTED_PART_ITEM = `${ingredientsStyle.part_item} ${ingredientsStyle.part_item__selected}`;
-  const INACTIVE_PART_ITEM = `${ingredientsStyle.part_item}`;
-
-  const UNSELECTED_REF = `${ingredientsStyle.part_ref__unselected} text text_type_main-default text_color_inactive`;
-  const SELECTED_REF = `${ingredientsStyle.part_ref} text text_type_main-default`;
+  const {data} = props;
 
   const mains = data.filter((item) => item.type === 'main');
   const sauces = data.filter((item) => item.type === 'sauce');
@@ -22,9 +20,9 @@ function BurgerIngredients(props) {
   return (
     <section className={ingredientsStyle.grid}>
       <ul className={ingredientsStyle.parts_list}>
-        <li className={SELECTED_PART_ITEM}><a href={'#'} className={SELECTED_REF}>Булки</a></li>
-        <li className={INACTIVE_PART_ITEM}><a href={'#'} className={UNSELECTED_REF}>Соусы</a></li>
-        <li className={INACTIVE_PART_ITEM}><a href={'#'} className={UNSELECTED_REF}>Начинки</a></li>
+        <li className={SELECTED_PART_ITEM}><a href='#' className={SELECTED_REF}>Булки</a></li>
+        <li className={INACTIVE_PART_ITEM}><a href='#' className={UNSELECTED_REF}>Соусы</a></li>
+        <li className={INACTIVE_PART_ITEM}><a href='#' className={UNSELECTED_REF}>Начинки</a></li>
       </ul>
       <section className={ingredientsStyle.ingredients}>
         <h3 className={ingredientsStyle.ingredient_caption}>Булки</h3>

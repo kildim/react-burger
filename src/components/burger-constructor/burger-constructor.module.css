@@ -52,3 +52,7 @@
     width: 33px;
     height: 33px;
 }
+
+.element_wrapper div {
+    width: 536px;
+}

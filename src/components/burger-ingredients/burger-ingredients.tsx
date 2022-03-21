@@ -1,17 +1,21 @@
+// @ts-nocheck
+
 import ingredientsStyle from './burger-ingredients.module.css';
 import IngredientsList from '../ingredients-list/ingredients-list';
 
-function BurgerIngredients(props: any) {
-  const {data = []} = {...props.data};
+
+function BurgerIngredients(props) {
+  const {data} = {...props};
+
   const SELECTED_PART_ITEM = `${ingredientsStyle.part_item} ${ingredientsStyle.part_item__selected}`;
   const INACTIVE_PART_ITEM = `${ingredientsStyle.part_item}`;
 
   const UNSELECTED_REF = `${ingredientsStyle.part_ref__unselected} text text_type_main-default text_color_inactive`;
   const SELECTED_REF = `${ingredientsStyle.part_ref} text text_type_main-default`;
 
-  const mains = data.filter((item: any) => item.type === 'main');
-  const sauces = data.filter((item: any) => item.type === 'sauce');
-  const buns = data.filter((item: any) => item.type === 'bun');
+  const mains = data.filter((item) => item.type === 'main');
+  const sauces = data.filter((item) => item.type === 'sauce');
+  const buns = data.filter((item) => item.type === 'bun');
 
   return (
     <section className={ingredientsStyle.grid}>

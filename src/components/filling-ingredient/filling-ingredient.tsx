@@ -1,8 +1,12 @@
+// @ts-nocheck
+
 import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
 import {DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import fillingIngredientStyle from './filling-ingredient.module.css';
 
-function FillingIngredient () {
+function FillingIngredient (props) {
+  const {text, price, thumbnail}={...props.filling}
+
   return (
     <div className={fillingIngredientStyle.wrapper}>
       <div className={fillingIngredientStyle.handle_wrapper}>
@@ -10,9 +14,9 @@ function FillingIngredient () {
       </div>
       <div className={fillingIngredientStyle.element_wrapper}>
         <ConstructorElement
-          text="Соус Spicy-X"
-          price={50}
-          thumbnail={'https://code.s3.yandex.net/react/code/sauce-02.png'}
+          text={text}
+          price={price}
+          thumbnail={thumbnail}
         />
       </div>
 

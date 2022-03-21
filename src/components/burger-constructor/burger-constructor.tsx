@@ -1,60 +1,46 @@
+// @ts-nocheck
+
 import constructorStyle from './burger-constructor.module.css';
 import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import FillingIngredient from '../filling-ingredient/filling-ingredient'
+import fillingIngredientStyle from '../filling-ingredient/filling-ingredient.module.css';
 
-function BurgerConstructor(props: any) {
-  const ingredients = [];
-  let upside = null;
-  let downside = null;
+function BurgerConstructor(props) {
 
-  // props.forEach( (item: any) => {
-  //   switch (item) {
-  //     case 'top':
-  //       upside = item;
-  //       break;
-  //     case 'bottom':
-  //       downside = item
-  //       break;
-  //     default:
-  //       ingredients.push(item)
-  //   }
-  // })
+  const {upside, fillings, downside} = {...props.burger};
 
   return (
     <section className={constructorStyle.grid}>
       <section className={constructorStyle.upper_cover}>
-        <ConstructorElement
-          type="top"
-          isLocked={true}
-          text="Краторная булка N-200i (верх)"
-          price={200}
-          thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
-        />
+        <div className={constructorStyle.element_wrapper}>
+          <ConstructorElement
+            type="top"
+            isLocked={true}
+            text={upside.text}
+            price={upside.price}
+            thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
+          />
+        </div>
       </section>
       <section className={constructorStyle.filling}>
-        <FillingIngredient/>
-        <FillingIngredient/>
-        <FillingIngredient/>
-        <FillingIngredient/>
-        <FillingIngredient/>
-        <FillingIngredient/>
-        <FillingIngredient/>
-        <FillingIngredient/>
-        <FillingIngredient/>
+        {fillings.map((item) => <FillingIngredient filling={item}/>)}
+
       </section>
       <section className={constructorStyle.bottom_cover}>
-        <ConstructorElement
-          type="bottom"
-          isLocked={true}
-          text="Краторная булка N-200i (верх)"
-          price={200}
-          thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
-        />
+        <div className={constructorStyle.element_wrapper}>
+          <ConstructorElement
+            type="bottom"
+            isLocked={true}
+            text="Краторная булка N-200i (верх)"
+            price={200}
+            thumbnail={'https://code.s3.yandex.net/react/code/bun-02.png'}
+          />
+        </div>
       </section>
       <section className={constructorStyle.amount}>
         <p className="text text_type_digits-medium">620</p>
         <div className={constructorStyle.currency_icon}>
-           <CurrencyIcon type="primary"/>
+          <CurrencyIcon type="primary"/>
         </div>
         <Button type="primary" size="large">
           Оформить заказ

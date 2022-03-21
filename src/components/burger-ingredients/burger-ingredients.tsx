@@ -2,7 +2,7 @@
 
 import ingredientsStyle from './burger-ingredients.module.css';
 import IngredientsList from '../ingredients-list/ingredients-list';
-
+import PropTypes from 'prop-types';
 
 function BurgerIngredients(props) {
   const {data} = {...props};
@@ -35,5 +35,24 @@ function BurgerIngredients(props) {
     </section>
   )
 }
+
+BurgerIngredients.protoTypes = PropTypes.arrayOf(
+  PropTypes.shape({
+
+  '_id': PropTypes.string,
+  'name': PropTypes.string,
+  'type': PropTypes.string,
+  'proteins': PropTypes.number,
+  'fat': PropTypes.number,
+  'carbohydrates': PropTypes.number,
+  'calories': PropTypes.number,
+  'price': PropTypes.number,
+  'image': PropTypes.string,
+  'image_mobile': PropTypes.string,
+  'image_large': PropTypes.string,
+  '__v': 0
+
+  })
+)
 
 export default BurgerIngredients;

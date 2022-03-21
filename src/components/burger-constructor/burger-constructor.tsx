@@ -3,12 +3,11 @@
 import constructorStyle from './burger-constructor.module.css';
 import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import FillingIngredient from '../filling-ingredient/filling-ingredient'
-import fillingIngredientStyle from '../filling-ingredient/filling-ingredient.module.css';
+import PropTypes from 'prop-types';
 
 function BurgerConstructor(props) {
 
   const {upside, fillings, downside} = {...props.burger};
-  console.log(upside.thumbnail)
 
   return (
     <section className={constructorStyle.grid}>
@@ -24,7 +23,7 @@ function BurgerConstructor(props) {
         </div>
       </section>
       <section className={constructorStyle.filling}>
-        {fillings.map((item) => <FillingIngredient filling={item}/>)}
+        {fillings.map((item) => <FillingIngredient filling={item} key={item._id}/>)}
 
       </section>
       <section className={constructorStyle.bottom_cover}>
@@ -50,5 +49,30 @@ function BurgerConstructor(props) {
     </section>
   )
 }
+
+BurgerConstructor.protoTypes = {
+  upside: PropTypes.shape(
+    {
+      type: PropTypes.string,
+      text: PropTypes.string,
+      price: PropTypes.number,
+      thumbnail: PropTypes.string,
+    }),
+  fillings: PropTypes.arrayOf(
+    PropTypes.shape({
+      text: PropTypes.string,
+      price: PropTypes.number,
+      thumbnail: PropTypes.string,
+    })
+  ),
+  downside: PropTypes.shape({
+
+    type: PropTypes.string,
+    text: PropTypes.string,
+    price: PropTypes.number,
+    thumbnail: PropTypes.string,
+  }),
+};
+
 
 export default BurgerConstructor;

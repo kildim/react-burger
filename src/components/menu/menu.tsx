@@ -1,6 +1,8 @@
-import menuStyle from './menu.module.css';
 import {BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+
 import logo from '../../images/logo.png';
+import menuStyle from './menu.module.css';
+
 
 function Menu() {
   const INACTIVE_REF = `${menuStyle.menu_ref} text text_type_main-default text_color_inactive`;

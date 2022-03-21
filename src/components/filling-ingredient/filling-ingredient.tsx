@@ -1,7 +1,7 @@
 // @ts-nocheck
-
 import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
 import {DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+
 import fillingIngredientStyle from './filling-ingredient.module.css';
 
 function FillingIngredient (props) {

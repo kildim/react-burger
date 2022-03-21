@@ -1,15 +1,15 @@
 import React from 'react';
-import './app.css';
-import {data, burger} from '../../utils/data';
-import Menu from '../menu/menu'
+
+import AppHeader from '../app-header/app-header';
 import Builder from '../builder/builder';
+import {data, burger} from '../../utils/data';
+
+import './app.css';
 
 function App() {
   return (
     <>
-      <header className={'header'}>
-        <Menu/>
-      </header>
+      <AppHeader />
       <main>
         <Builder data={data} burger={burger}/>
       </main>

@@ -1,9 +1,10 @@
 // @ts-nocheck
+import PropTypes from 'prop-types';
+import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+
+import FillingIngredient from '../filling-ingredient/filling-ingredient'
 
 import constructorStyle from './burger-constructor.module.css';
-import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import FillingIngredient from '../filling-ingredient/filling-ingredient'
-import PropTypes from 'prop-types';
 
 function BurgerConstructor(props) {
 

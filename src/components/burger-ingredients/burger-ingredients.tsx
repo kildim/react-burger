@@ -1,8 +1,10 @@
 // @ts-nocheck
+import PropTypes from 'prop-types';
+
+import IngredientsList from '../ingredients-list/ingredients-list';
 
 import ingredientsStyle from './burger-ingredients.module.css';
-import IngredientsList from '../ingredients-list/ingredients-list';
-import PropTypes from 'prop-types';
+
 
 function BurgerIngredients(props) {
   const {data} = {...props};

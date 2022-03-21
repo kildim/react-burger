@@ -1,7 +1,8 @@
-import BuilderStyle from './builder.module.css';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import {burger} from '../../utils/data';
+
+import BuilderStyle from './builder.module.css';
+
 
 const CAPTION_STYLE = `${BuilderStyle.caption} text text_type_main-large`;
 

@@ -1,6 +1,9 @@
-import ingredientsListStyle from './ingredients-list.module.css';
-import Ingredient from '../ingredient/ingredient';
 import { Key } from 'react';
+
+import Ingredient from '../ingredient/ingredient';
+
+import ingredientsListStyle from './ingredients-list.module.css';
+
 
 function IngredientsList(props: any) {
   const {data = []} = {...props};

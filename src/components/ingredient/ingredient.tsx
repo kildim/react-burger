@@ -1,6 +1,6 @@
 import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components';
+
 import ingredientStyle from './ingredient.module.css';
-const DESCRIPTION = 'Краторная булка N-200i Краторная булка N-200i Краторная булка N-200i Краторная булка N-200i Краторная булка N-200i';
 
 const DESCRIPTION_STYLE = `${ingredientStyle.description} text text_type_main-default`
 

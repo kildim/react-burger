@@ -2,8 +2,6 @@ import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-com
 
 import ingredientStyle from './ingredient.module.css';
 
-const DESCRIPTION_STYLE = `${ingredientStyle.description} text text_type_main-default`
-
 type IngredientProps = {
   data: {
     price: string,
@@ -27,7 +25,7 @@ function Ingredient(props: IngredientProps) {
         <span className={'text text_type_digits-default'}>{price}</span>
         <CurrencyIcon type="primary" />
       </p>
-      <p className={DESCRIPTION_STYLE}>
+      <p className={`${ingredientStyle.description} text text_type_main-default`}>
         {name}
       </p>
     </article>

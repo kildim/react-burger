@@ -1,0 +1,55 @@
+.grid {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 56px 720px;
+}
+
+.parts_list {
+    display: grid;
+    width: 100%;
+    height: 20px;
+    grid-template-columns: repeat(3, calc(100% / 3));
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.part_ref {
+    text-decoration: none;
+    color: #F2F2F3;
+}
+.part_ref__unselected {
+    text-decoration: none;
+    color: #8585AD;
+}
+
+.part_item {
+    display: flex;
+    height: 56px;
+    align-items: center;
+    justify-content: center;
+}
+
+.part_item__selected {
+    border-bottom: 2px solid #4C4CFF;
+    box-sizing: border-box;
+}
+
+.ingredient_caption {
+    margin: 40px 0 24px 0;
+}
+
+.ingredients {
+    overflow-y: auto;
+}
+
+.ingredients::-webkit-scrollbar {
+    width: 8px;
+    background: #2F2F37;
+}
+
+.ingredients::-webkit-scrollbar-thumb {
+    width: 8px;
+    height: 492px;
+    background: #8585AD;
+}

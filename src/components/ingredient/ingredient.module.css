@@ -1,0 +1,24 @@
+.grid {
+    display: flex;
+    flex-direction: column;
+    width: 268px;
+    height: 206px;
+    position: relative;
+    align-items: center;
+    margin: 16px 8px;
+}
+
+.illustration {
+
+}
+
+.price {
+    display: flex;
+    gap: 8px;
+    margin: 4px 0 ;
+}
+
+.description {
+    text-align: center;
+    overflow: hidden;
+}

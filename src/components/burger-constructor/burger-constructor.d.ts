@@ -1,23 +1,10 @@
-type FillingType = {
-  _id: string,
-  text: string,
-  price: number,
-  thumbnail: string
-}
-
-type BunType = {
-  _id: string
-  type: string,
-  text: string,
-  price: number,
-  thumbnail: string,
-}
+import {DataType} from '../../types/data-type';
 
 type BurgerConstructorPropsType = {
   burger: {
-  bun: BunType,
-  fillings: FillingType[]
-}
+    bun: DataType,
+    fillings: DataType[]
+  }
 };
 
-export type {BurgerConstructorPropsType, FillingType, BunType};
+export type {BurgerConstructorPropsType};

@@ -15,7 +15,6 @@ function Ingredient(props: IngredientProps) {
     setState({...state, showModal: false})
   }
   const handleCardClick = () => {
-    console.log('handleCardClick')
     setState(({...state, showModal: true}))
   }
 

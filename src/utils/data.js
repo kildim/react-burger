@@ -212,7 +212,7 @@ const data = [
 ];
 
 const burger = {
-  upside: {
+  bun: {
     type: 'top',
     text: 'Флюоресцентная булка R2-D3',
     price: 988,
@@ -292,14 +292,7 @@ const burger = {
       thumbnail: 'https://code.s3.yandex.net/react/code/sauce-01.png',
       _id: '60666c42cc7b410027a6a9b2',
     },
-  ],
-  downside: {
-    type: 'bottom',
-    text: 'Краторная булка N-200i',
-    price: 1255,
-    thumbnail: 'https://code.s3.yandex.net/react/code/bun-02.png',
-    _id: '60666c42cc7b410027a7a9b2',
-  },
+  ]
 }
 
 export {data, burger};

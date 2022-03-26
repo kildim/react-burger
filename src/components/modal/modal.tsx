@@ -28,7 +28,7 @@ function Modal(props: ModalPropsType) {
   return ReactDOM.createPortal(
     <div className={modalStyles.modal_overlay}  onClick={onCloseClick}>
       <div className={modalStyles.modal} onClick={handleModalClick}>
-        <div className={`${modalStyles.header} m-10`}>
+        <div className={`${modalStyles.header} mt-10 mr-10 ml-10`}>
           <h1 className={'text text_type_main-large'}>{header}</h1>
           <Button type="secondary" size="small" onClick={onCloseClick}><CloseIcon type="primary"/></Button>
         </div>

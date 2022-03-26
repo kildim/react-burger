@@ -1,14 +1,13 @@
-// @ts-nocheck
-import PropTypes from 'prop-types';
 import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 import FillingIngredient from '../filling-ingredient/filling-ingredient'
 
 import constructorStyle from './burger-constructor.module.css';
+import {BurgerConstructorPropsType, FillingType, BunType} from './burger-constructor.d'
 
-function BurgerConstructor(props) {
+function BurgerConstructor(props: BurgerConstructorPropsType) {
 
-  const {upside, fillings, downside} = props.burger;
+  const {bun, fillings} = props.burger;
 
   return (
     <section className={constructorStyle.grid}>
@@ -17,14 +16,14 @@ function BurgerConstructor(props) {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={upside.text}
-            price={upside.price}
-            thumbnail={upside.thumbnail}
+            text={bun.text}
+            price={bun.price}
+            thumbnail={bun.thumbnail}
           />
         </div>
       </section>
       <section className={constructorStyle.filling}>
-        {fillings.map((item) => <FillingIngredient filling={item} key={item._id}/>)}
+        {fillings.map((item: FillingType) => <FillingIngredient filling={item} key={item._id}/>)}
 
       </section>
       <section className={constructorStyle.bottom_cover}>
@@ -32,9 +31,9 @@ function BurgerConstructor(props) {
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={downside.text}
-            price={downside.price}
-            thumbnail={downside.thumbnail}
+            text={bun.text}
+            price={bun.price}
+            thumbnail={bun.thumbnail}
           />
         </div>
       </section>
@@ -50,32 +49,5 @@ function BurgerConstructor(props) {
     </section>
   )
 }
-
-BurgerConstructor.protoTypes = {
-  upside: PropTypes.shape(
-    {
-      type: PropTypes.string,
-      text: PropTypes.string,
-      price: PropTypes.number,
-      thumbnail: PropTypes.string,
-      _id: PropTypes.string,
-    }),
-  fillings: PropTypes.arrayOf(
-    PropTypes.shape({
-      text: PropTypes.string,
-      price: PropTypes.number,
-      thumbnail: PropTypes.string,
-      _id: PropTypes.string,
-    })
-  ),
-  downside: PropTypes.shape({
-    type: PropTypes.string,
-    text: PropTypes.string,
-    price: PropTypes.number,
-    thumbnail: PropTypes.string,
-    _id: PropTypes.string,
-  }),
-};
-
 
 export default BurgerConstructor;

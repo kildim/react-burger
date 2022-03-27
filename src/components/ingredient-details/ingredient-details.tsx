@@ -1,9 +1,9 @@
 import React from 'react';
 
-import {IngredientDetailsPropsType} from './ingredient-details.d';
+import {IngredientDetailsProps} from './ingredient-details.d';
 import IngredientDetailsStyle from './ingredient-details.module.css'
 
-function IngredientDetails(props: IngredientDetailsPropsType) {
+function IngredientDetails(props: IngredientDetailsProps) {
   const {image, name, calories, proteins, fat, carbohydrates} = props.data;
 
   const TERM_DEFINITION_STYLE = 'text text_type_main-small text_color_inactive';
@@ -12,7 +12,7 @@ function IngredientDetails(props: IngredientDetailsPropsType) {
   return (
  <div className={IngredientDetailsStyle.content}>
    <img src={image}
-        alt={'Ingredient illustration'}
+        alt={`${name} ingredient illustration`}
         width={480}
         height={240}
    />

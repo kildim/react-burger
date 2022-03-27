@@ -1,5 +1,5 @@
 
-type BurgerIngredientType = {
+type BurgerIngredient = {
     _id: string,
     name: string,
     type: 'main' | 'sauce' | 'bun',
@@ -14,8 +14,8 @@ type BurgerIngredientType = {
     __v: number;
 }
 
-type BurgerIngredientsPropsType = {
+type BurgerIngredientsProps = {
     data: BurgerIngredientType[]
 }
 
-export {BurgerIngredientsPropsType, BurgerIngredientType};
+export {BurgerIngredientsProps, BurgerIngredient};

@@ -1,5 +1,6 @@
 import Ingredient from '../ingredient/ingredient';
-import {DataType, IngredientsListPropsType} from './ingredients-list.d'
+import {DataType} from '../../types/data-type';
+import {IngredientsListPropsType} from './ingredients-list.d'
 
 import ingredientsListStyle from './ingredients-list.module.css';
 import React from 'react';

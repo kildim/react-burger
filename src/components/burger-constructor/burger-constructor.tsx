@@ -3,7 +3,7 @@ import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-deve
 import FillingIngredient from '../filling-ingredient/filling-ingredient'
 
 import constructorStyle from './burger-constructor.module.css';
-import {BurgerConstructorPropsType} from './burger-constructor.d'
+import {BurgerConstructorProps} from './burger-constructor.d';
 import React from 'react';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
@@ -12,16 +12,19 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 
 import {order} from '../../utils/data';
 
-function BurgerConstructor(props: BurgerConstructorPropsType) {
+function BurgerConstructor(props: BurgerConstructorProps) {
 
-  const {bun, fillings} = props.burger;
+  const {data} = props;
   const [state, setState] = React.useState({showIngredientDetails: false, showOrderDetails: false, ingredient: {}})
+
+  const bun = data[0];
 
   const handleModalClose = () => {
     setState({...state, showIngredientDetails: false, showOrderDetails: false})
   }
+
   const handleCardClick = (ingredient: DataType) => () => {
-    setState(({...state, showIngredientDetails: true, ingredient: ingredient}))
+      setState(({...state, showIngredientDetails: true, ingredient: ingredient}))
   }
   const handleOrderClick = () => {
     setState(({...state, showOrderDetails: true}))
@@ -34,21 +37,21 @@ function BurgerConstructor(props: BurgerConstructorPropsType) {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={bun.name}
+            text={`${bun.name} (верх)`}
             price={bun.price}
             thumbnail={bun.image}
           />
         </div>
       </section>
       <section className={constructorStyle.filling}>
-        {fillings.map((item: DataType) => <FillingIngredient filling={item} key={item._id} onClick={handleCardClick(item)}/>)}
+        {data.map((item: DataType) => <FillingIngredient filling={item} key={item._id} onClick={handleCardClick(item)}/>)}
       </section>
       <section className={constructorStyle.bottom_cover} onClick={handleCardClick(bun)}>
         <div className={constructorStyle.element_wrapper}>
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={bun.name}
+            text={`${bun.name}  (низ)`}
             price={bun.price}
             thumbnail={bun.image}
           />
@@ -67,14 +70,14 @@ function BurgerConstructor(props: BurgerConstructorPropsType) {
       </section>
       {
         state.showIngredientDetails &&
-        <Modal header={'Детали ингредиента'} show={true} onCloseClick={handleModalClose}>
-          <IngredientDetails data={state.ingredient} />
+        <Modal header={'Детали ингредиента'} onCloseClick={handleModalClose}>
+          <IngredientDetails data={state.ingredient as DataType}  />
         </Modal>
       }
 
       {
         state.showOrderDetails &&
-        <Modal header={''} show={true} onCloseClick={handleModalClose}>
+        <Modal header={''} onCloseClick={handleModalClose}>
           <OrderDetails order={order} />
         </Modal>
       }

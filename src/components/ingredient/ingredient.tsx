@@ -23,7 +23,7 @@ function Ingredient(props: IngredientProps) {
       <article className={ingredientStyle.grid} onClick={handleCardClick}>
         <Counter count={1} size="default"/>
         <img src={image}
-             alt={'Ingredient illustration'}
+             alt={`${name} ingredient illustration`}
              width={240}
              height={120}
         />
@@ -37,7 +37,7 @@ function Ingredient(props: IngredientProps) {
       </article>
       {
         state.showModal &&
-        <Modal header={'Детали ингредиента'} show={true} onCloseClick={handleModalClose}>
+        <Modal header={'Детали ингредиента'} onCloseClick={handleModalClose}>
           <IngredientDetails data={props.data}/>
         </Modal>
       }

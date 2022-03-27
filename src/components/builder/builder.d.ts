@@ -5,9 +5,9 @@ type burgerType = {
   fillings: DataType[]
 }
 
-type BuilderType = {
+type BuilderProps = {
   data: dataType[],
   burger: burgerType
 }
 
-export type {BuilderType}
+export type {BuilderProps}

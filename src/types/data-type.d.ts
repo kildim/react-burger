@@ -1,4 +1,4 @@
-type DataType =   {
+export type DataType =   {
   _id: string,
   name: string,
   type: 'main' | 'sauce' | 'bun',
@@ -12,5 +12,3 @@ type DataType =   {
   image_large: string,
   __v: number
 }
-
-export type {DataType}

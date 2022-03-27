@@ -1,14 +1,14 @@
 import IngredientsList from '../ingredients-list/ingredients-list';
 
 import ingredientsStyle from './burger-ingredients.module.css';
-import {BurgerIngredientsPropsType, BurgerIngredientType} from './burger-ingredients.d';
+import {BurgerIngredientsProps} from './burger-ingredients.d';
 
 const SELECTED_PART_ITEM = `${ingredientsStyle.part_item} ${ingredientsStyle.part_item__selected}`;
 const INACTIVE_PART_ITEM = `${ingredientsStyle.part_item}`;
 const UNSELECTED_REF = `${ingredientsStyle.part_ref__unselected} text text_type_main-default text_color_inactive`;
 const SELECTED_REF = `${ingredientsStyle.part_ref} text text_type_main-default`;
 
-function BurgerIngredients(props: BurgerIngredientsPropsType) {
+function BurgerIngredients(props: BurgerIngredientsProps) {
   const {data} = props;
 
   const mains = data.filter((item) => item.type === 'main');

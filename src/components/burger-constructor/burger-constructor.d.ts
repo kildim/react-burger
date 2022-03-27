@@ -1,10 +1,9 @@
 import {DataType} from '../../types/data-type';
 
-type BurgerConstructorPropsType = {
-  burger: {
-    bun: DataType,
-    fillings: DataType[]
-  }
-};
+export type BurgerConstructorProps = {
+  data: DataType[]
+}
 
-export type {BurgerConstructorPropsType};
+export type BurgerIngredient = {
+  data: DataType
+}

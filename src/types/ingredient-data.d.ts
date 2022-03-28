@@ -1,4 +1,4 @@
-export type DataType =   {
+export type IngredientData =   {
   _id: string,
   name: string,
   type: 'main' | 'sauce' | 'bun',

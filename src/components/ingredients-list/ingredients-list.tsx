@@ -1,5 +1,5 @@
 import Ingredient from '../ingredient/ingredient';
-import {DataType} from '../../types/data-type';
+import {IngredientData} from '../../types/ingredient-data';
 import {IngredientsListPropsType} from './ingredients-list.d'
 
 import ingredientsListStyle from './ingredients-list.module.css';
@@ -11,7 +11,7 @@ function IngredientsList(props: IngredientsListPropsType) {
 
   return (
     <div className={ingredientsListStyle.ingredients}>
-      {data.map((item: DataType) => <Ingredient key={item._id} data={item}/>)}
+      {data.map((item: IngredientData) => <Ingredient key={item._id} data={item}/>)}
     </div>
 
   )

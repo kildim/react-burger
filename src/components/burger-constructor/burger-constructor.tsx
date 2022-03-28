@@ -7,7 +7,7 @@ import {BurgerConstructorProps, State} from './burger-constructor.d';
 import React from 'react';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
-import {DataType} from '../../types/data-type';
+import {IngredientData} from '../../types/ingredient-data';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
 import {order} from '../../utils/data';
@@ -23,7 +23,7 @@ function BurgerConstructor(props: BurgerConstructorProps) {
     setState({...state, showIngredientDetails: false, showOrderDetails: false})
   }
 
-  const handleCardClick = (ingredient: DataType) => () => {
+  const handleCardClick = (ingredient: IngredientData) => () => {
       setState(({...state, showIngredientDetails: true, ingredient: ingredient}))
   }
   const handleOrderClick = () => {
@@ -44,7 +44,7 @@ function BurgerConstructor(props: BurgerConstructorProps) {
         </div>
       </section>
       <section className={constructorStyle.filling}>
-        {data.map((item: DataType) => <FillingIngredient filling={item} key={item._id} onClick={handleCardClick(item)}/>)}
+        {data.map((item: IngredientData) => <FillingIngredient filling={item} key={item._id} onClick={handleCardClick(item)}/>)}
       </section>
       <section className={constructorStyle.bottom_cover} onClick={handleCardClick(bun)}>
         <div className={constructorStyle.element_wrapper}>

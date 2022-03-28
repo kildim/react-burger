@@ -14,15 +14,21 @@ function App() {
 
   React.useEffect(() => {
     const getData = async () => {
-        const res = await fetch(`${API_URL}/ingredients`);
+      const res = await fetch(`${API_URL}/ingredients`);
+      try {
         if (res.ok) {
           const serverData = await res.json();
           setState({...state, data: serverData.data, isLoading: false})
+        } else {
+          setState({...state, isLoading: false, error: res.status})
         }
-        else
-        {setState({...state, isLoading: false, error: res.status})}
-    }
-
+      }
+      catch
+        (error)
+        {
+          setState({...state, data: serverData.data, isLoading: false, error: error.message})
+        }
+      }
     getData();
   }, [])
 
@@ -35,7 +41,7 @@ function App() {
             <>
               <AppHeader/>
               <main>
-                <Builder data={state.data} burger={state.data}/>
+                <Builder data={state.data}/>
               </main>
             </>
       }

@@ -3,7 +3,7 @@ import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-deve
 import FillingIngredient from '../filling-ingredient/filling-ingredient'
 
 import constructorStyle from './burger-constructor.module.css';
-import {BurgerConstructorProps} from './burger-constructor.d';
+import {BurgerConstructorProps, State} from './burger-constructor.d';
 import React from 'react';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
@@ -15,7 +15,7 @@ import {order} from '../../utils/data';
 function BurgerConstructor(props: BurgerConstructorProps) {
 
   const {data} = props;
-  const [state, setState] = React.useState({showIngredientDetails: false, showOrderDetails: false, ingredient: {}})
+  const [state, setState] = React.useState<State>({showIngredientDetails: false, showOrderDetails: false, ingredient: null})
 
   const bun = data[0];
 
@@ -69,9 +69,9 @@ function BurgerConstructor(props: BurgerConstructorProps) {
         </div>
       </section>
       {
-        state.showIngredientDetails &&
+        state.showIngredientDetails && state.ingredient &&
         <Modal header={'Детали ингредиента'} onCloseClick={handleModalClose}>
-          <IngredientDetails data={state.ingredient as DataType}  />
+          <IngredientDetails data={state.ingredient}  />
         </Modal>
       }
 

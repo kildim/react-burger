@@ -1,12 +1,12 @@
 import Ingredient from '../ingredient/ingredient';
 import {IngredientData} from '../../types/ingredient-data';
-import {IngredientsListPropsType} from './ingredients-list.d'
+import {IngredientsListProps} from './ingredients-list.d'
 
 import ingredientsListStyle from './ingredients-list.module.css';
 import React from 'react';
 
 
-function IngredientsList(props: IngredientsListPropsType) {
+function IngredientsList(props: IngredientsListProps) {
   const {data = []} = props;
 
   return (

@@ -1,19 +1,5 @@
-// type DataType =   {
-//   _id: string,
-//   name: string,
-//   type: 'main' | 'sauce' | 'bun',
-//   proteins: number,
-//   fat: number,
-//   carbohydrates: number,
-//   calories: number,
-//   price: number,
-//   image: string,
-//   image_mobile: string,
-//   image_large: string,
-//   __v: number
-// }
-import {DataType} from '../../types/data-type';
+import {IngrediendData} from '../../types/ingredient-data';
 
-export type IngredientsListPropsType = {
-  data: DataType[]
+export type IngredientsListProps = {
+  data: IngrediendData[]
 }

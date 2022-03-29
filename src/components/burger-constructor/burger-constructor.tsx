@@ -1,40 +1,59 @@
-// @ts-nocheck
-import PropTypes from 'prop-types';
 import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 import FillingIngredient from '../filling-ingredient/filling-ingredient'
 
 import constructorStyle from './burger-constructor.module.css';
+import {BurgerConstructorProps, State} from './burger-constructor.d';
+import React from 'react';
+import Modal from '../modal/modal';
+import OrderDetails from '../order-details/order-details';
+import {IngredientData} from '../../types/ingredient-data';
+import IngredientDetails from '../ingredient-details/ingredient-details';
 
-function BurgerConstructor(props) {
+import {order} from '../../utils/data';
 
-  const {upside, fillings, downside} = props.burger;
+function BurgerConstructor(props: BurgerConstructorProps) {
+
+  const {data} = props;
+  const [state, setState] = React.useState<State>({showIngredientDetails: false, showOrderDetails: false, ingredient: null})
+
+  const bun = data[0];
+
+  const handleModalClose = () => {
+    setState({...state, showIngredientDetails: false, showOrderDetails: false})
+  }
+
+  const handleCardClick = (ingredient: IngredientData) => () => {
+      setState(({...state, showIngredientDetails: true, ingredient: ingredient}))
+  }
+  const handleOrderClick = () => {
+    setState(({...state, showOrderDetails: true}))
+  }
 
   return (
     <section className={constructorStyle.grid}>
-      <section className={constructorStyle.upper_cover}>
+      <section className={constructorStyle.upper_cover} onClick={handleCardClick(bun)}>
         <div className={constructorStyle.element_wrapper}>
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={upside.text}
-            price={upside.price}
-            thumbnail={upside.thumbnail}
+            text={`${bun.name} (верх)`}
+            price={bun.price}
+            thumbnail={bun.image}
           />
         </div>
       </section>
       <section className={constructorStyle.filling}>
-        {fillings.map((item) => <FillingIngredient filling={item} key={item._id}/>)}
-
+        {data.map((item: IngredientData) => <FillingIngredient filling={item} key={item._id} onClick={handleCardClick(item)}/>)}
       </section>
-      <section className={constructorStyle.bottom_cover}>
+      <section className={constructorStyle.bottom_cover} onClick={handleCardClick(bun)}>
         <div className={constructorStyle.element_wrapper}>
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={downside.text}
-            price={downside.price}
-            thumbnail={downside.thumbnail}
+            text={`${bun.name}  (низ)`}
+            price={bun.price}
+            thumbnail={bun.image}
           />
         </div>
       </section>
@@ -43,39 +62,27 @@ function BurgerConstructor(props) {
         <div className={constructorStyle.currency_icon}>
           <CurrencyIcon type="primary"/>
         </div>
-        <Button type="primary" size="large">
-          Оформить заказ
-        </Button>
+        <div onClick={handleOrderClick}>
+          <Button type="primary" size="large">
+            Оформить заказ
+          </Button>
+        </div>
       </section>
+      {
+        state.showIngredientDetails && state.ingredient &&
+        <Modal header={'Детали ингредиента'} onCloseClick={handleModalClose}>
+          <IngredientDetails data={state.ingredient}  />
+        </Modal>
+      }
+
+      {
+        state.showOrderDetails &&
+        <Modal header={''} onCloseClick={handleModalClose}>
+          <OrderDetails order={order} />
+        </Modal>
+      }
     </section>
   )
 }
-
-BurgerConstructor.protoTypes = {
-  upside: PropTypes.shape(
-    {
-      type: PropTypes.string,
-      text: PropTypes.string,
-      price: PropTypes.number,
-      thumbnail: PropTypes.string,
-      _id: PropTypes.string,
-    }),
-  fillings: PropTypes.arrayOf(
-    PropTypes.shape({
-      text: PropTypes.string,
-      price: PropTypes.number,
-      thumbnail: PropTypes.string,
-      _id: PropTypes.string,
-    })
-  ),
-  downside: PropTypes.shape({
-    type: PropTypes.string,
-    text: PropTypes.string,
-    price: PropTypes.number,
-    thumbnail: PropTypes.string,
-    _id: PropTypes.string,
-  }),
-};
-
 
 export default BurgerConstructor;

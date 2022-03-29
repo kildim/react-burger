@@ -1,14 +1,17 @@
-// @ts-nocheck
 import Ingredient from '../ingredient/ingredient';
+import {IngredientData} from '../../types/ingredient-data';
+import {IngredientsListProps} from './ingredients-list.d'
 
 import ingredientsListStyle from './ingredients-list.module.css';
+import React from 'react';
 
 
-function IngredientsList(props: any) {
+function IngredientsList(props: IngredientsListProps) {
   const {data = []} = props;
+
   return (
     <div className={ingredientsListStyle.ingredients}>
-      {data.map((item) => <Ingredient key={item._id} data={item}/>)}
+      {data.map((item: IngredientData) => <Ingredient key={item._id} data={item}/>)}
     </div>
 
   )

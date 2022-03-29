@@ -26,7 +26,7 @@ function App() {
       catch
         (error)
         {
-          setState({...state, data: serverData.data, isLoading: false, error: error.message})
+          setState({...state, isLoading: false, error: error.message})
         }
       }
     getData();

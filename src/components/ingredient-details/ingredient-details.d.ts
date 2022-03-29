@@ -1,5 +1,5 @@
-import {DataType} from '../../types/data-type';
+import {IngredientData} from '../../types/ingredient-data.d';
 
 export type IngredientDetailsProps = {
-  data: DataType
+  data: IngredientData
 }

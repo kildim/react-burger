@@ -1,15 +1,15 @@
-import {DataType} from '../../types/data-type';
+import {IngredientData} from '../../types/ingredient-data.d';
 
 export type BurgerConstructorProps = {
-  data: DataType[]
+  data: IngredientData[]
 }
 
 export type BurgerIngredient = {
-  data: DataType
+  data: IngredientData
 }
 
 export type State = {
   showIngredientDetails: boolean,
   showOrderDetails: boolean,
-  ingredient: DataType | null
+  ingredient: IngredientData | null
 }

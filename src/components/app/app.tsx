@@ -1,16 +1,19 @@
 // @ts-nocheck
-import React from 'react';
+import React, {useContext} from 'react';
 import Loader from '../loader/loader';
 import Error from '../error/error';
 
 import AppHeader from '../app-header/app-header';
 import Builder from '../builder/builder';
 import {API_URL} from '../../constants/env-config';
+import {AppContext} from '../../contexts/app-context';
 
 import './app.css';
 
+
 function App() {
-  const [state, setState] = React.useState({data: [], isLoading: true, error: null})
+  const [state, setState] = React.useState({data: [], isLoading: true, error: null});
+  const appState = {state, setState};
 
   React.useEffect(() => {
     const getData = async () => {
@@ -22,13 +25,11 @@ function App() {
         } else {
           setState({...state, isLoading: false, error: res.status})
         }
+      } catch
+        (error) {
+        setState({...state, isLoading: false, error: error.message})
       }
-      catch
-        (error)
-        {
-          setState({...state, isLoading: false, error: error.message})
-        }
-      }
+    }
     getData();
   }, [])
 
@@ -39,10 +40,12 @@ function App() {
 
           (state.error !== null) ? <Error error={state.error}/> :
             <>
-              <AppHeader/>
-              <main>
-                <Builder data={state.data}/>
-              </main>
+              <AppContext.Provider value={appState}>
+                <AppHeader/>
+                <main>
+                  <Builder />
+                </main>
+              </AppContext.Provider>
             </>
       }
     </>

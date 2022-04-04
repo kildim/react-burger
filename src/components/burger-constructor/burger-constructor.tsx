@@ -5,14 +5,14 @@ import FillingIngredient from '../filling-ingredient/filling-ingredient'
 
 import constructorStyle from './burger-constructor.module.css';
 import {State, BurgerConstructorProps} from './burger-constructor.d';
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import {IngredientData} from '../../types/ingredient-data';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
 // import {order} from '../../utils/data';
-import {AppContext} from '../../contexts/app-context';
+import {AppContext} from '../../services/app-context';
 import {API_URL} from '../../constants/env-config';
 import {log} from 'util';
 
@@ -30,19 +30,19 @@ function BurgerConstructor() {
   const bun = ingredients.find((item) => item.type === 'bun');
   const fillings = ingredients.filter((item) => item.type !== 'bun');
 
-
-  const [burger, setBurger] = React.useState({bun: bun, fillings: fillings})
-
-  const cost = (burger) => {
-    let amount = burger.fillings.reduce((amount, current) => amount + current.price, 0);
-    return amount + burger.bun.price + burger.bun.price;
+  const cost = () => {
+    const amount = fillings.reduce((amount, current) => amount + current.price, 0);
+    return amount + bun.price + bun.price;
   }
 
-  const amount = cost(burger);
+  const amount = useMemo(() => {
+    const amount = fillings.reduce((amount, current) => amount + current.price, 0);
+    return amount + bun.price + bun.price;
+  }, [fillings, bun]);
 
   const ingredientsIds = () => {
-    let ids = burger.fillings.map((item) => item._id);
-    ids.push(burger.bun._id);
+    let ids = fillings.map((item) => item._id);
+    ids.push(bun._id);
     return ids;
   }
 
@@ -60,11 +60,11 @@ function BurgerConstructor() {
 
     fetch(`${API_URL}/orders`, options)
       .then((response) => {
-        console.log(response);
-        return response.json()})
+        return response.ok ? response.json() : Promise.reject(response.status)
+      })
       .then((data) => {
         setState({...state, order: data.order.number, showOrderDetails: true })})
-      .catch((error) => console.log(eroor))
+      .catch((error) => console.error(error))
   }
 
   return (
@@ -74,23 +74,23 @@ function BurgerConstructor() {
           <ConstructorElement
             type="top"
             isLocked={true}
-            text={`${burger.bun.name} (верх)`}
-            price={burger.bun.price}
-            thumbnail={burger.bun.image}
+            text={`${bun.name} (верх)`}
+            price={bun.price}
+            thumbnail={bun.image}
           />
         </div>
       </section>
       <section className={constructorStyle.filling}>
-        {burger.fillings.map((item: IngredientData) => <FillingIngredient filling={item} key={item._id} onClick={handleCardClick(item)}/>)}
+        {fillings.map((item: IngredientData) => <FillingIngredient filling={item} key={item._id} onClick={handleCardClick(item)}/>)}
       </section>
       <section className={constructorStyle.bottom_cover} onClick={handleCardClick(bun)}>
         <div className={constructorStyle.element_wrapper}>
           <ConstructorElement
             type="bottom"
             isLocked={true}
-            text={`${burger.bun.name}  (низ)`}
-            price={burger.bun.price}
-            thumbnail={burger.bun.image}
+            text={`${bun.name}  (низ)`}
+            price={bun.price}
+            thumbnail={bun.image}
           />
         </div>
       </section>

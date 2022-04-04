@@ -3,7 +3,7 @@ import IngredientsList from '../ingredients-list/ingredients-list';
 
 import ingredientsStyle from './burger-ingredients.module.css';
 import {useContext} from 'react';
-import {AppContext} from '../../contexts/app-context';
+import {AppContext} from '../../services/app-context';
 
 const SELECTED_PART_ITEM = `${ingredientsStyle.part_item} ${ingredientsStyle.part_item__selected}`;
 const INACTIVE_PART_ITEM = `${ingredientsStyle.part_item}`;
@@ -15,7 +15,7 @@ function BurgerIngredients() {
   const {state, setState} = useContext(AppContext);
   const ingredients = [...state.data]
 
-  if (ingredients === []) {
+  if (ingredients.length === 0) {
     return null
   }
   const mains = ingredients.filter((item) => item.type === 'main');

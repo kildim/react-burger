@@ -1,19 +1,19 @@
 // @ts-nocheck
-import React, {useContext} from 'react';
+import React, {useContext, useMemo} from 'react';
 import Loader from '../loader/loader';
 import Error from '../error/error';
 
 import AppHeader from '../app-header/app-header';
 import Builder from '../builder/builder';
 import {API_URL} from '../../constants/env-config';
-import {AppContext} from '../../contexts/app-context';
+import {AppContext} from '../../services/app-context';
 
 import './app.css';
 
 
 function App() {
   const [state, setState] = React.useState({data: [], isLoading: true, error: null});
-  const appState = {state, setState};
+  const appState = useMemo(() => ({state, setState}), [state, setState]);
 
   React.useEffect(() => {
     const getData = async () => {

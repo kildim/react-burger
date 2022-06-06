@@ -15,11 +15,14 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 import {AppContext} from '../../services/app-context';
 import {API_URL} from '../../constants/env-config';
 import {log} from 'util';
+import {useSelector} from 'react-redux';
 
 function BurgerConstructor() {
   const [state, setState] = React.useState<State>({showIngredientDetails: false, showOrderDetails: false, ingredient: null});
-  const {state: appState} = useContext(AppContext);
-  const ingredients = [...appState.data]
+  // const {state: appState} = useContext(AppContext);
+  const {burger} = useSelector((store) => ({
+    burger: store.burger
+  }))
 
   const handleModalClose = () => {
     setState({...state, showIngredientDetails: false, showOrderDetails: false, order: null})
@@ -27,18 +30,17 @@ function BurgerConstructor() {
 
 
 
-  const bun = ingredients.find((item) => item.type === 'bun');
-  const fillings = ingredients.filter((item) => item.type !== 'bun');
-
-  const cost = () => {
-    const amount = fillings.reduce((amount, current) => amount + current.price, 0);
-    return amount + bun.price + bun.price;
-  }
+  const bun = burger.find((item) => item.type === 'bun') || null;
+  const fillings = burger.filter((item) => item.type !== 'bun') ;
 
   const amount = useMemo(() => {
     const amount = fillings.reduce((amount, current) => amount + current.price, 0);
-    return amount + bun.price + bun.price;
+    return amount + (bun ? bun.price*2 : 0);
   }, [fillings, bun]);
+
+  const canOrder = () => {
+
+  }
 
   const ingredientsIds = () => {
     let ids = fillings.map((item) => item._id);
@@ -69,31 +71,41 @@ function BurgerConstructor() {
 
   return (
     <section className={constructorStyle.grid}>
-      <section className={constructorStyle.upper_cover} onClick={handleCardClick(bun)}>
-        <div className={constructorStyle.element_wrapper}>
-          <ConstructorElement
-            type="top"
-            isLocked={true}
-            text={`${bun.name} (верх)`}
-            price={bun.price}
-            thumbnail={bun.image}
-          />
-        </div>
-      </section>
-      <section className={constructorStyle.filling}>
-        {fillings.map((item: IngredientData) => <FillingIngredient filling={item} key={item._id} onClick={handleCardClick(item)}/>)}
-      </section>
-      <section className={constructorStyle.bottom_cover} onClick={handleCardClick(bun)}>
-        <div className={constructorStyle.element_wrapper}>
-          <ConstructorElement
-            type="bottom"
-            isLocked={true}
-            text={`${bun.name}  (низ)`}
-            price={bun.price}
-            thumbnail={bun.image}
-          />
-        </div>
-      </section>
+      {
+        bun &&
+        <section className={constructorStyle.upper_cover} onClick={handleCardClick(bun)}>
+          <div className={constructorStyle.element_wrapper}>
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={`${bun.name} (верх)`}
+              price={bun.price}
+              thumbnail={bun.image}
+            />
+          </div>
+        </section>
+
+      }
+      {
+        fillings &&
+        <section className={constructorStyle.filling}>
+          {fillings.map((item: IngredientData) => <FillingIngredient filling={item} key={item._id} onClick={handleCardClick(item)}/>)}
+        </section>
+      }
+      {
+        bun &&
+        <section className={constructorStyle.bottom_cover} onClick={handleCardClick(bun)}>
+          <div className={constructorStyle.element_wrapper}>
+            <ConstructorElement
+              type="bottom"
+              isLocked={true}
+              text={`${bun.name}  (низ)`}
+              price={bun.price}
+              thumbnail={bun.image}
+            />
+          </div>
+        </section>
+      }
       <section className={constructorStyle.amount}>
         <p className="text text_type_digits-medium">{amount}</p>
         <div className={constructorStyle.currency_icon}>

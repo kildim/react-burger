@@ -1,12 +1,30 @@
+// @ts-nocheck
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/app/app';
 import reportWebVitals from './reportWebVitals';
+import {configureStore} from '@reduxjs/toolkit';
+import thunk from 'redux-thunk';
+import {Provider} from 'react-redux';
+import {rootReducer} from './services/reducers/root-reducer';
+import {fetchIngredients} from './services/api/api';
+
+
+
+const store = configureStore({
+  reducer: rootReducer,
+  devTools: process.env.NODE_ENV !== 'production',
+  middleware: [thunk],
+})
+
+store.dispatch(fetchIngredients());
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

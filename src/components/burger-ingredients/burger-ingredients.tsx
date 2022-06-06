@@ -2,10 +2,7 @@
 import IngredientsList from '../ingredients-list/ingredients-list';
 
 import ingredientsStyle from './burger-ingredients.module.css';
-import {useContext} from 'react';
-import {AppContext} from '../../services/app-context';
 import {useSelector} from 'react-redux';
-import {log} from 'util';
 
 const SELECTED_PART_ITEM = `${ingredientsStyle.part_item} ${ingredientsStyle.part_item__selected}`;
 const INACTIVE_PART_ITEM = `${ingredientsStyle.part_item}`;
@@ -14,8 +11,6 @@ const SELECTED_REF = `${ingredientsStyle.part_ref} text text_type_main-default`;
 
 
 function BurgerIngredients() {
-  // const {state, setState} = useContext(AppContext);
-  // const ingredients = [...state.data]
   const {ingredients} = useSelector((store) => ({
     ingredients: store.ingredients,
   }))

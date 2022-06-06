@@ -3,6 +3,8 @@ import IngredientsList from '../ingredients-list/ingredients-list';
 
 import ingredientsStyle from './burger-ingredients.module.css';
 import {useSelector} from 'react-redux';
+import {useRef} from 'react';
+import {log} from 'util';
 
 const SELECTED_PART_ITEM = `${ingredientsStyle.part_item} ${ingredientsStyle.part_item__selected}`;
 const INACTIVE_PART_ITEM = `${ingredientsStyle.part_item}`;
@@ -11,6 +13,8 @@ const SELECTED_REF = `${ingredientsStyle.part_ref} text text_type_main-default`;
 
 
 function BurgerIngredients() {
+  const ingredientsListSectionRef = useRef(null);
+
   const {ingredients} = useSelector((store) => ({
     ingredients: store.ingredients,
   }))
@@ -23,8 +27,14 @@ function BurgerIngredients() {
   const buns = ingredients.filter((item) => item.type === 'bun');
 
   const partItemRefClickHandler = (e) => {
+    const ingredientsHeaders = Array.from(ingredientsListSectionRef.current.querySelectorAll('h3'));
+
+    // Задаю стили выбранного соответствующему табу
     e.currentTarget.classList.remove(`${ingredientsStyle.part_ref__unselected}`, `${ingredientsStyle.text_color_inactive}`);
     e.currentTarget.classList.add(`${ingredientsStyle.part_ref}`);
+
+    // Прокручиваю список, чтобы выбранный в табе ингридиент отобразился вверху списка
+    ingredientsHeaders.find( (ingredientHeader) => e.currentTarget.textContent === ingredientHeader.textContent).scrollIntoView()
   };
 
   const partItemClickHandler = (e) => {
@@ -54,7 +64,7 @@ function BurgerIngredients() {
         <li className={INACTIVE_PART_ITEM} onClick={partItemClickHandler}><a href="#" className={UNSELECTED_REF}
           onClick={partItemRefClickHandler}>Начинки</a></li>
       </ul>
-      <section className={ingredientsStyle.ingredients}>
+      <section className={ingredientsStyle.ingredients} ref={ingredientsListSectionRef}>
         <h3 className={ingredientsStyle.ingredient_caption}>Булки</h3>
         <IngredientsList data={buns}/>
         <h3 className={ingredientsStyle.ingredient_caption}>Соусы</h3>

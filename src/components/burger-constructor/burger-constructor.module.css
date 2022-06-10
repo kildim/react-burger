@@ -1,7 +1,7 @@
 .grid {
     display: grid;
     grid-template-columns: 16px 32px 536px 16px;
-    grid-template-rows: 88px min-content 88px 40px 64px;
+    grid-template-rows: 88px 495px 88px 40px 64px;
 }
 
 .upper_cover {

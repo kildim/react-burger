@@ -14,8 +14,9 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 // import {order} from '../../utils/data';
 import {AppContext} from '../../services/app-context';
 import {API_URL} from '../../constants/env-config';
-import {useSelector} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useDrop} from 'react-dnd';
+import {addToBurger} from '../../services/actions/action';
 
 function BurgerConstructor() {
   const [state, setState] = React.useState<State>({
@@ -24,24 +25,15 @@ function BurgerConstructor() {
     ingredient: null
   });
 
-  const [{ canDrop, isOver }, drop] = useDrop(() => ({
-    accept: 'ingredient',
-    drop: () => ({ name: 'Dustbin' }),
-    collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      canDrop: monitor.canDrop(),
-    }),
-  }))
-
   // const {state: appState} = useContext(AppContext);
-  const {bun, fillings} = useSelector((store) => ({
+  const {ingredients, bun, fillings} = useSelector((store) => ({
+    ingredients: store.ingredients,
     bun: store.burger.bun,
     fillings: store.burger.fillings
   }))
   const handleModalClose = () => {
     setState({...state, showIngredientDetails: false, showOrderDetails: false, order: null})
   }
-
 
   // const bun = burger.find((item) => item.type === 'bun') || null;
   // const fillings = burger.filter((item) => item.type !== 'bun') ;
@@ -51,9 +43,21 @@ function BurgerConstructor() {
     return amount + (bun ? bun.price * 2 : 0);
   }, [fillings, bun]);
 
-  const canOrder = () => {
+  const dispatch = useDispatch();
 
+  const canOrder = () => {
   }
+
+  const [{canDrop, isOver}, dropTargetRef] = useDrop(() => ({
+    accept: 'ingredient',
+    drop: ({_id}) => {
+      dispatch(addToBurger(_id))
+    },
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
+  }))
 
   const ingredientsIds = () => {
     let ids = fillings.map((item) => item._id);
@@ -84,37 +88,36 @@ function BurgerConstructor() {
   }
 
   return (
-    <section className={constructorStyle.grid} ref={drop}>
+    <section className={constructorStyle.grid} ref={dropTargetRef}>
       {
-        bun &&
-        <section className={constructorStyle.upper_cover} onClick={handleCardClick(bun)}>
-          <div className={constructorStyle.element_wrapper}>
-            <ConstructorElement
-              type="top"
-              isLocked={true}
-              text={`${bun.name || 'булочка'} (верх)`}
-              price={bun.price}
-              thumbnail={bun.image}
-            />
-          </div>
-        </section>
-
-      }
-      {
-        fillings &&
-          <section className={constructorStyle.filling}>
-            {fillings.map((item: IngredientData) => <FillingIngredient filling={item} key={item._id}
-              onClick={handleCardClick(item)}/>)}
+        Object.keys(bun).length !== 0  &&
+          <section className={constructorStyle.upper_cover} onClick={handleCardClick(bun)}>
+            <div className={constructorStyle.element_wrapper}>
+              <ConstructorElement
+                type="top"
+                isLocked={true}
+                text={`${bun.name} (верх)`}
+                price={bun.price}
+                thumbnail={bun.image}
+              />
+            </div>
           </section>
       }
       {
-        bun &&
+        fillings.length !== 0 &&
+        <section className={constructorStyle.filling}>
+          {fillings.map((item: IngredientData) => <FillingIngredient filling={item} key={item._id}
+            onClick={handleCardClick(item)}/>)}
+        </section>
+      }
+      {
+        Object.keys(bun).length !== 0 &&
         <section className={constructorStyle.bottom_cover} onClick={handleCardClick(bun)}>
           <div className={constructorStyle.element_wrapper}>
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={`${bun.name || 'булочка'}  (низ)`}
+              text={`${bun.name}  (низ)`}
               price={bun.price}
               thumbnail={bun.image}
             />

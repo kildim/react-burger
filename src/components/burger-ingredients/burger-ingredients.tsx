@@ -63,8 +63,6 @@ function BurgerIngredients() {
   }
 
   const partItemRefClickHandler = (e) => {
-    // Задаю стили выбранного соответствующему табу
-    // addPartItemRefSelection(e.currentTarget);
     setActiveTitle(e.currentTarget.textContent);
 
     // Прокручиваю список, чтобы выбранный в табе ингредиент отобразился вверху списка

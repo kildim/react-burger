@@ -10,6 +10,13 @@ const loadIngredients = createAction(
 }),
 );
 
+const  addToBurger = createAction(
+  Action.AddToBurger, (_id) => ({
+    type: Action.AddToBurger,
+    payload: _id
+  })
+)
+
 const getBurger = createAction(Action.GetBurger);
 
 const getSelectedIngredient = createAction(Action.GetSelectedIngredient);
@@ -33,6 +40,7 @@ const setFetchError = createAction(
 
 export {
   loadIngredients,
+  addToBurger,
   getBurger,
   getSelectedIngredient,
   dropSelectedIngredient,

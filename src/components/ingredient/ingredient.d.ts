@@ -4,4 +4,8 @@ type IngredientProps = {
   data: IngredientData,
 }
 
-export type {IngredientProps}
+type DropResult = {
+  name: string
+}
+
+export {IngredientProps, DropResult}

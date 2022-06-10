@@ -14,28 +14,41 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 // import {order} from '../../utils/data';
 import {AppContext} from '../../services/app-context';
 import {API_URL} from '../../constants/env-config';
-import {log} from 'util';
 import {useSelector} from 'react-redux';
+import {useDrop} from 'react-dnd';
 
 function BurgerConstructor() {
-  const [state, setState] = React.useState<State>({showIngredientDetails: false, showOrderDetails: false, ingredient: null});
-  // const {state: appState} = useContext(AppContext);
-  const {burger} = useSelector((store) => ({
-    burger: store.burger
+  const [state, setState] = React.useState<State>({
+    showIngredientDetails: false,
+    showOrderDetails: false,
+    ingredient: null
+  });
+
+  const [{ canDrop, isOver }, drop] = useDrop(() => ({
+    accept: 'ingredient',
+    drop: () => ({ name: 'Dustbin' }),
+    collect: (monitor) => ({
+      isOver: monitor.isOver(),
+      canDrop: monitor.canDrop(),
+    }),
   }))
 
+  // const {state: appState} = useContext(AppContext);
+  const {bun, fillings} = useSelector((store) => ({
+    bun: store.burger.bun,
+    fillings: store.burger.fillings
+  }))
   const handleModalClose = () => {
     setState({...state, showIngredientDetails: false, showOrderDetails: false, order: null})
   }
 
 
-
-  const bun = burger.find((item) => item.type === 'bun') || null;
-  const fillings = burger.filter((item) => item.type !== 'bun') ;
+  // const bun = burger.find((item) => item.type === 'bun') || null;
+  // const fillings = burger.filter((item) => item.type !== 'bun') ;
 
   const amount = useMemo(() => {
     const amount = fillings.reduce((amount, current) => amount + current.price, 0);
-    return amount + (bun ? bun.price*2 : 0);
+    return amount + (bun ? bun.price * 2 : 0);
   }, [fillings, bun]);
 
   const canOrder = () => {
@@ -65,12 +78,13 @@ function BurgerConstructor() {
         return response.ok ? response.json() : Promise.reject(response.status)
       })
       .then((data) => {
-        setState({...state, order: data.order.number, showOrderDetails: true })})
+        setState({...state, order: data.order.number, showOrderDetails: true})
+      })
       .catch((error) => console.error(error))
   }
 
   return (
-    <section className={constructorStyle.grid}>
+    <section className={constructorStyle.grid} ref={drop}>
       {
         bun &&
         <section className={constructorStyle.upper_cover} onClick={handleCardClick(bun)}>
@@ -78,7 +92,7 @@ function BurgerConstructor() {
             <ConstructorElement
               type="top"
               isLocked={true}
-              text={`${bun.name} (верх)`}
+              text={`${bun.name || 'булочка'} (верх)`}
               price={bun.price}
               thumbnail={bun.image}
             />
@@ -88,9 +102,10 @@ function BurgerConstructor() {
       }
       {
         fillings &&
-        <section className={constructorStyle.filling}>
-          {fillings.map((item: IngredientData) => <FillingIngredient filling={item} key={item._id} onClick={handleCardClick(item)}/>)}
-        </section>
+          <section className={constructorStyle.filling}>
+            {fillings.map((item: IngredientData) => <FillingIngredient filling={item} key={item._id}
+              onClick={handleCardClick(item)}/>)}
+          </section>
       }
       {
         bun &&
@@ -99,7 +114,7 @@ function BurgerConstructor() {
             <ConstructorElement
               type="bottom"
               isLocked={true}
-              text={`${bun.name}  (низ)`}
+              text={`${bun.name || 'булочка'}  (низ)`}
               price={bun.price}
               thumbnail={bun.image}
             />
@@ -120,14 +135,14 @@ function BurgerConstructor() {
       {
         state.showIngredientDetails && state.ingredient &&
         <Modal header={'Детали ингредиента'} onCloseClick={handleModalClose}>
-          <IngredientDetails data={state.ingredient}  />
+          <IngredientDetails data={state.ingredient}/>
         </Modal>
       }
 
       {
         state.showOrderDetails &&
         <Modal header={''} onCloseClick={handleModalClose}>
-          <OrderDetails order={{_id: state.order, status: 'Ваш заказ начали готовить'}} />
+          <OrderDetails order={{_id: state.order, status: 'Ваш заказ начали готовить'}}/>
         </Modal>
       }
     </section>

@@ -102,9 +102,6 @@ function BurgerIngredients() {
   const sauces = ingredients.filter((item) => item.type === 'sauce');
   const buns = ingredients.filter((item) => item.type === 'bun');
 
-
-
-
   return (
     <section className={ingredientsStyle.grid}>
       <ul className={ingredientsStyle.parts_list} onClickCapture={partsListClickHandler} ref={tabsListRef}>

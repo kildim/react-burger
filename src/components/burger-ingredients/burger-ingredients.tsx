@@ -23,9 +23,17 @@ function BurgerIngredients() {
     prevActiveTitleRef.current = 'Булки'
   }, [])
 
-  const {ingredients} = useSelector((store) => ({
-    ingredients: store.ingredients,
-  }))
+  const {ingredients} = useSelector((store) => {
+    const ingredients = store.ingredients.map( (ingredient) => {
+      if (ingredient.type === 'bun') {
+        return ingredient._id === store.burger.bun._id ? {...ingredient, count: 2} : {...ingredient, count:0}
+      } else {
+        const ingredientCount = store.burger.fillings.filter( (filling) => ingredient._id === filling._id).length;
+        return {...ingredient, count: ingredientCount}
+      }
+    } );
+    return  {ingredients}
+  })
 
   if (ingredients.length === 0) {
     return null

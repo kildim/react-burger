@@ -10,17 +10,19 @@ import {
   setIsLoading,
   setFetchError, addToBurger,
 } from '../actions/action';
+import ingredient from '../../components/ingredient/ingredient';
 
 const addIngredient = (state, action) => {
-  const ingredient = current(state).ingredients.find((ingredient) => ingredient._id === action.payload);
+  let ingredients = [...current(state).ingredients]
+  let ingredientIndex = ingredients.findIndex((ingredient) => ingredient._id === action.payload);
   let bun = {...current(state).burger.bun};
   let fillings = [...current(state).burger.fillings]
-  console.log(fillings)
-  if (ingredient.type === 'bun') {
-    bun = ingredient
+  if (ingredients[ingredientIndex].type === 'bun') {
+    bun = {...ingredients[ingredientIndex]}
   } else {
-    fillings.push(ingredient)
+    fillings.push(ingredients[ingredientIndex])
   }
+
   return {bun, fillings}
 }
 
@@ -30,7 +32,8 @@ const rootReducer = createReducer( preloadedState, (builder) => {
       state.ingredients = action.payload.ingredients;
     })
     .addCase(addToBurger, (state, action) => {
-      state.burger = addIngredient(state, action);
+       const {bun, fillings} = addIngredient(state, action);
+       state.burger = {bun: bun, fillings: fillings}
     })
     .addCase(getBurger, (state, action) => {
     })

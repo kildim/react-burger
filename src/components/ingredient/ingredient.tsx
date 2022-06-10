@@ -6,11 +6,10 @@ import React from 'react';
 import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details'
 import {DragPreviewImage, useDrag} from 'react-dnd';
-import {logDOM} from '@testing-library/react';
 
 
 function Ingredient(props: IngredientProps) {
-  const {price = 0, name = '', image = '', _id = null} = props.data
+  const {price = 0, name = '', image = '', _id = null, count = 0} = props.data
   const [state, setState] = React.useState({showModal: false})
 
   const [{isDragging}, dragRef, dragPreviewRef] = useDrag(() => ({
@@ -35,7 +34,7 @@ function Ingredient(props: IngredientProps) {
       <DragPreviewImage connect={dragPreviewRef} src={image} />
 
       <article className={ingredientStyle.grid} onClick={handleCardClick} ref={dragRef}>
-        <Counter count={1} size="default"/>
+        <Counter count={count} size="default"/>
         <img src={image}
           alt={`${name} ingredient illustration`}
           width={240}

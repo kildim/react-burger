@@ -4,15 +4,13 @@ import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-deve
 import FillingIngredient from '../filling-ingredient/filling-ingredient'
 
 import constructorStyle from './burger-constructor.module.css';
+import genId from '../../utils/gen-id';
 import {State, BurgerConstructorProps} from './burger-constructor.d';
 import React, {useContext, useMemo} from 'react';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import {IngredientData} from '../../types/ingredient-data';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 
-// import {order} from '../../utils/data';
-import {AppContext} from '../../services/app-context';
 import {API_URL} from '../../constants/env-config';
 import {useDispatch, useSelector} from 'react-redux';
 import {useDrop} from 'react-dnd';
@@ -25,9 +23,7 @@ function BurgerConstructor() {
     ingredient: null
   });
 
-  // const {state: appState} = useContext(AppContext);
-  const {ingredients, bun, fillings} = useSelector((store) => ({
-    ingredients: store.ingredients,
+  const {bun, fillings} = useSelector((store) => ({
     bun: store.burger.bun,
     fillings: store.burger.fillings
   }))
@@ -35,18 +31,12 @@ function BurgerConstructor() {
     setState({...state, showIngredientDetails: false, showOrderDetails: false, order: null})
   }
 
-  // const bun = burger.find((item) => item.type === 'bun') || null;
-  // const fillings = burger.filter((item) => item.type !== 'bun') ;
-
   const amount = useMemo(() => {
     const amount = fillings.reduce((amount, current) => amount + current.price, 0);
     return amount + (bun ? bun.price * 2 : 0);
   }, [fillings, bun]);
 
   const dispatch = useDispatch();
-
-  const canOrder = () => {
-  }
 
   const [{canDrop, isOver}, dropTargetRef] = useDrop(() => ({
     accept: 'ingredient',
@@ -65,9 +55,6 @@ function BurgerConstructor() {
     return ids;
   }
 
-  const handleCardClick = (ingredient: IngredientData) => () => {
-    setState(({...state, showIngredientDetails: true, ingredient: ingredient}))
-  }
   const handleOrderClick = () => {
     const options = {
       method: 'POST',
@@ -87,32 +74,42 @@ function BurgerConstructor() {
       .catch((error) => console.error(error))
   }
 
+  // const moveFilling = (dragIndex, hoverIndex) => {
+  //   const fillingsUpdated = [...fillings];
+  //   const draggedFilling = fillingsUpdated[dragIndex];
+  //   fillingsUpdated.splice(dragIndex, 1);
+  //   fillingsUpdated.splice(hoverIndex, 0 , draggedFilling)
+  //   console.log('MOVE FILLING')
+  //   // dispatch(updateFillings(fillingsUpdated))
+  // }
+
   return (
     <section className={constructorStyle.grid} ref={dropTargetRef}>
       {
-        Object.keys(bun).length !== 0  &&
-          <section className={constructorStyle.upper_cover} onClick={handleCardClick(bun)}>
-            <div className={constructorStyle.element_wrapper}>
-              <ConstructorElement
-                type="top"
-                isLocked={true}
-                text={`${bun.name} (верх)`}
-                price={bun.price}
-                thumbnail={bun.image}
-              />
-            </div>
-          </section>
+        Object.keys(bun).length !== 0 &&
+        <section className={constructorStyle.upper_cover}>
+          <div className={constructorStyle.element_wrapper}>
+            <ConstructorElement
+              type="top"
+              isLocked={true}
+              text={`${bun.name} (верх)`}
+              price={bun.price}
+              thumbnail={bun.image}
+            />
+          </div>
+        </section>
       }
       {
         fillings.length !== 0 &&
         <section className={constructorStyle.filling}>
-          {fillings.map((item: IngredientData) => <FillingIngredient filling={item} key={item._id}
-            onClick={handleCardClick(item)}/>)}
+          {fillings.map((item: IngredientData) => <FillingIngredient filling={item} key={item.uniqueIndex}/>)}
+          {/*{fillings.map((item: IngredientData) => <FillingIngredient filling={item} key={idGenerator()}*/}
+          {/*moveIngredient={moveIngredient}/>)}*/}
         </section>
       }
       {
         Object.keys(bun).length !== 0 &&
-        <section className={constructorStyle.bottom_cover} onClick={handleCardClick(bun)}>
+        <section className={constructorStyle.bottom_cover}>
           <div className={constructorStyle.element_wrapper}>
             <ConstructorElement
               type="bottom"
@@ -135,12 +132,6 @@ function BurgerConstructor() {
           </Button>
         </div>
       </section>
-      {
-        state.showIngredientDetails && state.ingredient &&
-        <Modal header={'Детали ингредиента'} onCloseClick={handleModalClose}>
-          <IngredientDetails data={state.ingredient}/>
-        </Modal>
-      }
 
       {
         state.showOrderDetails &&

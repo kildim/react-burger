@@ -7,10 +7,13 @@ import {
   getOrderNumber,
   getSelectedIngredient,
   loadIngredients,
+  removeFilling,
   setIsLoading,
   setFetchError, addToBurger,
 } from '../actions/action';
-import ingredient from '../../components/ingredient/ingredient';
+import genId from '../../utils/gen-id';
+
+const getUniqueIndex = genId();
 
 const addIngredient = (state, action) => {
   let ingredients = [...current(state).ingredients]
@@ -20,10 +23,17 @@ const addIngredient = (state, action) => {
   if (ingredients[ingredientIndex].type === 'bun') {
     bun = {...ingredients[ingredientIndex]}
   } else {
-    fillings.push(ingredients[ingredientIndex])
+    fillings.push({...ingredients[ingredientIndex], uniqueIndex: getUniqueIndex()})
   }
 
   return {bun, fillings}
+}
+
+const removeIngredient = (state, action) => {
+  const ingredientUniqueIndex = action.payload;
+  let updatedFillings = current(state).burger.fillings.filter( (filling) => filling.uniqueIndex !== ingredientUniqueIndex);
+
+  return updatedFillings;
 }
 
 const rootReducer = createReducer( preloadedState, (builder) => {
@@ -34,6 +44,10 @@ const rootReducer = createReducer( preloadedState, (builder) => {
     .addCase(addToBurger, (state, action) => {
        const {bun, fillings} = addIngredient(state, action);
        state.burger = {bun: bun, fillings: fillings}
+    })
+    .addCase(removeFilling, (state, action) => {
+        const updatedFillings = removeIngredient(state, action);
+        state.burger.fillings = updatedFillings;
     })
     .addCase(getBurger, (state, action) => {
     })

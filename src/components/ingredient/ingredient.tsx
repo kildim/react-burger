@@ -18,7 +18,6 @@ function Ingredient(props: IngredientProps) {
 
     collect: (monitor) => ({
       isDragging: monitor.isDragging(),
-      handlerId: monitor.getHandlerId(),
     }),
   }))
 

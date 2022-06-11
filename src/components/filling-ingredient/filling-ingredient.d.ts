@@ -1,8 +1,7 @@
-import {IngredientData} from '../../types/ingredient-data.d';
+import {FillingType} from '../../types/filling-type';
 
 type FillingIngredientPropsType = {
-  filling: IngredientData
-  onClick: () => void
+  filling: FillingType,
 }
 
 export type {FillingIngredientPropsType}

@@ -17,6 +17,13 @@ const  addToBurger = createAction(
   })
 )
 
+const removeFilling = createAction(
+  Action.RemoveFilling, (uniqueIndex) => ({
+    type: Action.RemoveFilling,
+    payload: uniqueIndex,
+  })
+)
+
 const getBurger = createAction(Action.GetBurger);
 
 const getSelectedIngredient = createAction(Action.GetSelectedIngredient);
@@ -41,6 +48,7 @@ const setFetchError = createAction(
 export {
   loadIngredients,
   addToBurger,
+  removeFilling,
   getBurger,
   getSelectedIngredient,
   dropSelectedIngredient,

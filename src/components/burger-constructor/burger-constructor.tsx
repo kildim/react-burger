@@ -74,15 +74,6 @@ function BurgerConstructor() {
       .catch((error) => console.error(error))
   }
 
-  // const moveFilling = (dragIndex, hoverIndex) => {
-  //   const fillingsUpdated = [...fillings];
-  //   const draggedFilling = fillingsUpdated[dragIndex];
-  //   fillingsUpdated.splice(dragIndex, 1);
-  //   fillingsUpdated.splice(hoverIndex, 0 , draggedFilling)
-  //   console.log('MOVE FILLING')
-  //   // dispatch(updateFillings(fillingsUpdated))
-  // }
-
   return (
     <section className={constructorStyle.grid} ref={dropTargetRef}>
       {
@@ -103,8 +94,6 @@ function BurgerConstructor() {
         fillings.length !== 0 &&
         <section className={constructorStyle.filling}>
           {fillings.map((item: IngredientData) => <FillingIngredient filling={item} key={item.uniqueIndex}/>)}
-          {/*{fillings.map((item: IngredientData) => <FillingIngredient filling={item} key={idGenerator()}*/}
-          {/*moveIngredient={moveIngredient}/>)}*/}
         </section>
       }
       {

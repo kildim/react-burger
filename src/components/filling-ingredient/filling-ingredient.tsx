@@ -4,10 +4,9 @@ import {DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import fillingIngredientStyle from './filling-ingredient.module.css';
 import {FillingIngredientPropsType, DragDropItemType} from './filling-ingredient.d'
 import {useDispatch} from 'react-redux';
-import {removeFilling} from '../../services/actions/action';
+import {removeFilling, replaceFillings} from '../../services/actions/action';
 import {useDrag, useDrop} from 'react-dnd';
 import {useRef} from 'react';
-import {FillingType} from '../../types/filling-type';
 import type { Identifier, XYCoord } from 'dnd-core'
 
 function FillingIngredient(props: FillingIngredientPropsType) {
@@ -46,7 +45,7 @@ function FillingIngredient(props: FillingIngredientPropsType) {
       item.index = hoverIndex
 
 
-      // dispatch(replaceFillings(dragIndex, hoverIndex))
+      dispatch(replaceFillings(dragIndex, hoverIndex))
     }
   })
   const [{isDragging}, dragFilling] = useDrag({

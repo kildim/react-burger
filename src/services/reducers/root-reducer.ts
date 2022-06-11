@@ -6,10 +6,12 @@ import {
   getBurger,
   getOrderNumber,
   getSelectedIngredient,
+  replaceFillings,
   loadIngredients,
   removeFilling,
   setIsLoading,
-  setFetchError, addToBurger,
+  setFetchError,
+  addToBurger,
 } from '../actions/action';
 import genId from '../../utils/gen-id';
 
@@ -36,6 +38,20 @@ const removeIngredient = (state, action) => {
   return updatedFillings;
 }
 
+const replaceIngredients = (state, action) => {
+  const {dragIndex: sourceUniqueIndex, hoverIndex: targetUniqueIndex} = action.payload;
+  const sourceItem = {...current(state).burger.fillings.find( (filling) => filling.uniqueIndex === sourceUniqueIndex)};
+  const targetIndex = current(state).burger.fillings.findIndex( (filling) => filling.uniqueIndex === sourceUniqueIndex);
+  const sourceIndex = current(state).burger.fillings.findIndex( (filling) => filling.uniqueIndex === sourceUniqueIndex);
+  const updatedFillings = current(state).burger.fillings.map( (filling) => filling);
+  updatedFillings.splice(sourceIndex, 1);
+  updatedFillings.splice(targetIndex, 0, sourceItem);
+
+  // не могу понять почему не изменяется updatedFillings при перетаскиавнии ингредиента !
+  console.log(updatedFillings);
+  return updatedFillings;
+}
+
 const rootReducer = createReducer( preloadedState, (builder) => {
   builder
     .addCase(loadIngredients, (state, action) => {
@@ -48,6 +64,10 @@ const rootReducer = createReducer( preloadedState, (builder) => {
     .addCase(removeFilling, (state, action) => {
         const updatedFillings = removeIngredient(state, action);
         state.burger.fillings = updatedFillings;
+    })
+    .addCase(replaceFillings, (state, action) => {
+      const replacedFillings = replaceIngredients(state, action);
+      state.burger.fillings = replacedFillings;
     })
     .addCase(getBurger, (state, action) => {
     })

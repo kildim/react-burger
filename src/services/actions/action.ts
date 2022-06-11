@@ -24,6 +24,13 @@ const removeFilling = createAction(
   })
 )
 
+const replaceFillings = createAction(
+  Action.ReplaceFillings, (dragIndex, hoverIndex) => ({
+    type: Action.ReplaceFillings,
+    payload: {dragIndex, hoverIndex},
+  })
+)
+
 const getBurger = createAction(Action.GetBurger);
 
 const getSelectedIngredient = createAction(Action.GetSelectedIngredient);
@@ -49,6 +56,7 @@ export {
   loadIngredients,
   addToBurger,
   removeFilling,
+  replaceFillings,
   getBurger,
   getSelectedIngredient,
   dropSelectedIngredient,

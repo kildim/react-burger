@@ -2,6 +2,7 @@ export enum Action {
   LoadIngredients = 'LOAD_INGREDIENTS',
   AddToBurger = 'ADD_TO_BURGER',
   RemoveFilling = 'REMOVE_FILLING',
+  ReplaceFillings = 'REPLACE_FILLINGS',
   GetBurger = 'GET_BURGER',
   GetSelectedIngredient = 'GET_SELECTED_INGREDIENT',
   DropSelectedIngredient = 'DROP_SELECTED_INGREDIENT',

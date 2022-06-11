@@ -4,4 +4,11 @@ type FillingIngredientPropsType = {
   filling: FillingType,
 }
 
-export type {FillingIngredientPropsType}
+type DragDropItemType = {
+  _id: string,
+  uniqueIndex: number,
+  type?: string,
+  index?: number
+}
+
+export type {FillingIngredientPropsType, DragDropItemType}

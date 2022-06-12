@@ -8,5 +8,7 @@ export const preloadedState = {
   order: {},
   isLoading: false,
   isError: false,
-  errorMessage: ''
+  errorMessage: '',
+  showIngredientDetail: false,
+  ingredient: {},
 }

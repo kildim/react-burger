@@ -11,6 +11,7 @@ import {AppContext} from '../../services/app-context';
 import './app.css';
 import {useSelector} from 'react-redux';
 import {loadIngredients} from '../../services/actions/action';
+import IngredientDetail from '../ingredient-detail/ingredient-detail';
 
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
               <main>
                 <Builder/>
               </main>
+              <IngredientDetail />
             </>
       }
     </>

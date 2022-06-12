@@ -2,16 +2,17 @@
 import {createReducer, current} from '@reduxjs/toolkit';
 import {preloadedState} from '../../constants/preload-state';
 import {
-  dropSelectedIngredient,
-  getBurger,
-  getOrderNumber,
-  getSelectedIngredient,
+  dropOrder,
   replaceFillings,
   loadIngredients,
   removeFilling,
   setIsLoading,
   setFetchError,
   addToBurger,
+  loadOrder,
+  selectIngredient,
+  showIngredientDetail,
+  hideIngredientDetail,
 } from '../actions/action';
 import genId from '../../utils/gen-id';
 
@@ -62,13 +63,20 @@ const rootReducer = createReducer(preloadedState, (builder) => {
       state.burger.fillings[sourceIndex] = hoverItem;
       state.burger.fillings[targetIndex] = dragItem;
     })
-    .addCase(getBurger, (state, action) => {
+    .addCase(loadOrder, (state, action) => {
+      state.order = action.payload.order;
     })
-    .addCase(getSelectedIngredient, (state, action) => {
+    .addCase(dropOrder, (state, action) => {
+      state.order = {}
     })
-    .addCase(dropSelectedIngredient, (state, action) => {
+    .addCase(showIngredientDetail, (state, action) => {
+      state.showIngredientDetail = true
     })
-    .addCase(getOrderNumber, (state, action) => {
+    .addCase(hideIngredientDetail, (state, action) => {
+      state.showIngredientDetail = false
+    })
+    .addCase(selectIngredient, (state, action) => {
+      state.ingredient = state.ingredients.find((ingredient) => ingredient._id === action.payload)
     })
     .addCase(setIsLoading, (state, action) => {
       state.isLoading = action.payload

@@ -15,20 +15,20 @@ import {API_URL} from '../../constants/env-config';
 import {useDispatch, useSelector} from 'react-redux';
 import {useDrop} from 'react-dnd';
 import {addToBurger} from '../../services/actions/action';
+import {fetchOrder} from '../../services/api/api';
 
 function BurgerConstructor() {
   const [state, setState] = React.useState<State>({
-    showIngredientDetails: false,
     showOrderDetails: false,
-    ingredient: null
   });
 
-  const {bun, fillings} = useSelector((store) => ({
+  const {bun, fillings, order} = useSelector((store) => ({
     bun: store.burger.bun,
-    fillings: store.burger.fillings
+    fillings: store.burger.fillings,
+    order: store.order,
   }))
   const handleModalClose = () => {
-    setState({...state, showIngredientDetails: false, showOrderDetails: false, order: null})
+    setState({...state, showOrderDetails: false})
   }
 
   const amount = useMemo(() => {
@@ -56,22 +56,8 @@ function BurgerConstructor() {
   }
 
   const handleOrderClick = () => {
-    const options = {
-      method: 'POST',
-      body: JSON.stringify({ingredients: ingredientsIds()}),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-
-    fetch(`${API_URL}/orders`, options)
-      .then((response) => {
-        return response.ok ? response.json() : Promise.reject(response.status)
-      })
-      .then((data) => {
-        setState({...state, order: data.order.number, showOrderDetails: true})
-      })
-      .catch((error) => console.error(error))
+    dispatch(fetchOrder(ingredientsIds()));
+    setState({...state, showOrderDetails: true})
   }
 
   return (
@@ -125,7 +111,7 @@ function BurgerConstructor() {
       {
         state.showOrderDetails &&
         <Modal header={''} onCloseClick={handleModalClose}>
-          <OrderDetails order={{_id: state.order, status: 'Ваш заказ начали готовить'}}/>
+          <OrderDetails order={{_id: order.number, status: 'Ваш заказ начали готовить'}}/>
         </Modal>
       }
     </section>

@@ -10,6 +10,22 @@ const loadIngredients = createAction(
 }),
 );
 
+const loadOrder = createAction(
+  Action.LoadOrder, (order) => ({
+    type: Action.LoadOrder,
+    payload: {
+      order: order
+    }
+  })
+)
+
+const dropOrder = createAction(
+  Action.DropOrder, () => ({
+    type: Action.DropOrder,
+    payload: {}
+  })
+)
+
 const  addToBurger = createAction(
   Action.AddToBurger, (_id) => ({
     type: Action.AddToBurger,
@@ -31,13 +47,34 @@ const replaceFillings = createAction(
   })
 )
 
-const getBurger = createAction(Action.GetBurger);
+const showIngredientDetail = createAction(
+  Action.ShowIngredientDetail, () => ({
+    type: Action.ShowIngredientDetail,
+    payload: null
+  })
+)
 
-const getSelectedIngredient = createAction(Action.GetSelectedIngredient);
+const hideIngredientDetail = createAction(
+  Action.HideIngredientDetail, () => ({
+    type: Action.HideIngredientDetail,
+    payload: null
+  })
+)
 
-const dropSelectedIngredient = createAction(Action.DropSelectedIngredient);
+const selectIngredient = createAction(
+  Action.SelectIngredient, (id) => ({
+    type: Action.SelectIngredient,
+    payload: id
+  })
+)
 
-const getOrderNumber = createAction(Action.GetOrderNumber);
+// const getBurger = createAction(Action.GetBurger);
+//
+// const getSelectedIngredient = createAction(Action.GetSelectedIngredient);
+//
+// const dropSelectedIngredient = createAction(Action.DropSelectedIngredient);
+//
+// const getOrderNumber = createAction(Action.GetOrderNumber);
 
 const setIsLoading = createAction(
   Action.SetIsLoading, (isLoading: boolean) => ({
@@ -45,6 +82,7 @@ const setIsLoading = createAction(
     payload: isLoading,
   })
 );
+
 const setFetchError = createAction(
   Action.SetFetchError, (fetchError) => ({
     type: Action.SetFetchError,
@@ -57,10 +95,15 @@ export {
   addToBurger,
   removeFilling,
   replaceFillings,
-  getBurger,
-  getSelectedIngredient,
-  dropSelectedIngredient,
-  getOrderNumber,
+  loadOrder,
+  dropOrder,
+  showIngredientDetail,
+  hideIngredientDetail,
+  selectIngredient,
+  // getBurger,
+  // getSelectedIngredient,
+  // dropSelectedIngredient,
+  // getOrderNumber,
   setIsLoading,
   setFetchError
 }

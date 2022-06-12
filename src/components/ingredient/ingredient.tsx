@@ -1,31 +1,28 @@
 import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components';
 
 import ingredientStyle from './ingredient.module.css';
-import {IngredientProps, DropResult} from './ingredient.d'
+import {IngredientProps} from './ingredient.d'
 import React from 'react';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details'
+
 import {DragPreviewImage, useDrag} from 'react-dnd';
+import {useDispatch} from 'react-redux';
+import {showIngredientDetail, selectIngredient} from '../../services/actions/action';
 
 
 function Ingredient(props: IngredientProps) {
   const {price = 0, name = '', image = '', _id = null, count = 0} = props.data
-  const [state, setState] = React.useState({showModal: false})
+  const dispatch = useDispatch();
 
-  const [{isDragging}, dragRef, dragPreviewRef] = useDrag(() => ({
+  const [, dragRef, dragPreviewRef] = useDrag(() => ({
     type: 'ingredient',
     item: {_id},
 
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
+
   }))
 
-  const handleModalClose = () => {
-    setState({...state, showModal: false})
-  }
   const handleCardClick = () => {
-    setState(({...state, showModal: true}))
+    dispatch(selectIngredient(_id))
+    dispatch(showIngredientDetail())
   }
 
   return (
@@ -47,14 +44,7 @@ function Ingredient(props: IngredientProps) {
           {name}
         </p>
       </article>
-      {
-        state.showModal &&
-        <Modal header={'Детали ингредиента'} onCloseClick={handleModalClose}>
-          <IngredientDetails data={props.data}/>
-        </Modal>
-      }
     </>
-
   )
 }
 

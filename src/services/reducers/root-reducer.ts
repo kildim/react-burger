@@ -33,41 +33,34 @@ const addIngredient = (state, action) => {
 
 const removeIngredient = (state, action) => {
   const ingredientUniqueIndex = action.payload;
-  let updatedFillings = current(state).burger.fillings.filter( (filling) => filling.uniqueIndex !== ingredientUniqueIndex);
+  let updatedFillings = current(state).burger.fillings.filter((filling) => filling.uniqueIndex !== ingredientUniqueIndex);
 
   return updatedFillings;
 }
 
-const replaceIngredients = (state, action) => {
-  const {dragIndex: sourceUniqueIndex, hoverIndex: targetUniqueIndex} = action.payload;
-  const sourceItem = {...current(state).burger.fillings.find( (filling) => filling.uniqueIndex === sourceUniqueIndex)};
-  const targetIndex = current(state).burger.fillings.findIndex( (filling) => filling.uniqueIndex === sourceUniqueIndex);
-  const sourceIndex = current(state).burger.fillings.findIndex( (filling) => filling.uniqueIndex === sourceUniqueIndex);
-  const updatedFillings = current(state).burger.fillings.map( (filling) => filling);
-  updatedFillings.splice(sourceIndex, 1);
-  updatedFillings.splice(targetIndex, 0, sourceItem);
-
-  // не могу понять почему не изменяется updatedFillings при перетаскиавнии ингредиента !
-  console.log(updatedFillings);
-  return updatedFillings;
-}
-
-const rootReducer = createReducer( preloadedState, (builder) => {
+const rootReducer = createReducer(preloadedState, (builder) => {
   builder
     .addCase(loadIngredients, (state, action) => {
       state.ingredients = action.payload.ingredients;
     })
     .addCase(addToBurger, (state, action) => {
-       const {bun, fillings} = addIngredient(state, action);
-       state.burger = {bun: bun, fillings: fillings}
+      const {bun, fillings} = addIngredient(state, action);
+      state.burger = {bun: bun, fillings: fillings}
     })
     .addCase(removeFilling, (state, action) => {
-        const updatedFillings = removeIngredient(state, action);
-        state.burger.fillings = updatedFillings;
+      const updatedFillings = removeIngredient(state, action);
+      state.burger.fillings = updatedFillings;
     })
     .addCase(replaceFillings, (state, action) => {
-      const replacedFillings = replaceIngredients(state, action);
-      state.burger.fillings = replacedFillings;
+
+      const {dragIndex: sourceUniqueIndex, hoverIndex: targetUniqueIndex} = action.payload;
+      const targetIndex = state.burger.fillings.findIndex((filling) => filling.uniqueIndex === targetUniqueIndex);
+      const sourceIndex = state.burger.fillings.findIndex((filling) => filling.uniqueIndex === sourceUniqueIndex);
+
+      const dragItem = state.burger.fillings[sourceIndex];
+      const hoverItem = state.burger.fillings[targetIndex];
+      state.burger.fillings[sourceIndex] = hoverItem;
+      state.burger.fillings[targetIndex] = dragItem;
     })
     .addCase(getBurger, (state, action) => {
     })

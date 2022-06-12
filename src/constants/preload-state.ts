@@ -6,7 +6,7 @@ export const preloadedState = {
   },
   currentIngredient: {},
   order: {},
-  isLoading: false,
+  isLoading: true,
   isError: false,
   errorMessage: '',
   showIngredientDetail: false,

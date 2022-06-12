@@ -8,8 +8,6 @@ import {configureStore} from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
 import {rootReducer} from './services/reducers/root-reducer';
-import {fetchIngredients} from './services/api/api';
-
 
 
 const store = configureStore({
@@ -18,12 +16,10 @@ const store = configureStore({
   middleware: [thunk],
 })
 
-store.dispatch(fetchIngredients());
-
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+      <App/>
     </Provider>
   </React.StrictMode>,
   document.getElementById('root')

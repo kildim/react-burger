@@ -1,6 +1,14 @@
 //@ts-nocheck
 
-import {loadIngredients, setIsLoading, setFetchError, loadOrder, dropOrder} from '../actions/action';
+import {
+  loadIngredients,
+  setIsLoading,
+  setFetchError,
+  loadOrder,
+  dropOrder,
+  showOrderDetail,
+  hideOrderDetail
+} from '../actions/action';
 import {API_URL} from '../../constants/env-config';
 
 const fetchIngredients = () =>
@@ -42,14 +50,20 @@ const fetchOrder = (ingredientsIds) =>
           return response.ok ? response.json() : Promise.reject(response.status)
         })
         .then((data) => {
-          dispatch(loadOrder(data.order));
+          dispatch(loadOrder(data));
+          dispatch(showOrderDetail())
         })
-        .catch((error) => console.error(error))
+        .catch((error) => {
+          dispatch(hideOrderDetail());
+          dispatch(setFetchError({isError: true, errorMessage: error.message}));
+        })
     } catch
       (error) {
+      dispatch(hideOrderDetail())
       dispatch(setFetchError({isError: true, errorMessage: error.message}));
+    } finally {
+      dispatch(setIsLoading(false));
     }
-    dispatch(setIsLoading(false));
   }
 
 

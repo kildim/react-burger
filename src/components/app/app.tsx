@@ -12,6 +12,7 @@ import './app.css';
 import {useSelector} from 'react-redux';
 import {loadIngredients} from '../../services/actions/action';
 import IngredientDetail from '../ingredient-detail/ingredient-detail';
+import OrderDetail from '../order-detail/order-detail';
 
 
 function App() {
@@ -20,28 +21,6 @@ function App() {
     isError: store.isError,
     errorMessage: store.errorMessage,
   }));
-
-
-  // const [state, setState] = React.useState({data: [], isLoading: true, error: null});
-  // const appState = useMemo(() => ({state, setState}), [state, setState]);
-
-  // React.useEffect(() => {
-  //   const getData = async () => {
-  //     const res = await fetch(`${API_URL}/ingredients`);
-  //     try {
-  //       if (res.ok) {
-  //         const serverData = await res.json();
-  //         setState({...state, data: serverData.data, isLoading: false})
-  //       } else {
-  //         setState({...state, isLoading: false, error: res.status})
-  //       }
-  //     } catch
-  //       (error) {
-  //       setState({...state, isLoading: false, error: error.message})
-  //     }
-  //   }
-  //   getData();
-  // }, [])
 
   return (
     <>
@@ -53,6 +32,7 @@ function App() {
               <main>
                 <Builder/>
               </main>
+              <OrderDetail />
               <IngredientDetail />
             </>
       }

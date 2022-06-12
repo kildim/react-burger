@@ -13,6 +13,8 @@ import {
   selectIngredient,
   showIngredientDetail,
   hideIngredientDetail,
+  showOrderDetail,
+  hideOrderDetail,
 } from '../actions/action';
 import genId from '../../utils/gen-id';
 
@@ -74,6 +76,12 @@ const rootReducer = createReducer(preloadedState, (builder) => {
     })
     .addCase(hideIngredientDetail, (state, action) => {
       state.showIngredientDetail = false
+    })
+    .addCase(showOrderDetail, (state, action) => {
+      state.showOrderDetail = true
+    })
+    .addCase(hideOrderDetail, (state, action) => {
+      state.showOrderDetail = false
     })
     .addCase(selectIngredient, (state, action) => {
       state.ingredient = state.ingredients.find((ingredient) => ingredient._id === action.payload)

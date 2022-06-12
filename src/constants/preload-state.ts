@@ -10,5 +10,6 @@ export const preloadedState = {
   isError: false,
   errorMessage: '',
   showIngredientDetail: false,
+  showOrderDetail: false,
   ingredient: {},
 }

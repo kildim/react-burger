@@ -4,32 +4,20 @@ import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-deve
 import FillingIngredient from '../filling-ingredient/filling-ingredient'
 
 import constructorStyle from './burger-constructor.module.css';
-import genId from '../../utils/gen-id';
-import {State, BurgerConstructorProps} from './burger-constructor.d';
-import React, {useContext, useMemo} from 'react';
-import Modal from '../modal/modal';
-import OrderDetails from '../order-details/order-details';
+import React, {useMemo} from 'react';
 import {IngredientData} from '../../types/ingredient-data';
 
-import {API_URL} from '../../constants/env-config';
 import {useDispatch, useSelector} from 'react-redux';
 import {useDrop} from 'react-dnd';
 import {addToBurger} from '../../services/actions/action';
 import {fetchOrder} from '../../services/api/api';
 
 function BurgerConstructor() {
-  const [state, setState] = React.useState<State>({
-    showOrderDetails: false,
-  });
-
-  const {bun, fillings, order} = useSelector((store) => ({
+  const {bun, fillings} = useSelector((store) => ({
     bun: store.burger.bun,
     fillings: store.burger.fillings,
     order: store.order,
   }))
-  const handleModalClose = () => {
-    setState({...state, showOrderDetails: false})
-  }
 
   const amount = useMemo(() => {
     const amount = fillings.reduce((amount, current) => amount + current.price, 0);
@@ -57,7 +45,6 @@ function BurgerConstructor() {
 
   const handleOrderClick = () => {
     dispatch(fetchOrder(ingredientsIds()));
-    setState({...state, showOrderDetails: true})
   }
 
   return (
@@ -107,13 +94,6 @@ function BurgerConstructor() {
           </Button>
         </div>
       </section>
-
-      {
-        state.showOrderDetails &&
-        <Modal header={''} onCloseClick={handleModalClose}>
-          <OrderDetails order={{_id: order.number, status: 'Ваш заказ начали готовить'}}/>
-        </Modal>
-      }
     </section>
   )
 }

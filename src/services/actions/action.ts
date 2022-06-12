@@ -68,13 +68,19 @@ const selectIngredient = createAction(
   })
 )
 
-// const getBurger = createAction(Action.GetBurger);
-//
-// const getSelectedIngredient = createAction(Action.GetSelectedIngredient);
-//
-// const dropSelectedIngredient = createAction(Action.DropSelectedIngredient);
-//
-// const getOrderNumber = createAction(Action.GetOrderNumber);
+const showOrderDetail = createAction(
+  Action.ShowOrderDetail, () => ({
+    type: Action.ShowOrderDetail,
+    payload: null
+  })
+)
+
+const hideOrderDetail = createAction(
+  Action.HideOrderDetail, () => ({
+    type: Action.HideOrderDetail,
+    payload: null
+  })
+)
 
 const setIsLoading = createAction(
   Action.SetIsLoading, (isLoading: boolean) => ({
@@ -100,10 +106,8 @@ export {
   showIngredientDetail,
   hideIngredientDetail,
   selectIngredient,
-  // getBurger,
-  // getSelectedIngredient,
-  // dropSelectedIngredient,
-  // getOrderNumber,
+  showOrderDetail,
+  hideOrderDetail,
   setIsLoading,
   setFetchError
 }

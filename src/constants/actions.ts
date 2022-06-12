@@ -9,5 +9,7 @@ export enum Action {
   HideIngredientDetail = 'HIDE_INGREDIENT_DETAIL',
   SelectIngredient = 'SELECT_INGREDIENT',
   SetIsLoading = 'SET_IS_LOADING',
-  SetFetchError = 'SET_FETCH_ERROR'
+  SetFetchError = 'SET_FETCH_ERROR',
+  ShowOrderDetail = 'SHOW_ORDER_DETAIL',
+  HideOrderDetail = 'HIDE_ORDER_DETAIL',
 }

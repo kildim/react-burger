@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, {useContext, useEffect, useMemo} from 'react';
+import React, {useEffect} from 'react';
 import Loader from '../loader/loader';
 import Error from '../error/error';
 import AppHeader from '../app-header/app-header';
@@ -17,7 +17,7 @@ function App() {
 
   useEffect(() => {
       dispatch(fetchIngredients());
-    }, []
+    }, [dispatch]
   );
 
   const {isLoading, isError, errorMessage} = useSelector((store) => ({

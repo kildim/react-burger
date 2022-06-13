@@ -20,8 +20,11 @@ function BurgerConstructor() {
   }))
 
   const amount = useMemo(() => {
-    const amount = fillings.reduce((amount, current) => amount + current.price, 0);
-    return amount + (bun ? bun.price * 2 : 0);
+    let amount = fillings.reduce((amount, current) => amount + current.price, 0);
+    if (bun.price) {
+      amount += bun.price * 2
+    }
+    return amount;
   }, [fillings, bun]);
 
   const dispatch = useDispatch();

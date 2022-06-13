@@ -2,11 +2,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {MouseEvent} from 'react';
-import {CloseIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components'
-import OrderDetailStyle from '../order-detail/order-detail.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {hideOrderDetail} from '../../services/actions/action';
 import acceptance from '../../images/acceptance.png';
+import Modal from '../modal/modal';
 
 const APP_BODY = document.getElementById('root');
 
@@ -39,19 +38,15 @@ function OrderDetail() {
   }
 
   return showOrderDetail && ReactDOM.createPortal(
-    <div className={OrderDetailStyle.modal_overlay} onClick={handleCloseClick}>
-      <div className={OrderDetailStyle.modal} onClick={handleModalClick}>
-        <div className={`${OrderDetailStyle.header} mt-10 mr-10 ml-10`}>
-          <h1 className={'text text_type_main-large'}></h1>
-          <Button type="secondary" size="small" onClick={handleCloseClick}><CloseIcon type="primary"/></Button>
-        </div>
+    <Modal header={''} onCloseClick={handleCloseClick}>
+      <>
         <span className={'text text_type_digits-large mt-30'}>{number}</span>
         <span className={'text text_type_main-medium mt-8'}>идентификатор заказа</span>
         <img src={acceptance} className={'mt-15'}/>
         <span className={'mt-15 text text_type_main-default'}>{status}</span>
         <span className={'mt-2 mb-30 text text_type_main-default text_color_inactive'}>Дождитесь готовности на орбитальной станции</span>
-      </div>
-    </div>
+      </>
+    </Modal>
     , APP_BODY
   )
 }

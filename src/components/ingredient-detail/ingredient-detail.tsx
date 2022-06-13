@@ -37,14 +37,13 @@ function IngredientDetail() {
     return null;
   }
 
-  const handleCloseClick = (event: MouseEvent<HTMLDivElement>): void => {
-    event.stopPropagation()
+  const handleClosePopup = () => {
     dispatch(hideIngredientDetail())
   }
 
 
   return showIngredientDetail && ReactDOM.createPortal(
-    <Modal header={'Детали ингредиента'} onCloseClick={handleCloseClick}>
+    <Modal header={'Детали ингредиента'} onClosePopup={handleClosePopup}>
       <div className={IngredientDetailStyle.content}>
         <img src={image}
           alt={`${name} ingredient illustration`}

@@ -75,6 +75,13 @@ const showOrderDetail = createAction(
   })
 )
 
+const clearBurger = createAction(
+  Action.ClearBurger, () => ({
+    type: Action.ClearBurger,
+    payload: null,
+  })
+)
+
 const hideOrderDetail = createAction(
   Action.HideOrderDetail, () => ({
     type: Action.HideOrderDetail,
@@ -109,5 +116,6 @@ export {
   showOrderDetail,
   hideOrderDetail,
   setIsLoading,
-  setFetchError
+  setFetchError,
+  clearBurger
 }

@@ -1,7 +1,6 @@
 //@ts-nocheck
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {MouseEvent} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {hideOrderDetail} from '../../services/actions/action';
 import acceptance from '../../images/acceptance.png';
@@ -31,14 +30,12 @@ function OrderDetail() {
     return null;
   }
 
-  const handleModalClick = (event: MouseEvent<HTMLDivElement>): void => event.stopPropagation();
-  const handleCloseClick = (event: MouseEvent<HTMLDivElement>): void => {
-    event.stopPropagation()
+  const handleClosePopup = () => {
     dispatch(hideOrderDetail())
   }
 
   return showOrderDetail && ReactDOM.createPortal(
-    <Modal header={''} onCloseClick={handleCloseClick}>
+    <Modal header={''} onClosePopup={handleClosePopup}>
       <>
         <span className={'text text_type_digits-large mt-30'}>{number}</span>
         <span className={'text text_type_main-medium mt-8'}>идентификатор заказа</span>

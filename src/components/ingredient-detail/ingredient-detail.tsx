@@ -2,7 +2,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {MouseEvent} from 'react';
-import {CloseIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components'
 import IngredientDetailStyle from '../ingredient-detail/ingredient-detail.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {hideIngredientDetail} from '../../services/actions/action';
@@ -65,8 +64,6 @@ function IngredientDetail() {
             <dd className={DEFINITION_DESCRIPTION_STYLE}>{carbohydrates}</dd>
           </dl>
         </div>
-        {/*  </div>*/}
-        {/*</div>*/}
       </div>
     </Modal>
     , APP_BODY

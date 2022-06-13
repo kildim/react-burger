@@ -11,16 +11,16 @@ import {hideIngredientDetail} from '../../services/actions/action';
 const APP_BODY = document.getElementById('root');
 
 function Modal(props: ModalPropsType) {
-  const {header, onCloseClick, children} = props;
+  const {header, onClosePopup, children} = props;
   React.useEffect(() => {
     const handleEscKeyDown = (event: KeyboardEvent) => {
       if ((event.key === "Escape")) {
-        onCloseClick();
+        onClosePopup();
       }
     }
     document.addEventListener('keydown', handleEscKeyDown)
     return () => document.removeEventListener('keydown', handleEscKeyDown)
-  }, [onCloseClick])
+  }, [onClosePopup])
 
   if (APP_BODY===null) {
     return null;
@@ -29,11 +29,11 @@ function Modal(props: ModalPropsType) {
   const handleModalClick = (event: MouseEvent<HTMLDivElement>): void => event.stopPropagation();
 
   return ReactDOM.createPortal(
-    <ModalOverlay onCloseClick={onCloseClick}>
+    <ModalOverlay onCloseClick={onClosePopup}>
       <div className={modalStyles.modal} onClick={handleModalClick}>
         <div className={`${modalStyles.header} mt-10 mr-10 ml-10`}>
           <h1 className={'text text_type_main-large'}>{header}</h1>
-          <Button type="secondary" size="small" onClick={onCloseClick}><CloseIcon type="primary"/></Button>
+          <Button type="secondary" size="small" onClick={onClosePopup}><CloseIcon type="primary"/></Button>
         </div>
         {children}
       </div>

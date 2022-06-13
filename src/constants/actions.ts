@@ -12,4 +12,5 @@ export enum Action {
   SetFetchError = 'SET_FETCH_ERROR',
   ShowOrderDetail = 'SHOW_ORDER_DETAIL',
   HideOrderDetail = 'HIDE_ORDER_DETAIL',
+  ClearBurger = 'CLEAR_BURGER',
 }

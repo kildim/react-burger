@@ -7,7 +7,8 @@ import {
   loadOrder,
   dropOrder,
   showOrderDetail,
-  hideOrderDetail
+  hideOrderDetail,
+  clearBurger,
 } from '../actions/action';
 import {API_URL} from '../../constants/env-config';
 import {ok} from 'assert';
@@ -38,6 +39,7 @@ const fetchOrder = (ingredientsIds) => (dispatch, _getState) => {
     .then(checkResponse)
     .then((res) => {
       dispatch(loadOrder(res));
+      dispatch(clearBurger());
       dispatch(showOrderDetail())
     })
     .catch((error) => {

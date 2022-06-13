@@ -1,6 +1,6 @@
 // @ts-nocheck
 import {createReducer, current} from '@reduxjs/toolkit';
-import {preloadedState} from '../../constants/preload-state';
+import {preloadBurger, preloadedState} from '../../constants/preload-state';
 import {
   dropOrder,
   replaceFillings,
@@ -15,6 +15,7 @@ import {
   hideIngredientDetail,
   showOrderDetail,
   hideOrderDetail,
+  clearBurger,
 } from '../actions/action';
 import genId from '../../utils/gen-id';
 
@@ -79,6 +80,9 @@ const rootReducer = createReducer(preloadedState, (builder) => {
     })
     .addCase(showOrderDetail, (state, action) => {
       state.showOrderDetail = true
+    })
+    .addCase(clearBurger, (state, action) => {
+      state.burger = preloadBurger;
     })
     .addCase(hideOrderDetail, (state, action) => {
       state.showOrderDetail = false

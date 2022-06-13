@@ -47,7 +47,7 @@ function BurgerConstructor() {
   }
 
   const handleOrderClick = () => {
-    if (fillings.length === 0) {
+    if (Object.keys(bun).length === 0) {
       return
     }
     dispatch(fetchOrder(ingredientsIds()));

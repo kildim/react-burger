@@ -1,9 +1,11 @@
+export const preloadBurger = {
+  bun: {},
+  fillings: []
+}
+
 export const preloadedState = {
   ingredients: [],
-  burger: {
-    bun: {},
-    fillings: []
-  },
+  burger: preloadBurger,
   currentIngredient: {},
   order: {},
   isLoading: true,

@@ -1,7 +1,5 @@
-import {FillingType} from '../../types/filling-type';
-
 type FillingIngredientPropsType = {
-  filling: FillingType,
+  filling: IngredientData,
 }
 
 type DragDropItemType = {

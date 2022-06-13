@@ -23,26 +23,11 @@ function IngredientDetail() {
     image: state.ingredient.image,
   }));
 
-  React.useEffect(() => {
-    const handleEscKeyDown = (event: KeyboardEvent) => {
-      if ((event.key === 'Escape')) {
-        dispatch(hideIngredientDetail())
-      }
-    }
-    document.addEventListener('keydown', handleEscKeyDown)
-    return () => document.removeEventListener('keydown', handleEscKeyDown)
-  }, [])
-
-  if (APP_BODY === null) {
-    return null;
-  }
-
   const handleClosePopup = () => {
     dispatch(hideIngredientDetail())
   }
 
-
-  return showIngredientDetail && ReactDOM.createPortal(
+  return showIngredientDetail &&
     <Modal header={'Детали ингредиента'} onClosePopup={handleClosePopup}>
       <div className={IngredientDetailStyle.content}>
         <img src={image}
@@ -65,8 +50,6 @@ function IngredientDetail() {
         </div>
       </div>
     </Modal>
-    , APP_BODY
-  )
 }
 
 export default IngredientDetail;

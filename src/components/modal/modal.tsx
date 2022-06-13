@@ -8,7 +8,7 @@ import {CloseIcon, Button} from '@ya.praktikum/react-developer-burger-ui-compone
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import {hideIngredientDetail} from '../../services/actions/action';
 
-const APP_BODY = document.getElementById('root');
+const MODAL_PORTAL = document.getElementById('modals');
 
 function Modal(props: ModalPropsType) {
   const {header, onClosePopup, children} = props;
@@ -22,7 +22,7 @@ function Modal(props: ModalPropsType) {
     return () => document.removeEventListener('keydown', handleEscKeyDown)
   }, [onClosePopup])
 
-  if (APP_BODY===null) {
+  if (MODAL_PORTAL===null) {
     return null;
   }
 
@@ -38,7 +38,7 @@ function Modal(props: ModalPropsType) {
         {children}
       </div>
     </ModalOverlay>
-, APP_BODY
+, MODAL_PORTAL
   )
 }
 

@@ -16,25 +16,11 @@ function OrderDetail() {
     status: state.order.success ? 'Ваш заказ начали готовить' : 'Ваш заказ отклонён'
   }));
 
-  React.useEffect(() => {
-    const handleEscKeyDown = (event: KeyboardEvent) => {
-      if ((event.key === 'Escape')) {
-        dispatch(hideOrderDetail())
-      }
-    }
-    document.addEventListener('keydown', handleEscKeyDown)
-    return () => document.removeEventListener('keydown', handleEscKeyDown)
-  }, [])
-
-  if (APP_BODY === null) {
-    return null;
-  }
-
   const handleClosePopup = () => {
     dispatch(hideOrderDetail())
   }
 
-  return showOrderDetail && ReactDOM.createPortal(
+  return showOrderDetail &&
     <Modal header={''} onClosePopup={handleClosePopup}>
       <>
         <span className={'text text_type_digits-large mt-30'}>{number}</span>
@@ -44,8 +30,6 @@ function OrderDetail() {
         <span className={'mt-2 mb-30 text text_type_main-default text_color_inactive'}>Дождитесь готовности на орбитальной станции</span>
       </>
     </Modal>
-    , APP_BODY
-  )
 }
 
 export default OrderDetail;

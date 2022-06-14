@@ -3,29 +3,38 @@ import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-com
 import ingredientStyle from './ingredient.module.css';
 import {IngredientProps} from './ingredient.d'
 import React from 'react';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details'
+
+import {DragPreviewImage, useDrag} from 'react-dnd';
+import {useDispatch} from 'react-redux';
+import {showIngredientDetail, selectIngredient} from '../../services/actions/action';
 
 
 function Ingredient(props: IngredientProps) {
-  const {price = 0, name = '', image = ''} = props.data
-  const [state, setState] = React.useState({showModal: false})
+  const {price = 0, name = '', image = '', _id = null, count = 0} = props.data
+  const dispatch = useDispatch();
 
-  const handleModalClose = () => {
-    setState({...state, showModal: false})
-  }
+  const [, dragRef, dragPreviewRef] = useDrag(() => ({
+    type: 'ingredient',
+    item: {_id},
+
+
+  }))
+
   const handleCardClick = () => {
-    setState(({...state, showModal: true}))
+    dispatch(selectIngredient(_id))
+    dispatch(showIngredientDetail())
   }
 
   return (
     <>
-      <article className={ingredientStyle.grid} onClick={handleCardClick}>
-        <Counter count={1} size="default"/>
+      <DragPreviewImage connect={dragPreviewRef} src={image} />
+
+      <article className={ingredientStyle.grid} onClick={handleCardClick} ref={dragRef}>
+        <Counter count={count} size="default"/>
         <img src={image}
-             alt={`${name} ingredient illustration`}
-             width={240}
-             height={120}
+          alt={`${name} ingredient illustration`}
+          width={240}
+          height={120}
         />
         <p className={ingredientStyle.price}>
           <span className={'text text_type_digits-default'}>{price}</span>
@@ -35,14 +44,7 @@ function Ingredient(props: IngredientProps) {
           {name}
         </p>
       </article>
-      {
-        state.showModal &&
-        <Modal header={'Детали ингредиента'} onCloseClick={handleModalClose}>
-          <IngredientDetails data={props.data}/>
-        </Modal>
-      }
     </>
-
   )
 }
 

@@ -10,5 +10,7 @@ export type IngredientData =   {
   image: string,
   image_mobile: string,
   image_large: string,
-  __v: number
+  __v: number,
+  count: number,
+  uniqueIndex?: number,
 }

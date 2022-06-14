@@ -1,8 +1,12 @@
-import {IngredientData} from '../../types/ingredient-data.d';
-
 type FillingIngredientPropsType = {
-  filling: IngredientData
-  onClick: () => void
+  filling: IngredientData,
 }
 
-export type {FillingIngredientPropsType}
+type DragDropItemType = {
+  _id: string,
+  uniqueIndex: number,
+  type?: string,
+  index?: number
+}
+
+export type {FillingIngredientPropsType, DragDropItemType}

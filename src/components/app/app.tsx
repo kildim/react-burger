@@ -1,55 +1,47 @@
 // @ts-nocheck
-import React, {useContext, useMemo} from 'react';
+import React, {useEffect} from 'react';
 import Loader from '../loader/loader';
 import Error from '../error/error';
-
 import AppHeader from '../app-header/app-header';
 import Builder from '../builder/builder';
-import {API_URL} from '../../constants/env-config';
-import {AppContext} from '../../services/app-context';
-
 import './app.css';
+import {useDispatch, useSelector} from 'react-redux';
+import IngredientDetail from '../ingredient-detail/ingredient-detail';
+import OrderDetail from '../order-detail/order-detail';
+import {fetchIngredients} from '../../services/api/api';
 
 
 function App() {
-  const [state, setState] = React.useState({data: [], isLoading: true, error: null});
-  const appState = useMemo(() => ({state, setState}), [state, setState]);
 
-  React.useEffect(() => {
-    const getData = async () => {
-      const res = await fetch(`${API_URL}/ingredients`);
-      try {
-        if (res.ok) {
-          const serverData = await res.json();
-          setState({...state, data: serverData.data, isLoading: false})
-        } else {
-          setState({...state, isLoading: false, error: res.status})
-        }
-      } catch
-        (error) {
-        setState({...state, isLoading: false, error: error.message})
-      }
-    }
-    getData();
-  }, [])
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+      dispatch(fetchIngredients());
+    }, [dispatch]
+  );
+
+  const {isLoading, isError, errorMessage} = useSelector((store) => ({
+    isLoading: store.isLoading,
+    isError: store.isError,
+    errorMessage: store.errorMessage,
+  }));
 
   return (
     <>
       {
-        state.isLoading ? <Loader/> :
-
-          (state.error !== null) ? <Error error={state.error}/> :
+        isLoading ? <Loader/> :
+          isError ? <Error error={errorMessage}/> :
             <>
-              <AppContext.Provider value={appState}>
-                <AppHeader/>
-                <main>
-                  <Builder />
-                </main>
-              </AppContext.Provider>
+              <AppHeader/>
+              <main>
+                <Builder/>
+              </main>
+              <OrderDetail/>
+              <IngredientDetail/>
             </>
       }
     </>
   )
 }
 
-export default App;
+  export default App;

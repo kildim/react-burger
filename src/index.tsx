@@ -1,15 +1,26 @@
+// @ts-nocheck
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './components/app/app';
 import reportWebVitals from './reportWebVitals';
+import {configureStore} from '@reduxjs/toolkit';
+import thunk from 'redux-thunk';
+import {Provider} from 'react-redux';
+import {rootReducer} from './services/reducers/root-reducer';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+
+const store = configureStore({
+  reducer: rootReducer,
+  devTools: process.env.NODE_ENV !== 'production',
+  middleware: [thunk],
+})
+
+createRoot(document.getElementById('root')).render(
+  <Provider store={store}>
+    <App/>
+  </Provider>
+)
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

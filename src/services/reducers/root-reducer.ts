@@ -7,7 +7,6 @@ import {
   loadIngredients,
   removeFilling,
   setIsLoading,
-  setFetchError,
   addToBurger,
   loadOrder,
   selectIngredient,
@@ -15,7 +14,7 @@ import {
   hideIngredientDetail,
   showOrderDetail,
   hideOrderDetail,
-  clearBurger,
+  clearBurger, showErrorMessage, hideErrorMessage,
 } from '../actions/action';
 import genId from '../../utils/gen-id';
 
@@ -93,9 +92,13 @@ const rootReducer = createReducer(preloadedState, (builder) => {
     .addCase(setIsLoading, (state, action) => {
       state.isLoading = action.payload
     })
-    .addCase(setFetchError, ((state, action) => {
-      state.isError = action.payload.isError;
+    .addCase(showErrorMessage, ((state, action) => {
+      state.showErrorMessage = true;
       state.errorMessage = action.payload.errorMessage;
+    }))
+    .addCase(hideErrorMessage, ((state, action) => {
+      state.showErrorMessage = false;
+      state.errorMessage = null;
     }))
 })
 

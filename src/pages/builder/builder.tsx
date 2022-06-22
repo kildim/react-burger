@@ -1,11 +1,13 @@
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
+import BurgerIngredients from '../../components/burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../../components/burger-constructor/burger-constructor';
 
 import BuilderStyle from './builder.module.css';
 import {HTML5Backend} from 'react-dnd-html5-backend';
 import {DndProvider} from 'react-dnd';
+import React from 'react';
 
 const CAPTION_STYLE = `${BuilderStyle.caption} text text_type_main-large`;
+
 
 function Builder() {
 

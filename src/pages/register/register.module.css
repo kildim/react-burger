@@ -1,0 +1,10 @@
+.content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 177px;
+}
+
+.page_ref {
+    color: #4C4CFF;
+}

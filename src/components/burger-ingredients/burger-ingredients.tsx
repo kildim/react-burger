@@ -17,7 +17,6 @@ function BurgerIngredients() {
   const prevActiveTitleRef = useRef(null);
   const [ingredientTitles, setIngredientTitles] = useState(null);
 
-  // Запоминаю в ingredientTitles массив ссылок на DOM элементы заголовков ингредиентов
   useEffect(() => {
     setIngredientTitles(Array.from(ingredientsListSectionRef.current.querySelectorAll('h3')));
     prevActiveTitleRef.current = 'Булки'
@@ -73,7 +72,6 @@ function BurgerIngredients() {
   const partItemRefClickHandler = (e) => {
     setActiveTitle(e.currentTarget.textContent);
 
-    // Прокручиваю список, чтобы выбранный в табе ингредиент отобразился вверху списка
     ingredientTitles.find((ingredientHeader) => (e.currentTarget.textContent === ingredientHeader.textContent)).scrollIntoView();
   };
 
@@ -86,8 +84,6 @@ function BurgerIngredients() {
   }
 
   const ingredientsListScrollHandler = (e) => {
-
-    // Создаю массив расстояний от заголовка ингридиента до верхней границы элемента-контэйнера
     const distance = ingredientTitles.map(
       (ingredientTitle) =>
         (Math.abs(ingredientTitle.getBoundingClientRect().top - ingredientsListSectionRef.current.getBoundingClientRect().top))

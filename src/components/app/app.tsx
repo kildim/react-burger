@@ -1,47 +1,79 @@
 // @ts-nocheck
 import React, {useEffect} from 'react';
-import Loader from '../loader/loader';
 import Error from '../error/error';
 import AppHeader from '../app-header/app-header';
-import Builder from '../builder/builder';
+import Builder from '../../pages/builder/builder';
 import './app.css';
 import {useDispatch, useSelector} from 'react-redux';
 import IngredientDetail from '../ingredient-detail/ingredient-detail';
 import OrderDetail from '../order-detail/order-detail';
 import {fetchIngredients} from '../../services/api/api';
-
+import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
+import Loader from '../loader/loader';
+import SignIn from '../../pages/sign-in/sign-in';
+import Register from '../../pages/register/register';
+import ForgotPassword from '../../pages/forgot-password/forgot-password';
+import ResetPassword from '../../pages/reset-password/reset-password';
+import Profile from '../../pages/profile/profile';
+import Ingredient from '../../pages/ingredient/ingredient';
 
 function App() {
 
   const dispatch = useDispatch();
-
   useEffect(() => {
       dispatch(fetchIngredients());
     }, [dispatch]
   );
 
-  const {isLoading, isError, errorMessage} = useSelector((store) => ({
+  const {isLoading, showErrorMessage} = useSelector((store) => ({
+    //@ts-ignore
     isLoading: store.isLoading,
-    isError: store.isError,
-    errorMessage: store.errorMessage,
+    showErrorMessage: store.showErrorMessage,
   }));
 
   return (
-    <>
-      {
-        isLoading ? <Loader/> :
-          isError ? <Error error={errorMessage}/> :
-            <>
+    isLoading ? <Loader/> :
+      showErrorMessage ? <Error /> :
+        (<>
+            <Router>
               <AppHeader/>
               <main>
-                <Builder/>
+                <Switch>
+                  <Route path="/" exact={true}>
+                    <Builder/>
+                  </Route>
+                  <Route path="/login" exact={true}>
+                    <SignIn />
+                  </Route>
+                  <Route path="/register" exact={true}>
+                    <Register />
+                  </Route>
+                  <Route path="/forgot-password" exact={true}>
+                    <ForgotPassword />
+                  </Route>
+                  <Route path="/reset-password" exact={true}>
+                    <ResetPassword />
+                  </Route>
+                  <Route path="/profile" exact={true}>
+                    <Profile />
+                  </Route>
+                  <Route path="/ingredient/:id" exact={true}>
+                    <Ingredient />
+                  </Route>
+                  <Route>
+                    <Redirect to={'/'}/>
+                  </Route>
+                </Switch>
               </main>
-              <OrderDetail/>
-              <IngredientDetail/>
-            </>
-      }
-    </>
+            </Router>
+            <OrderDetail/>
+            <IngredientDetail/>
+          </>
+        )
+
   )
+
+
 }
 
-  export default App;
+export default App;

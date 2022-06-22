@@ -9,9 +9,9 @@ export const preloadedState = {
   currentIngredient: {},
   order: {},
   isLoading: true,
-  isError: false,
-  errorMessage: '',
+  errorMessage: null,
   showIngredientDetail: false,
   showOrderDetail: false,
+  showErrorMessage: false,
   ingredient: {},
 }

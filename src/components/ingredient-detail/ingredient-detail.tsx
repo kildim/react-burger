@@ -1,13 +1,10 @@
 //@ts-nocheck
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {MouseEvent} from 'react';
 import IngredientDetailStyle from '../ingredient-detail/ingredient-detail.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import {hideIngredientDetail} from '../../services/actions/action';
 import Modal from '../modal/modal';
 
-const APP_BODY = document.getElementById('root');
 const TERM_DEFINITION_STYLE = 'text text_type_main-small text_color_inactive';
 const DEFINITION_DESCRIPTION_STYLE = 'text text_type_digits-default text_color_inactive'
 

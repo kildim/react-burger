@@ -1,0 +1,25 @@
+.content {
+    display: flex;
+    align-items: flex-start;
+    padding-top: 177px;
+    justify-content: center;
+}
+
+.info {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    order: 2;
+}
+
+.menu {
+    position: absolute;
+    left: 100px;
+    display: inline-flex;
+    flex-direction: column;
+    order: 1;
+}
+
+a {
+    text-decoration: none;
+}

@@ -16,7 +16,7 @@ function ForgotPassword() {
       <Button type="primary" size="large">Восстановить</Button>
       <div className={'p-10'}/>
       <p className="text text_type_main-default text_color_inactive">Вспомнили пароль? <Link
-        className={styles.page_ref}>Войти</Link></p>
+        to={'/login'} className={styles.page_ref}>Войти</Link></p>
     </section>
   )
 }

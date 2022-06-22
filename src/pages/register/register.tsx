@@ -23,7 +23,7 @@ function Register() {
       <Button type="primary" size="large">Зарегистрироваться</Button>
       <div className={'p-10'}/>
       <p className="text text_type_main-default text_color_inactive">Уже зарегистрированы? <Link
-        className={styles.page_ref}>Войти</Link></p>
+        to={'/login'} className={styles.page_ref}>Войти</Link></p>
     </section>
   )
 }

@@ -17,9 +17,9 @@ function SignIn() {
       <div className={'p-3'} />
       <Button type="primary" size="large">Войти</Button>
       <div className={'p-10'} />
-      <p className="text text_type_main-default text_color_inactive">Вы — новый пользователь? <Link className={styles.page_ref}>Зарегистрироваться</Link></p>
+      <p className="text text_type_main-default text_color_inactive">Вы — новый пользователь? <Link to={'/register'} className={styles.page_ref}>Зарегистрироваться</Link></p>
       <div className={'p-2'} />
-      <p className="text text_type_main-default text_color_inactive">Забыли пароль? <Link className={styles.page_ref}>Восстановить пароль</Link></p>
+      <p className="text text_type_main-default text_color_inactive">Забыли пароль? <Link to={'/forgot-password'} className={styles.page_ref}>Восстановить пароль</Link></p>
     </section>
   )
 }

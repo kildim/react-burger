@@ -39,8 +39,8 @@ function Profile() {
         </div>
         <div className={styles.menu}>
             <NavLink to={'/profile'} exact={true} className={REF_CLASS} activeStyle={ACTIVE_REF_STYLE}>Профиль</NavLink>
-            <NavLink to={'/'} exact={true} className={REF_CLASS} activeStyle={ACTIVE_REF_STYLE}>История заказов</NavLink>
-            <NavLink to={'/'} exact={true} className={REF_CLASS} activeStyle={ACTIVE_REF_STYLE}>Выход</NavLink>
+            <NavLink to={'/profile/orders'} exact={true} className={REF_CLASS} activeStyle={ACTIVE_REF_STYLE}>История заказов</NavLink>
+            <NavLink to={'/profile/orders/:id'} exact={true} className={REF_CLASS} activeStyle={ACTIVE_REF_STYLE}>Выход</NavLink>
         </div>
     </section>
   )

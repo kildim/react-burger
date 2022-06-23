@@ -13,5 +13,7 @@ export const preloadedState = {
   showIngredientDetail: false,
   showOrderDetail: false,
   showErrorMessage: false,
+  showPasswordRecoverNotification: false,
+  passwordRecoverStatus: {},
   ingredient: {},
 }

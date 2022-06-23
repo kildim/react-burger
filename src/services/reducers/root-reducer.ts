@@ -14,7 +14,11 @@ import {
   hideIngredientDetail,
   showOrderDetail,
   hideOrderDetail,
-  clearBurger, showErrorMessage, hideErrorMessage,
+  clearBurger,
+  showErrorMessage,
+  hideErrorMessage,
+  showRecoverPasswordNotification,
+  hideRecoverPasswordNotification,
 } from '../actions/action';
 import genId from '../../utils/gen-id';
 
@@ -99,6 +103,14 @@ const rootReducer = createReducer(preloadedState, (builder) => {
     .addCase(hideErrorMessage, ((state, action) => {
       state.showErrorMessage = false;
       state.errorMessage = null;
+    }))
+    .addCase(showRecoverPasswordNotification, ((state, action) => {
+      state.showPasswordRecoverNotification = true;
+      state.passwordRecoverStatus = action.payload;
+    }))
+    .addCase(hideRecoverPasswordNotification, ((state, action) => {
+      state.showPasswordRecoverNotification = false;
+      state.passwordRecoverStatus = null;
     }))
 })
 

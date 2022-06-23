@@ -10,6 +10,15 @@ const loadIngredients = createAction(
   }),
 );
 
+const postPasswordRecoverRequest = createAction(
+  Action.PostPasswordRecoverRequest, (email) => ({
+    type: Action.PostPasswordRecoverRequest,
+    payload: {
+      email: email,
+    },
+  }),
+);
+
 const loadOrder = createAction(
   Action.LoadOrder, (order) => ({
     type: Action.LoadOrder,
@@ -103,19 +112,26 @@ const showErrorMessage = createAction(
     })
 )
 
+const showRecoverPasswordNotification = createAction(
+  Action.ShowRecoverPasswordNotification, (notification) => ({
+    type: Action.ShowRecoverPasswordNotification,
+      payload: notification
+  })
+)
+
+const hideRecoverPasswordNotification = createAction(
+  Action.HideRecoverPasswordNotification, (notification) => ({
+    type: Action.HideRecoverPasswordNotification,
+    payload: null,
+  })
+)
+
 const hideErrorMessage = createAction(
   Action.HideErrorMessage, () => ({
     type: Action.HideErrorMessage,
     payload: null,
   })
 )
-
-// const setFetchError = createAction(
-//   Action.SetFetchError, (fetchError) => ({
-//     type: Action.SetFetchError,
-//     payload: fetchError,
-//   })
-// );
 
 export {
   loadIngredients,
@@ -132,6 +148,7 @@ export {
   setIsLoading,
   showErrorMessage,
   hideErrorMessage,
-  // setFetchError,
-  clearBurger
+  clearBurger,
+  showRecoverPasswordNotification,
+  hideRecoverPasswordNotification,
 }

@@ -18,7 +18,7 @@ function Error() {
     <Modal header={''} onClosePopup={handleClosePopup}>
       <section>
         <h1 className={ErrorStyles.error}>ERROR</h1>
-        <h2 className={ErrorStyles.error}>STATUS: {errorMessage}</h2>
+        <h2 className={ErrorStyles.error}>STATUS: {errorMessage.errorMessage}</h2>
       </section>
     </Modal>
 }

@@ -9,6 +9,7 @@ import {
   clearBurger,
   showErrorMessage,
   showRecoverPasswordNotification,
+  showResetPasswordNotification,
 } from '../actions/action';
 import {API_URL} from '../../constants/env-config';
 
@@ -71,5 +72,26 @@ const postRememberPasswordNotification = (email) => (dispatch, _getState) => {
     .finally(() => dispatch(setIsLoading(false)))
 }
 
+const postResetPassword = (requestBody) => (dispatch, _getState) => {
+  const options = {
+    method: 'POST',
+    body: JSON.stringify(requestBody),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+  };
 
-export {fetchIngredients, fetchOrder, postRememberPasswordNotification};
+  dispatch(setIsLoading(true));
+  fetch(`${API_URL}/password-reset/reset`, options)
+    .then(checkResponse)
+    .then((res) => {
+      dispatch(showResetPasswordNotification(res))
+    })
+    .catch((error) => {
+      dispatch(showErrorMessage({errorMessage: error}));
+    })
+    .finally(() => dispatch(setIsLoading(false)))
+}
+
+
+export {fetchIngredients, fetchOrder, postRememberPasswordNotification, postResetPassword};

@@ -19,6 +19,8 @@ import {
   hideErrorMessage,
   showRecoverPasswordNotification,
   hideRecoverPasswordNotification,
+  showResetPasswordNotification,
+  hideResetPasswordNotification,
 } from '../actions/action';
 import genId from '../../utils/gen-id';
 
@@ -111,6 +113,14 @@ const rootReducer = createReducer(preloadedState, (builder) => {
     .addCase(hideRecoverPasswordNotification, ((state, action) => {
       state.showPasswordRecoverNotification = false;
       state.passwordRecoverStatus = null;
+    }))
+    .addCase(showResetPasswordNotification, ((state, action) => {
+      state.showPasswordResetNotification = true;
+      state.passwordResetStatus = action.payload;
+    }))
+    .addCase(hideResetPasswordNotification, ((state, action) => {
+      state.showPasswordResetNotification = false;
+      state.passwordResetStatus = null;
     }))
 })
 

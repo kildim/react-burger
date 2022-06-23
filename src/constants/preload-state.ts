@@ -15,5 +15,7 @@ export const preloadedState = {
   showErrorMessage: false,
   showPasswordRecoverNotification: false,
   passwordRecoverStatus: {},
+  showResetPasswordNotification: false,
+  passwordResetStatus: {},
   ingredient: {},
 }

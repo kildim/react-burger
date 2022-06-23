@@ -17,6 +17,7 @@ import ResetPassword from '../../pages/reset-password/reset-password';
 import Profile from '../../pages/profile/profile';
 import Ingredient from '../../pages/ingredient/ingredient';
 import RecoverPasswordNotification from '../RecoverPasswordNotification/RecoverPasswordNotification';
+import ResetPasswordNotification from '../ResetPasswordNotification/ResetPasswordNotification';
 
 function App() {
 
@@ -69,6 +70,7 @@ function App() {
               <OrderDetail/>
               <IngredientDetail/>
               <RecoverPasswordNotification/>
+              <ResetPasswordNotification/>
             </Router>
           </>
         )

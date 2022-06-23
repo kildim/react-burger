@@ -126,6 +126,20 @@ const hideRecoverPasswordNotification = createAction(
   })
 )
 
+const showResetPasswordNotification = createAction(
+  Action.ShowResetPasswordNotification, (notification) => ({
+    type: Action.ShowResetPasswordNotification,
+    payload: notification
+  })
+)
+
+const hideResetPasswordNotification = createAction(
+  Action.HideResetPasswordNotification, (notification) => ({
+    type: Action.HideResetPasswordNotification,
+    payload: null,
+  })
+)
+
 const hideErrorMessage = createAction(
   Action.HideErrorMessage, () => ({
     type: Action.HideErrorMessage,
@@ -151,4 +165,6 @@ export {
   clearBurger,
   showRecoverPasswordNotification,
   hideRecoverPasswordNotification,
+  showResetPasswordNotification,
+  hideResetPasswordNotification,
 }

@@ -17,4 +17,6 @@ export enum Action {
   ClearBurger = 'CLEAR_BURGER',
   ShowRecoverPasswordNotification = 'SHOW_RECOVER_PASSWORD_NOTIFICATION',
   HideRecoverPasswordNotification = 'HIDE_RECOVER_PASSWORD_NOTIFICATION',
+  ShowResetPasswordNotification = 'SHOW_RESET_PASSWORD_NOTIFICATION',
+  HideResetPasswordNotification = 'HIDE_RESET_PASSWORD_NOTIFICATION',
 }

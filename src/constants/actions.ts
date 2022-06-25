@@ -11,12 +11,7 @@ export enum Action {
   HideErrorMessage = 'HIDE_ERROR_MESSAGE',
   SelectIngredient = 'SELECT_INGREDIENT',
   SetIsLoading = 'SET_IS_LOADING',
-  PostPasswordRecoverRequest = 'POST_PASSWORD_RECOVER_REQUEST',
   ShowOrderDetail = 'SHOW_ORDER_DETAIL',
   HideOrderDetail = 'HIDE_ORDER_DETAIL',
   ClearBurger = 'CLEAR_BURGER',
-  ShowRecoverPasswordNotification = 'SHOW_RECOVER_PASSWORD_NOTIFICATION',
-  HideRecoverPasswordNotification = 'HIDE_RECOVER_PASSWORD_NOTIFICATION',
-  ShowResetPasswordNotification = 'SHOW_RESET_PASSWORD_NOTIFICATION',
-  HideResetPasswordNotification = 'HIDE_RESET_PASSWORD_NOTIFICATION',
 }

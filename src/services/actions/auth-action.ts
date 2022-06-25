@@ -1,38 +1,38 @@
 import {createAction} from '@reduxjs/toolkit';
-import {Action} from '../../constants/actions';
+import {AuthAction} from '../../constants/auth-actions';
 
 const showRecoverPasswordNotification = createAction(
-  Action.ShowRecoverPasswordNotification, (notification) => ({
-    type: Action.ShowRecoverPasswordNotification,
+  AuthAction.ShowRecoverPasswordNotification, (notification) => ({
+    type: AuthAction.ShowRecoverPasswordNotification,
     payload: notification
   })
 )
 
 const hideRecoverPasswordNotification = createAction(
-  Action.HideRecoverPasswordNotification, (notification) => ({
-    type: Action.HideRecoverPasswordNotification,
+  AuthAction.HideRecoverPasswordNotification, (notification) => ({
+    type: AuthAction.HideRecoverPasswordNotification,
     payload: null,
   })
 )
 
 const showResetPasswordNotification = createAction(
-  Action.ShowResetPasswordNotification, (notification) => ({
-    type: Action.ShowResetPasswordNotification,
+  AuthAction.ShowResetPasswordNotification, (notification) => ({
+    type: AuthAction.ShowResetPasswordNotification,
     payload: notification
   })
 )
 
 const hideResetPasswordNotification = createAction(
-  Action.HideResetPasswordNotification, (notification) => ({
-    type: Action.HideResetPasswordNotification,
+  AuthAction.HideResetPasswordNotification, (notification) => ({
+    type: AuthAction.HideResetPasswordNotification,
     payload: null,
   })
 )
 
 
 const postPasswordRecoverRequest = createAction(
-  Action.PostPasswordRecoverRequest, (email) => ({
-    type: Action.PostPasswordRecoverRequest,
+  AuthAction.PostPasswordRecoverRequest, (email) => ({
+    type: AuthAction.PostPasswordRecoverRequest,
     payload: {
       email: email,
     },

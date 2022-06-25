@@ -7,10 +7,10 @@ import Modal from '../modal/modal';
 
 function OrderDetail() {
   const dispatch = useDispatch();
-  const {showOrderDetail} = useSelector((state) => ({showOrderDetail: state.showOrderDetail}))
+  const {showOrderDetail} = useSelector((state) => ({showOrderDetail: state.main.showOrderDetail}))
   const {number, status} = useSelector((state) => ({
-    number: {...state.order.order}.number,
-    status: state.order.success ? 'Ваш заказ начали готовить' : 'Ваш заказ отклонён'
+    number: {...state.main.order.order}.number,
+    status: state.main.order.success ? 'Ваш заказ начали готовить' : 'Ваш заказ отклонён'
   }));
 
   const handleClosePopup = () => {

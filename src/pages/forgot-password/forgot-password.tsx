@@ -4,7 +4,7 @@ import {Input, Button} from '@ya.praktikum/react-developer-burger-ui-components'
 import {Link} from 'react-router-dom';
 import {useCallback, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {postRememberPasswordNotification} from '../../services/api/api';
+import {postRememberPasswordNotification} from '../../services/auth/auth';
 
 function ForgotPassword() {
   const [email, setEmail] = useState(null);

@@ -4,7 +4,7 @@ import {Input, Button} from '@ya.praktikum/react-developer-burger-ui-components'
 import {Link} from 'react-router-dom';
 import {useCallback, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {postResetPassword} from '../../services/api/api';
+import {postResetPassword} from '../../services/auth/auth';
 
 function ResetPassword() {
   const [password, setPassword] = useState(null);

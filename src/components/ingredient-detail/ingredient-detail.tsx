@@ -10,14 +10,14 @@ const DEFINITION_DESCRIPTION_STYLE = 'text text_type_digits-default text_color_i
 
 function IngredientDetail() {
   const dispatch = useDispatch();
-  const {showIngredientDetail} = useSelector((state) => ({showIngredientDetail: state.showIngredientDetail}))
+  const {showIngredientDetail} = useSelector((state) => ({showIngredientDetail: state.main.showIngredientDetail}))
   const {name, calories, proteins, fat, carbohydrates, image} = useSelector((state) => ({
-    name: state.ingredient.name,
-    calories: state.ingredient.calories,
-    proteins: state.ingredient.proteins,
-    fat: state.ingredient.fat,
-    carbohydrates: state.ingredient.carbohydrates,
-    image: state.ingredient.image,
+    name: state.main.ingredient.name,
+    calories: state.main.ingredient.calories,
+    proteins: state.main.ingredient.proteins,
+    fat: state.main.ingredient.fat,
+    carbohydrates: state.main.ingredient.carbohydrates,
+    image: state.main.ingredient.image,
   }));
 
   const handleClosePopup = () => {

@@ -3,17 +3,17 @@ import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import Modal from '../modal/modal';
 import {useHistory} from 'react-router-dom';
-import {hideResetPasswordNotification} from '../../services/actions/action';
+import {hideResetPasswordNotification} from '../../services/actions/auth-action';
 import {Button} from '@ya.praktikum/react-developer-burger-ui-components';
 
 
 function ResetPasswordNotification() {
   const dispatch = useDispatch();
-  const {showPasswordResetNotification} = useSelector((state) => ({showPasswordResetNotification: state.showPasswordResetNotification}))
+  const {showPasswordResetNotification} = useSelector((state) => ({showPasswordResetNotification: state.main.showPasswordResetNotification}))
   const {status, notification} = useSelector((state) => {
     return {
-      status: {...state.passwordResetStatus}?.success,
-      notification: state.passwordResetStatus?.success ? 'Пароль сброшен успешно!' : 'Сервер не подтвердил сброс пароля!'
+      status: {...state.main.passwordResetStatus}?.success,
+      notification: state.main.passwordResetStatus?.success ? 'Пароль сброшен успешно!' : 'Сервер не подтвердил сброс пароля!'
     }
   });
 

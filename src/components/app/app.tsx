@@ -29,8 +29,8 @@ function App() {
 
   const {isLoading, showErrorMessage} = useSelector((store) => ({
     //@ts-ignore
-    isLoading: store.isLoading,
-    showErrorMessage: store.showErrorMessage,
+    isLoading: store.main.isLoading,
+    showErrorMessage: store.main.showErrorMessage,
   }));
 
   return (

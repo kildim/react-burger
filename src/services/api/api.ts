@@ -51,47 +51,4 @@ const fetchOrder = (ingredientsIds) => (dispatch, _getState) => {
     .finally(() => dispatch(setIsLoading(false)))
 }
 
-const postRememberPasswordNotification = (email) => (dispatch, _getState) => {
-  const options = {
-    method: 'POST',
-    body: JSON.stringify({email: email}),
-    headers: {
-      'Content-Type': 'application/json'
-    },
-  };
-
-  dispatch(setIsLoading(true));
-  fetch(`${API_URL}/password-reset`, options)
-    .then(checkResponse)
-    .then((res) => {
-      dispatch(showRecoverPasswordNotification(res))
-    })
-    .catch((error) => {
-      dispatch(showErrorMessage({errorMessage: error}));
-    })
-    .finally(() => dispatch(setIsLoading(false)))
-}
-
-const postResetPassword = (requestBody) => (dispatch, _getState) => {
-  const options = {
-    method: 'POST',
-    body: JSON.stringify(requestBody),
-    headers: {
-      'Content-Type': 'application/json'
-    },
-  };
-
-  dispatch(setIsLoading(true));
-  fetch(`${API_URL}/password-reset/reset`, options)
-    .then(checkResponse)
-    .then((res) => {
-      dispatch(showResetPasswordNotification(res))
-    })
-    .catch((error) => {
-      dispatch(showErrorMessage({errorMessage: error}));
-    })
-    .finally(() => dispatch(setIsLoading(false)))
-}
-
-
-export {fetchIngredients, fetchOrder, postRememberPasswordNotification, postResetPassword};
+export {fetchIngredients, fetchOrder};

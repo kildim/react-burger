@@ -7,7 +7,7 @@ import Modal from '../modal/modal';
 
 function Error() {
   const dispatch = useDispatch();
-  const {showErrorMessage, errorMessage} = useSelector((state) => ({showErrorMessage: state.showErrorMessage, errorMessage: state.errorMessage}))
+  const {showErrorMessage, errorMessage} = useSelector((state) => ({showErrorMessage: state.main.showErrorMessage, errorMessage: state.main.errorMessage}))
 
 
   const handleClosePopup = () => {

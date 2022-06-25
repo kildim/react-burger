@@ -3,17 +3,17 @@ import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import Modal from '../modal/modal';
 import {useHistory} from 'react-router-dom';
-import {hideRecoverPasswordNotification} from '../../services/actions/action';
+import {hideRecoverPasswordNotification} from '../../services/actions/auth-action';
 import {Button} from '@ya.praktikum/react-developer-burger-ui-components';
 
 
 function RecoverPasswordNotification() {
   const dispatch = useDispatch();
-  const {showPasswordRecoverNotification} = useSelector((state) => ({showPasswordRecoverNotification: state.showPasswordRecoverNotification}))
+  const {showPasswordRecoverNotification} = useSelector((state) => ({showPasswordRecoverNotification: state.main.showPasswordRecoverNotification}))
   const {status, notification} = useSelector((state) => {
     return {
-      status: {...state.passwordRecoverStatus}?.success,
-      notification: state.passwordRecoverStatus?.success ? 'Письмо с сылкой успешно выслано на почту!' : 'Сервер не подтвердил отправку письма на почту!'
+      status: {...state.main.passwordRecoverStatus}?.success,
+      notification: state.main.passwordRecoverStatus?.success ? 'Письмо с сылкой успешно выслано на почту!' : 'Сервер не подтвердил отправку письма на почту!'
     }
   });
 

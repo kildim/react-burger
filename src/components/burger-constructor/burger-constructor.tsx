@@ -14,9 +14,9 @@ import {fetchOrder} from '../../services/api/api';
 
 function BurgerConstructor() {
   const {bun, fillings} = useSelector((store) => ({
-    bun: store.burger.bun,
-    fillings: store.burger.fillings,
-    order: store.order,
+    bun: store.main.burger.bun,
+    fillings: store.main.burger.fillings,
+    order: store.main.order,
   }))
 
   const amount = useMemo(() => {

@@ -23,11 +23,11 @@ function BurgerIngredients() {
   }, [])
 
   const {ingredients} = useSelector((store) => {
-    const ingredients = store.ingredients.map( (ingredient) => {
+    const ingredients = store.main.ingredients.map( (ingredient) => {
       if (ingredient.type === 'bun') {
-        return ingredient._id === store.burger.bun._id ? {...ingredient, count: 2} : {...ingredient, count:0}
+        return ingredient._id === store.main.burger.bun._id ? {...ingredient, count: 2} : {...ingredient, count:0}
       } else {
-        const ingredientCount = store.burger.fillings.filter( (filling) => ingredient._id === filling._id).length;
+        const ingredientCount = store.main.burger.fillings.filter( (filling) => ingredient._id === filling._id).length;
         return {...ingredient, count: ingredientCount}
       }
     } );

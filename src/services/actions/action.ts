@@ -10,15 +10,6 @@ const loadIngredients = createAction(
   }),
 );
 
-const postPasswordRecoverRequest = createAction(
-  Action.PostPasswordRecoverRequest, (email) => ({
-    type: Action.PostPasswordRecoverRequest,
-    payload: {
-      email: email,
-    },
-  }),
-);
-
 const loadOrder = createAction(
   Action.LoadOrder, (order) => ({
     type: Action.LoadOrder,
@@ -112,33 +103,7 @@ const showErrorMessage = createAction(
     })
 )
 
-const showRecoverPasswordNotification = createAction(
-  Action.ShowRecoverPasswordNotification, (notification) => ({
-    type: Action.ShowRecoverPasswordNotification,
-      payload: notification
-  })
-)
 
-const hideRecoverPasswordNotification = createAction(
-  Action.HideRecoverPasswordNotification, (notification) => ({
-    type: Action.HideRecoverPasswordNotification,
-    payload: null,
-  })
-)
-
-const showResetPasswordNotification = createAction(
-  Action.ShowResetPasswordNotification, (notification) => ({
-    type: Action.ShowResetPasswordNotification,
-    payload: notification
-  })
-)
-
-const hideResetPasswordNotification = createAction(
-  Action.HideResetPasswordNotification, (notification) => ({
-    type: Action.HideResetPasswordNotification,
-    payload: null,
-  })
-)
 
 const hideErrorMessage = createAction(
   Action.HideErrorMessage, () => ({
@@ -163,8 +128,4 @@ export {
   showErrorMessage,
   hideErrorMessage,
   clearBurger,
-  showRecoverPasswordNotification,
-  hideRecoverPasswordNotification,
-  showResetPasswordNotification,
-  hideResetPasswordNotification,
 }

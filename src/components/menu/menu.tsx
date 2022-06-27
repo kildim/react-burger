@@ -1,12 +1,12 @@
 import {BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import {useLocation} from 'react-router-dom';
+import {NavLink, useLocation} from 'react-router-dom';
 
 import logo from '../../images/logo.png';
 import menuStyle from './menu.module.css';
 
-const INACTIVE_REF = `${menuStyle.menu_ref} text text_type_main-default text_color_inactive`;
+// const INACTIVE_REF = `${menuStyle.menu_ref} text text_type_main-default text_color_inactive`;
 const ACTIVE_REF = `${menuStyle.menu_ref} text text_type_main-default`;
-const INACTIVE_PROFILE = `${menuStyle.menu_profile} text text_type_main-default text_color_inactive`
+const INACTIVE_REF = `${menuStyle.menu_profile} text text_type_main-default text_color_inactive`
 
 function Menu() {
   const location = useLocation();
@@ -14,11 +14,11 @@ function Menu() {
   return (
     <nav className={menuStyle.container}>
       <ul className={menuStyle.menu_list}>
-        <li><a href={'#'} className={ACTIVE_REF}><BurgerIcon type="primary"/>Конструктор</a></li>
+        <li><NavLink to={''} exact={true} className={INACTIVE_REF}><BurgerIcon type="primary"/>Конструктор</NavLink></li>
         <li><a href={'#'} className={INACTIVE_REF}><ListIcon type="secondary"/>Лента заказов</a></li>
       </ul>
       <a href={'#'} className={menuStyle.menu_logo}><img src={logo} style={{width: '290px'}}/></a>
-      <a href={'#'} className={INACTIVE_PROFILE}><ProfileIcon type="secondary"/>Личный кабинет</a>
+      <NavLink to={'/profile'} className={INACTIVE_REF} activeClassName={ACTIVE_REF}><ProfileIcon type="secondary"/>Личный кабинет</NavLink>
     </nav>
   )
 };

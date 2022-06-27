@@ -18,6 +18,7 @@ import Profile from '../../pages/profile/profile';
 import Ingredient from '../../pages/ingredient/ingredient';
 import RecoverPasswordNotification from '../RecoverPasswordNotification/RecoverPasswordNotification';
 import ResetPasswordNotification from '../ResetPasswordNotification/ResetPasswordNotification';
+import ProtectedRoute from '../protected-route/protected-route';
 
 function App() {
 
@@ -34,10 +35,11 @@ function App() {
   }));
 
   return (
-    isLoading ? <Loader/> :
+    <Router>
+      {isLoading ? <Loader/> :
       showErrorMessage ? <Error /> :
         (<>
-            <Router>
+            {/*<Router>*/}
               <AppHeader/>
               <main>
                 <Switch>
@@ -56,9 +58,12 @@ function App() {
                   <Route path="/reset-password" exact={true}>
                     <ResetPassword />
                   </Route>
-                  <Route path="/profile">
+                  {/*<Route path="/profile">*/}
+                  {/*  <Profile />*/}
+                  {/*</Route>*/}
+                  <ProtectedRoute path="/profile">
                     <Profile />
-                  </Route>
+                  </ProtectedRoute>
                   <Route path="/ingredient/:id" exact={true}>
                     <Ingredient />
                   </Route>
@@ -71,10 +76,10 @@ function App() {
               <IngredientDetail/>
               <RecoverPasswordNotification/>
               <ResetPasswordNotification/>
-            </Router>
+            {/*</Router>*/}
           </>
-        )
-
+        )}
+    </Router>
   )
 
 

@@ -2,9 +2,9 @@
 import styles from './profile.module.css';
 import {Input} from '@ya.praktikum/react-developer-burger-ui-components';
 import {NavLink} from 'react-router-dom';
-import {useCallback} from 'react';
+import {useCallback, useState} from 'react';
 import {useAuth} from '../../services/auth/auth';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
 const REF_CLASS = `text text_type_main-large text_color_inactive mb-3 mt-3`;
 
@@ -12,8 +12,15 @@ const ACTIVE_REF_STYLE = {color: 'white', textDecoration: 'none'};
 
 
 function Profile() {
-  const {isAuthenticated, signOut} = useAuth();
+  const {signOut} = useAuth();
   const dispatch = useDispatch();
+  const {name, email} = useSelector((store) => ({name: store.auth.name, email: store.auth.email}));
+  const [form, setValue] = useState({email: email, password: '', name: name});
+
+
+  const onChange = e => {
+    setValue({...form, [e.target.name]: e.target.value});
+  };
   const handleLogoutClick = useCallback(
     e => {
       e.preventDefault();
@@ -31,7 +38,8 @@ function Profile() {
           placeholder={`Имя`}
           icon={'EditIcon'}
           value={''}
-          onChange={() => null}
+          name={'name'}
+          onChange={onChange}
         />
         <div className={'p-3'}/>
         <Input
@@ -39,7 +47,8 @@ function Profile() {
           placeholder={'Логин'}
           icon={'EditIcon'}
           value={''}
-          onChange={() => null}
+          name={'email'}
+          onChange={onChange}
         />
         <div className={'p-3'}/>
         <Input
@@ -47,7 +56,8 @@ function Profile() {
           placeholder={'Пароль'}
           icon={'EditIcon'}
           value={''}
-          onChange={() => null}
+          name={'password'}
+          onChange={onChange}
         />
       </div>
       <div className={styles.menu}>

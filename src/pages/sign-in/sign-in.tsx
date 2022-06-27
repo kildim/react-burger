@@ -1,7 +1,7 @@
 //@ts-nocheck
 import styles from './sign-in.module.css';
 import {Input, PasswordInput, Button} from '@ya.praktikum/react-developer-burger-ui-components';
-import {Link, Redirect} from 'react-router-dom';
+import {Link, useHistory, useLocation} from 'react-router-dom';
 import {useCallback, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {useAuth} from '../../services/auth/auth';
@@ -10,9 +10,8 @@ import {useAuth} from '../../services/auth/auth';
 function SignIn() {
   const {isAuthenticated, signIn} = useAuth();
   const dispatch = useDispatch();
-
-  console.log(isAuthenticated)
-
+  const history = useHistory();
+  const location = useLocation();
 
   const [form, setValue] = useState({email: '', password: ''});
 
@@ -29,7 +28,8 @@ function SignIn() {
   );
 
   if (isAuthenticated) {
-    return <Redirect to={'/'}/>
+    const { from } = location.state || { from: { pathname: "/" } };
+    history.push(from);
   }
 
   return (

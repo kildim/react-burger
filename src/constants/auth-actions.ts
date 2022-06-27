@@ -4,4 +4,6 @@ export enum AuthAction {
   ShowResetPasswordNotification = 'SHOW_RESET_PASSWORD_NOTIFICATION',
   HideResetPasswordNotification = 'HIDE_RESET_PASSWORD_NOTIFICATION',
   PostPasswordRecoverRequest = 'POST_PASSWORD_RECOVER_REQUEST',
+  SaveUserProfile = 'SAVE_USER_PROFILE',
+  SetIsAuthenticated = 'SET_IS_AUTHENTICATED',
 }

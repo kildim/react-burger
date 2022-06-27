@@ -5,9 +5,10 @@ import {createReducer} from '@reduxjs/toolkit';
 import {preloadedAuthState} from '../../constants/preload-auth-state';
 import {
   hideRecoverPasswordNotification,
-  hideResetPasswordNotification,
+  hideResetPasswordNotification, saveUserProfile,
   showRecoverPasswordNotification,
-  showResetPasswordNotification
+  showResetPasswordNotification,
+  setIsAuthenticated,
 } from '../actions/auth-action';
 
 const authReducer = createReducer(preloadedAuthState, (builder) => {
@@ -27,6 +28,13 @@ const authReducer = createReducer(preloadedAuthState, (builder) => {
     .addCase(hideResetPasswordNotification, ((state, action) => {
       state.showPasswordResetNotification = false;
       state.passwordResetStatus = null;
+    }))
+    .addCase(saveUserProfile, ((state, action) => {
+      state.email = action.payload.email;
+      state.nick = action.payload.name;
+    }))
+    .addCase(setIsAuthenticated, ((state, action) => {
+      state.isAuthenticated = action.payload
     }))
 })
 

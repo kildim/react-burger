@@ -29,6 +29,20 @@ const hideResetPasswordNotification = createAction(
   })
 )
 
+const saveUserProfile = createAction(
+  AuthAction.SaveUserProfile, (userProfile) => ({
+    type: AuthAction.SaveUserProfile,
+    payload: userProfile,
+  })
+)
+
+const setIsAuthenticated = createAction(
+  AuthAction.SetIsAuthenticated, (isAuthenticated) => ({
+    type: AuthAction.SetIsAuthenticated,
+    payload: isAuthenticated,
+  })
+)
+
 
 const postPasswordRecoverRequest = createAction(
   AuthAction.PostPasswordRecoverRequest, (email) => ({
@@ -44,4 +58,7 @@ export{
   hideRecoverPasswordNotification,
   showResetPasswordNotification,
   hideResetPasswordNotification,
+  postPasswordRecoverRequest,
+  saveUserProfile,
+  setIsAuthenticated
 }

@@ -4,11 +4,12 @@ import {Input, Button} from '@ya.praktikum/react-developer-burger-ui-components'
 import {Link} from 'react-router-dom';
 import {useCallback, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {postResetPassword} from '../../services/auth/auth';
+import {useAuth} from '../../services/auth/auth';
 
 function ResetPassword() {
   const [password, setPassword] = useState(null);
   const [token, setToken] = useState(null);
+  const {postResetPassword} = useAuth();
 
   const handleEmailInputChange = useCallback((e) => setPassword(e.target.value));
   const handleTokenInputChange = useCallback((e) => setToken(e.target.value));

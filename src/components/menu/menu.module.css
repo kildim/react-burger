@@ -36,3 +36,7 @@
     text-decoration: none;
     gap: 8px;
 }
+
+svg {
+    fill: currentColor;
+}

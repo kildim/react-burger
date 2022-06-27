@@ -1,3 +1,5 @@
+// @ts-nocheck
+
 import {BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {NavLink, useLocation} from 'react-router-dom';
 
@@ -14,7 +16,7 @@ function Menu() {
   return (
     <nav className={menuStyle.container}>
       <ul className={menuStyle.menu_list}>
-        <li><NavLink to={''} exact={true} className={INACTIVE_REF}><BurgerIcon type="primary"/>Конструктор</NavLink></li>
+        <li><NavLink to={'/'} exact={true} className={INACTIVE_REF} activeClassName={ACTIVE_REF}><BurgerIcon type="secondary"/>Конструктор</NavLink></li>
         <li><a href={'#'} className={INACTIVE_REF}><ListIcon type="secondary"/>Лента заказов</a></li>
       </ul>
       <a href={'#'} className={menuStyle.menu_logo}><img src={logo} style={{width: '290px'}}/></a>

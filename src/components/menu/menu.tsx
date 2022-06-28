@@ -1,17 +1,15 @@
 // @ts-nocheck
 
 import {BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components';
-import {NavLink, useLocation} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 import logo from '../../images/logo.png';
 import menuStyle from './menu.module.css';
 
-// const INACTIVE_REF = `${menuStyle.menu_ref} text text_type_main-default text_color_inactive`;
 const ACTIVE_REF = `${menuStyle.menu_ref} text text_type_main-default`;
 const INACTIVE_REF = `${menuStyle.menu_profile} text text_type_main-default text_color_inactive`
 
 function Menu() {
-  const location = useLocation();
 
   return (
     <nav className={menuStyle.container}>

@@ -4,6 +4,7 @@ import IngredientDetailStyle from '../ingredient-detail/ingredient-detail.module
 import {useDispatch, useSelector} from 'react-redux';
 import {hideIngredientDetail} from '../../services/actions/action';
 import Modal from '../modal/modal';
+import {useHistory} from 'react-router-dom';
 
 const TERM_DEFINITION_STYLE = 'text text_type_main-small text_color_inactive';
 const DEFINITION_DESCRIPTION_STYLE = 'text text_type_digits-default text_color_inactive'
@@ -20,8 +21,11 @@ function IngredientDetail() {
     image: state.main.ingredient.image,
   }));
 
+  const history = useHistory();
+
   const handleClosePopup = () => {
     dispatch(hideIngredientDetail())
+    history.replace('/');
   }
 
   return showIngredientDetail &&

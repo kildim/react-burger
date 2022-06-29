@@ -65,6 +65,7 @@ function App() {
                     <Profile />
                   </ProtectedRoute>
                   <Route path="/ingredient/:id" exact={true}>
+                    <Builder/>
                     <Ingredient />
                   </Route>
                   <Route>

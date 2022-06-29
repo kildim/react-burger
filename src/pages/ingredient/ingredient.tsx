@@ -2,7 +2,7 @@
 import styles from '../ingredient/ingredient.module.css';
 import React from 'react';
 import {useSelector} from 'react-redux';
-import {useParams} from 'react-router-dom';
+import {useHistory, useParams} from 'react-router-dom';
 
 const TERM_DEFINITION_STYLE = 'text text_type_main-small text_color_inactive';
 const DEFINITION_DESCRIPTION_STYLE = 'text text_type_digits-default text_color_inactive'
@@ -11,16 +11,14 @@ const TITLE_STYLE = "text text_type_main-large"
 
 function Ingredient() {
   const {id} = useParams()
-  const {name, calories, proteins, fat, carbohydrates, image} = useSelector((state) => ({
-    name: state.ingredients[id].name,
-    calories: state.ingredients[id].calories,
-    proteins: state.ingredients[id].proteins,
-    fat: state.ingredients[id].fat,
-    carbohydrates: state.ingredients[id].carbohydrates,
-    image: state.ingredients[id].image,
-  }));
+  const history = useHistory();
 
-  return (
+  const ingredient = useSelector((state) => state.main.ingredients.find((ingredient) => ingredient._id === id));
+  const {name, calories, proteins, fat, carbohydrates, image} = {...ingredient}
+
+  return history.location.state ? null
+    :
+   (
     <section >
       <div className={styles.content}>
         <h1 className={TITLE_STYLE}>Детали ингредиента</h1>

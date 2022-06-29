@@ -5,13 +5,15 @@ import {IngredientProps} from './ingredient.d'
 import React from 'react';
 
 import {DragPreviewImage, useDrag} from 'react-dnd';
-import {useDispatch} from 'react-redux';
-import {showIngredientDetail, selectIngredient} from '../../services/actions/action';
+// import {useDispatch} from 'react-redux';
+// import {showIngredientDetail, selectIngredient} from '../../services/actions/action';
+import {useHistory} from 'react-router-dom';
 
 
 function Ingredient(props: IngredientProps) {
   const {price = 0, name = '', image = '', _id = null, count = 0} = props.data
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const history = useHistory();
 
   const [, dragRef, dragPreviewRef] = useDrag(() => ({
     type: 'ingredient',
@@ -21,8 +23,9 @@ function Ingredient(props: IngredientProps) {
   }))
 
   const handleCardClick = () => {
-    dispatch(selectIngredient(_id))
-    dispatch(showIngredientDetail())
+    // dispatch(selectIngredient(_id))
+    // dispatch(showIngredientDetail())
+    history.replace({pathname: `/ingredient/${_id}`, state: {from: '/', id: _id}})
   }
 
   return (

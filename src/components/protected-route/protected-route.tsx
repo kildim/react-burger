@@ -1,17 +1,18 @@
 import {Redirect, Route, useLocation} from 'react-router-dom';
 import {useAuth} from '../../services/auth/auth';
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {fetchIngredients} from '../../services/api/api';
+import Loader from '../loader/loader';
 
 function ProtectedRoute(props: any) {
-  const [isUserLoaded, setUserLoaded] = useState(false);
   const {isAuthenticated, getUserData} = useAuth();
   const location = useLocation();
-  const {isLoading} = useSelector((store) => ({
-    //@ts-ignore
-    isLoading: store.main.isLoading,
-  }));
+  const {isUserDataLoading} = useSelector((store) => ({
+    // @ts-ignore
+    isUserDataLoading: store.auth.isUserDataLoading
+    })
+  )
 
   const dispatch = useDispatch();
 
@@ -19,8 +20,8 @@ function ProtectedRoute(props: any) {
     dispatch(getUserData());
   }, []);
 
-  if (isLoading) {
-    return null;
+  if (!isUserDataLoading) {
+    return (<Loader/>);
   }
 
   if (!isAuthenticated) {
@@ -28,7 +29,7 @@ function ProtectedRoute(props: any) {
       <Redirect
         to={{
           pathname: '/login',
-          state: { from: location.pathname }
+          state: {from: location.pathname}
         }}
       />
     )

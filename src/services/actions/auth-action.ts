@@ -43,6 +43,13 @@ const setIsAuthenticated = createAction(
   })
 )
 
+const setIsUserDataLoading = createAction(
+  AuthAction.SetIsUserDataLoading, (isUserDataLoading) => ({
+    type: AuthAction.SetIsUserDataLoading,
+    payload: isUserDataLoading,
+  })
+)
+
 
 const postPasswordRecoverRequest = createAction(
   AuthAction.PostPasswordRecoverRequest, (email) => ({
@@ -60,5 +67,6 @@ export{
   hideResetPasswordNotification,
   postPasswordRecoverRequest,
   saveUserProfile,
-  setIsAuthenticated
+  setIsAuthenticated,
+  setIsUserDataLoading,
 }

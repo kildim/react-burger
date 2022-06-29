@@ -6,4 +6,5 @@ export enum AuthAction {
   PostPasswordRecoverRequest = 'POST_PASSWORD_RECOVER_REQUEST',
   SaveUserProfile = 'SAVE_USER_PROFILE',
   SetIsAuthenticated = 'SET_IS_AUTHENTICATED',
+  SetIsUserDataLoading = 'SET_IS_USER_DATA_LOADING',
 }

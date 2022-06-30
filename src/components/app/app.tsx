@@ -19,14 +19,30 @@ import Ingredient from '../../pages/ingredient/ingredient';
 import RecoverPasswordNotification from '../RecoverPasswordNotification/RecoverPasswordNotification';
 import ResetPasswordNotification from '../ResetPasswordNotification/ResetPasswordNotification';
 import ProtectedRoute from '../protected-route/protected-route';
+import {getCookie} from '../../utils/utils';
+import {setAuthChecked} from '../../services/actions/auth-action';
+import {useAuth} from '../../services/auth/auth';
 
 function App() {
 
   const dispatch = useDispatch();
+  const {getUserData } = useAuth();
+
   useEffect(() => {
       dispatch(fetchIngredients());
     }, [dispatch]
   );
+  useEffect(
+    () => {
+      const accessToken = getCookie("authorization");
+      const refreshToken = localStorage.getItem("authorization");
+      if (accessToken && refreshToken) {
+        dispatch(getUserData());
+      } else {
+        dispatch(setAuthChecked(true));
+      }
+    }, []
+  )
 
   const {isLoading, showErrorMessage} = useSelector((store) => ({
     //@ts-ignore
@@ -35,11 +51,10 @@ function App() {
   }));
 
   return (
-    <Router>
+    <>
       {isLoading ? <Loader/> :
       showErrorMessage ? <Error /> :
         (<>
-            {/*<Router>*/}
               <AppHeader/>
               <main>
                 <Switch>
@@ -58,9 +73,6 @@ function App() {
                   <Route path="/reset-password" exact={true}>
                     <ResetPassword />
                   </Route>
-                  {/*<Route path="/profile">*/}
-                  {/*  <Profile />*/}
-                  {/*</Route>*/}
                   <ProtectedRoute path="/profile">
                     <Profile />
                   </ProtectedRoute>
@@ -77,10 +89,9 @@ function App() {
               <IngredientDetail/>
               <RecoverPasswordNotification/>
               <ResetPasswordNotification/>
-            {/*</Router>*/}
           </>
         )}
-    </Router>
+    </>
   )
 
 

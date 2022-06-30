@@ -3,4 +3,5 @@ export const preloadedAuthState = {
   email: null,
   isAuthenticated:false,
   isUserDataLoading: false,
+  isAuthChecked: false,
 }

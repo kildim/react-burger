@@ -10,6 +10,7 @@ import {
   showResetPasswordNotification,
   setIsAuthenticated,
   setIsUserDataLoading,
+  setAuthChecked,
 } from '../actions/auth-action';
 
 const authReducer = createReducer(preloadedAuthState, (builder) => {
@@ -39,6 +40,9 @@ const authReducer = createReducer(preloadedAuthState, (builder) => {
     }))
     .addCase(setIsUserDataLoading, ((state,action) => {
       state.isUserDataLoading = action.payload;
+    }))
+    .addCase(setAuthChecked, ((state,action) => {
+      state.isAuthChecked = action.payload;
     }))
 })
 

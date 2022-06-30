@@ -1,30 +1,17 @@
 import {Redirect, Route, useLocation} from 'react-router-dom';
 import {useAuth} from '../../services/auth/auth';
-import React, {useEffect, useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {fetchIngredients} from '../../services/api/api';
+import React from 'react';
 import Loader from '../loader/loader';
 
 function ProtectedRoute(props: any) {
-  const {isAuthenticated, getUserData} = useAuth();
+  const {nick, isAuthChecked} = useAuth();
   const location = useLocation();
-  const {isUserDataLoading} = useSelector((store) => ({
-    // @ts-ignore
-    isUserDataLoading: store.auth.isUserDataLoading
-    })
-  )
 
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(getUserData());
-  }, []);
-
-  if (!isUserDataLoading) {
+  if (!isAuthChecked) {
     return (<Loader/>);
   }
 
-  if (!isAuthenticated) {
+  if (!nick) {
     return (
       <Redirect
         to={{

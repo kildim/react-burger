@@ -36,6 +36,13 @@ const saveUserProfile = createAction(
   })
 )
 
+const setAuthChecked = createAction(
+  AuthAction.SET_AUTH_CHECKED, (isChecked) => ({
+    type: AuthAction.SET_AUTH_CHECKED,
+    payload: isChecked,
+  })
+)
+
 const setIsAuthenticated = createAction(
   AuthAction.SetIsAuthenticated, (isAuthenticated) => ({
     type: AuthAction.SetIsAuthenticated,
@@ -69,4 +76,5 @@ export{
   saveUserProfile,
   setIsAuthenticated,
   setIsUserDataLoading,
+  setAuthChecked,
 }

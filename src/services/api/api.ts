@@ -14,6 +14,7 @@ import {
 import {API_URL} from '../../constants/env-config';
 
 const checkResponse = (res) => res.ok ? res.json() : Promise.reject(res.status);
+// const checkResponse = (res) => res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 
 const fetchIngredients = () => (dispatch, _getState) => {
   dispatch(setIsLoading(true));

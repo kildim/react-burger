@@ -7,4 +7,5 @@ export enum AuthAction {
   SaveUserProfile = 'SAVE_USER_PROFILE',
   SetIsAuthenticated = 'SET_IS_AUTHENTICATED',
   SetIsUserDataLoading = 'SET_IS_USER_DATA_LOADING',
+  SET_AUTH_CHECKED = 'SET_AUTH_CHECKED',
 }

@@ -11,6 +11,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useDrop} from 'react-dnd';
 import {addToBurger} from '../../services/actions/action';
 import {fetchOrder} from '../../services/api/api';
+import {Redirect, useHistory} from 'react-router-dom';
 
 function BurgerConstructor() {
   const {bun, fillings} = useSelector((store) => ({
@@ -18,6 +19,7 @@ function BurgerConstructor() {
     fillings: store.main.burger.fillings,
     order: store.main.order,
   }))
+  const {isAuthChecked} = useSelector((store) => store.auth.isAuthChecked)
 
   const amount = useMemo(() => {
     let amount = fillings.reduce((amount, current) => amount + current.price, 0);
@@ -28,6 +30,7 @@ function BurgerConstructor() {
   }, [fillings, bun]);
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [{canDrop, isOver}, dropTargetRef] = useDrop(() => ({
     accept: 'ingredient',
@@ -47,6 +50,11 @@ function BurgerConstructor() {
   }
 
   const handleOrderClick = () => {
+    if (!isAuthChecked) {
+      history.push({pathname: '/login', state: {from: '/'}})  ;
+      return;
+    }
+
     if (Object.keys(bun).length === 0) {
       return
     }

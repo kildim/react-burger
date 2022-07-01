@@ -19,7 +19,7 @@ function BurgerConstructor() {
     fillings: store.main.burger.fillings,
     order: store.main.order,
   }))
-  const {isAuthChecked} = useSelector((store) => store.auth.isAuthChecked)
+  const isAuthenticated = useSelector((store) => store.auth.isAuthenticated)
 
   const amount = useMemo(() => {
     let amount = fillings.reduce((amount, current) => amount + current.price, 0);
@@ -50,7 +50,7 @@ function BurgerConstructor() {
   }
 
   const handleOrderClick = () => {
-    if (!isAuthChecked) {
+    if (!isAuthenticated) {
       history.push({pathname: '/login', state: {from: '/'}})  ;
       return;
     }

@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import Error from '../error/error';
 import AppHeader from '../app-header/app-header';
 import Builder from '../../pages/builder/builder';
-import './app.css';
+import './app.module.css';
 import {useDispatch, useSelector} from 'react-redux';
 import IngredientDetail from '../ingredient-detail/ingredient-detail';
 import OrderDetail from '../order-detail/order-detail';
@@ -22,11 +22,12 @@ import ProtectedRoute from '../protected-route/protected-route';
 import {getCookie} from '../../utils/utils';
 import {setAuthChecked} from '../../services/actions/auth-action';
 import {useAuth} from '../../services/auth/auth';
+import Modal from '../modal/modal';
 
 function App() {
 
   const dispatch = useDispatch();
-  const {getUserData } = useAuth();
+  const {getUserData} = useAuth();
 
   useEffect(() => {
       dispatch(fetchIngredients());
@@ -34,8 +35,8 @@ function App() {
   );
   useEffect(
     () => {
-      const accessToken = getCookie("authorization");
-      const refreshToken = localStorage.getItem("authorization");
+      const accessToken = getCookie('authorization');
+      const refreshToken = localStorage.getItem('authorization');
       if (accessToken && refreshToken) {
         dispatch(getUserData());
       } else {
@@ -51,50 +52,46 @@ function App() {
   }));
 
   return (
-    <>
-      {isLoading ? <Loader/> :
-      showErrorMessage ? <Error /> :
+    isLoading ? <Loader/> :
+      showErrorMessage ? <Error/> :
         (<>
-              <AppHeader/>
-              <main>
-                <Switch>
-                  <Route path="/" exact={true}>
-                    <Builder/>
-                  </Route>
-                  <Route path="/login" exact={true}>
-                    <SignIn />
-                  </Route>
-                  <Route path="/register" exact={true}>
-                    <Register />
-                  </Route>
-                  <Route path="/forgot-password" exact={true}>
-                    <ForgotPassword />
-                  </Route>
-                  <Route path="/reset-password" exact={true}>
-                    <ResetPassword />
-                  </Route>
-                  <ProtectedRoute path="/profile">
-                    <Profile />
-                  </ProtectedRoute>
-                  <Route path="/ingredient/:id" exact={true}>
-                    <Builder/>
-                    <Ingredient />
-                  </Route>
-                  <Route>
-                    <Redirect to={'/'}/>
-                  </Route>
-                </Switch>
-              </main>
-              <OrderDetail/>
-              <IngredientDetail/>
-              <RecoverPasswordNotification/>
-              <ResetPasswordNotification/>
+            <AppHeader/>
+            <main>
+              <Switch>
+                <Route path="/" exact={true}>
+                  <Builder/>
+                </Route>
+                <Route path="/login" exact={true}>
+                  <SignIn/>
+                </Route>
+                <Route path="/register" exact={true}>
+                  <Register/>
+                </Route>
+                <Route path="/forgot-password" exact={true}>
+                  <ForgotPassword/>
+                </Route>
+                <Route path="/reset-password" exact={true}>
+                  <ResetPassword/>
+                </Route>
+                <ProtectedRoute path="/profile">
+                  <Profile/>
+                </ProtectedRoute>
+                <Route path="/ingredient/:id" exact={true}>
+                  <Builder/>
+                  <Ingredient/>
+                </Route>
+                <Route>
+                  <Redirect to={'/'}/>
+                </Route>
+              </Switch>
+            </main>
+            <OrderDetail/>
+            <IngredientDetail/>
+            <RecoverPasswordNotification/>
+            <ResetPasswordNotification/>
           </>
-        )}
-    </>
+        )
   )
-
-
 }
 
 export default App;

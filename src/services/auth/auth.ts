@@ -3,8 +3,8 @@
 
 import {
   saveUserProfile, setAuthChecked, setIsAuthenticated, setIsUserDataLoading,
-  showRecoverPasswordNotification,
-  showResetPasswordNotification
+  showRecoverPasswordNotification, showResetPasswordNotification,
+  // showResetPasswordNotification
 } from '../actions/auth-action';
 import {
   setIsLoading,
@@ -13,11 +13,8 @@ import {
 import {API_URL} from '../../constants/env-config';
 import {useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
-import {deleteCookie, getCookie, setCookie} from '../../utils/utils';
+import {deleteCookie, getCookie, setCookie, checkResponse} from '../../utils/utils';
 import {fetchWithRefresh} from '../../utils/fetch-with-refreash';
-
-const checkResponse = (res) => res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
-
 export function useAuth() {
   const nick = useSelector((store) => store.auth.nick);
   const isAuthenticated = useSelector((store) => store.auth.isAuthenticated)
@@ -67,7 +64,9 @@ export function useAuth() {
     fetch(`${API_URL}/password-reset`, options)
       .then(checkResponse)
       .then((res) => {
-        dispatch(showRecoverPasswordNotification(res))
+        if (res.success) {
+          dispatch(showRecoverPasswordNotification(res));
+        }
       })
       .catch((error) => {
         dispatch(showErrorMessage({errorMessage: error}));
@@ -109,11 +108,17 @@ export function useAuth() {
     fetch(`${API_URL}/auth/register`, options)
       .then(checkResponse)
       .then((res) => {
-        dispatch(saveUserProfile(res.user))
-        history.push('/')
+        if (res.success) {
+          setCookie('authorization', res.accessToken);
+          localStorage.setItem('authorization', res.refreshToken);
+          dispatch(saveUserProfile(res.user))
+          history.push('/')
+        } else {
+          throw ('Сервер не зарегистрировал!')
+        }
       })
       .catch((error) => {
-        dispatch(showErrorMessage({errorMessage: error}));
+        dispatch(showErrorMessage(error.message));
       })
       .finally(() => dispatch(setIsLoading(false)))
   }
@@ -141,7 +146,7 @@ export function useAuth() {
       })
       .catch((error) => {
         dispatch(setIsAuthenticated(false));
-        dispatch(showErrorMessage({errorMessage: error}));
+        dispatch(showErrorMessage(error.message));
       })
       .finally(() => dispatch(setIsLoading(false)))
   }

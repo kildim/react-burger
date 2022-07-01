@@ -8,13 +8,9 @@ import {
   hideOrderDetail,
   clearBurger,
   showErrorMessage,
-  showRecoverPasswordNotification,
-  showResetPasswordNotification,
 } from '../actions/action';
 import {API_URL} from '../../constants/env-config';
-
-const checkResponse = (res) => res.ok ? res.json() : Promise.reject(res.status);
-// const checkResponse = (res) => res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+import {checkResponse} from '../../utils/utils'
 
 const fetchIngredients = () => (dispatch, _getState) => {
   dispatch(setIsLoading(true));

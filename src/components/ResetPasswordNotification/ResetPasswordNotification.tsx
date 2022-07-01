@@ -9,11 +9,11 @@ import {Button} from '@ya.praktikum/react-developer-burger-ui-components';
 
 function ResetPasswordNotification() {
   const dispatch = useDispatch();
-  const {showPasswordResetNotification} = useSelector((state) => ({showPasswordResetNotification: state.main.showPasswordResetNotification}))
+  const {showPasswordResetNotification} = useSelector((state) => ({showPasswordResetNotification: state.auth.showPasswordResetNotification}))
   const {status, notification} = useSelector((state) => {
     return {
-      status: {...state.main.passwordResetStatus}?.success,
-      notification: state.main.passwordResetStatus?.success ? 'Пароль сброшен успешно!' : 'Сервер не подтвердил сброс пароля!'
+      status: {...state.auth.passwordResetStatus}?.success,
+      notification: state.auth.passwordResetStatus?.success ? 'Пароль сброшен успешно!' : 'Сервер не подтвердил сброс пароля!'
     }
   });
 

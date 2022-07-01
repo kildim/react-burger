@@ -7,13 +7,16 @@ import {useDispatch} from 'react-redux';
 import {useAuth} from '../../services/auth/auth';
 
 function ResetPassword() {
-  const [password, setPassword] = useState(null);
-  const [token, setToken] = useState(null);
+  const [form, setValue] = useState({password: '', token: ''});
+
+  // const [password, setPassword] = useState('');
+  // const [token, setToken] = useState('');
   const {postResetPassword} = useAuth();
 
-  const handleEmailInputChange = useCallback((e) => setPassword(e.target.value));
-  const handleTokenInputChange = useCallback((e) => setToken(e.target.value));
-  const handleResetPasswordButtonClick = useCallback((e) => dispatch(postResetPassword({password: password, token: token})))
+  const onChange = useCallback(e => {
+    setValue({...form, [e.target.name]: e.target.value});
+  });
+  const handleResetPasswordButtonClick = useCallback((e) => dispatch(postResetPassword(form)))
 
 
   const dispatch = useDispatch();
@@ -21,24 +24,29 @@ function ResetPassword() {
   return (
     <section className={styles.content}>
       <h1 aria-label={'Страница авторизации'} className={'text text_type_main-large'}>Восстановление пароля</h1>
-      <div className={'p-3'}/>
-      <Input
-        type={'password'}
-        placeholder={'Введите новый пароль'}
-        onChange={handleEmailInputChange}
-        icon={'ShowIcon'}
-      />
-      <div className={'p-3'}/>
-      <Input
-        type={'text'}
-        placeholder={'Введите код из письма'}
-        onChange={handleTokenInputChange}
-      />
-      <div className={'p-3'}/>
-      <Button type="primary" size="large" onClick={handleResetPasswordButtonClick}>Сохранить</Button>
-      <div className={'p-10'}/>
-      <p className="text text_type_main-default text_color_inactive">Вспомнили пароль? <Link to={'/login'}
-        className={styles.page_ref}>Войти</Link></p>
+      <form className={`${styles.form} p-3`} onSubmit={handleResetPasswordButtonClick}>
+        <Input
+          type={'password'}
+          placeholder={'Введите новый пароль'}
+          onChange={onChange}
+          icon={'ShowIcon'}
+          value={form.password}
+          name={'password'}
+        />
+        <div className={'p-3'}/>
+        <Input
+          type={'text'}
+          placeholder={'Введите код из письма'}
+          onChange={onChange}
+          value={form.token}
+          name={'token'}
+        />
+        <div className={'p-3'}/>
+        <Button type="primary" size="large">Сохранить</Button>
+        <div className={'p-3'}/>
+        <p className="text text_type_main-default text_color_inactive">Вспомнили пароль? <Link to={'/login'}
+          className={styles.page_ref}>Войти</Link></p>
+      </form>
     </section>
   )
 }

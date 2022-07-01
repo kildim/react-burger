@@ -18,9 +18,9 @@ function Profile() {
   const [form, setValue] = useState({email: email, password: '', name: name});
 
 
-  const onChange = e => {
+  const onChange = useCallback(e => {
     setValue({...form, [e.target.name]: e.target.value});
-  };
+  });
   const handleLogoutClick = useCallback(
     e => {
       e.preventDefault();

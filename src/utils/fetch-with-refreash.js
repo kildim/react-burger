@@ -1,8 +1,5 @@
 import { API_URL } from "../constants/env-config";
-import { setCookie } from "./utils";
-
-const checkResponse = (res) =>
-  res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+import { setCookie,  checkResponse} from "./utils";
 
 export const updateToken = () => {
     return fetch(`${API_URL}/auth/token`, {

@@ -9,11 +9,11 @@ import {Button} from '@ya.praktikum/react-developer-burger-ui-components';
 
 function RecoverPasswordNotification() {
   const dispatch = useDispatch();
-  const {showPasswordRecoverNotification} = useSelector((state) => ({showPasswordRecoverNotification: state.main.showPasswordRecoverNotification}))
+  const {showPasswordRecoverNotification} = useSelector((state) => ({showPasswordRecoverNotification: state.auth.showPasswordRecoverNotification}))
   const {status, notification} = useSelector((state) => {
     return {
-      status: {...state.main.passwordRecoverStatus}?.success,
-      notification: state.main.passwordRecoverStatus?.success ? 'Письмо с сылкой успешно выслано на почту!' : 'Сервер не подтвердил отправку письма на почту!'
+      status: {...state.auth.passwordRecoverStatus}?.success,
+      notification: state.auth.passwordRecoverStatus?.success ? 'Письмо с сылкой успешно выслано на почту!' : 'Сервер не подтвердил отправку письма на почту!'
     }
   });
 

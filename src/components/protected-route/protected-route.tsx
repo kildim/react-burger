@@ -1,9 +1,9 @@
-import {Redirect, Route, useLocation} from 'react-router-dom';
+import {Redirect, Route, RouteProps, useLocation} from 'react-router-dom';
 import {useAuth} from '../../services/auth/auth';
 import React from 'react';
 import Loader from '../loader/loader';
 
-function ProtectedRoute(props: any) {
+function ProtectedRoute(props: RouteProps) {
   const {nick, isAuthChecked} = useAuth();
   const location = useLocation();
 

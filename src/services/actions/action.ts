@@ -3,11 +3,11 @@ import {Action} from '../../constants/actions';
 
 const loadIngredients = createAction(
   Action.LoadIngredients, (ingredients) => ({
-  type: Action.LoadIngredients,
-  payload: {
-    ingredients: ingredients,
-  },
-}),
+    type: Action.LoadIngredients,
+    payload: {
+      ingredients: ingredients,
+    },
+  }),
 );
 
 const loadOrder = createAction(
@@ -26,7 +26,7 @@ const dropOrder = createAction(
   })
 )
 
-const  addToBurger = createAction(
+const addToBurger = createAction(
   Action.AddToBurger, (_id) => ({
     type: Action.AddToBurger,
     payload: _id
@@ -96,12 +96,21 @@ const setIsLoading = createAction(
   })
 );
 
-const setFetchError = createAction(
-  Action.SetFetchError, (fetchError) => ({
-    type: Action.SetFetchError,
-    payload: fetchError,
+const showErrorMessage = createAction(
+  Action.ShowErrorMessage, (errorMessage) => ({
+      type: Action.ShowErrorMessage,
+      payload: {errorMessage},
+    })
+)
+
+
+
+const hideErrorMessage = createAction(
+  Action.HideErrorMessage, () => ({
+    type: Action.HideErrorMessage,
+    payload: null,
   })
-);
+)
 
 export {
   loadIngredients,
@@ -116,6 +125,7 @@ export {
   showOrderDetail,
   hideOrderDetail,
   setIsLoading,
-  setFetchError,
-  clearBurger
+  showErrorMessage,
+  hideErrorMessage,
+  clearBurger,
 }

@@ -17,18 +17,17 @@ function BurgerIngredients() {
   const prevActiveTitleRef = useRef(null);
   const [ingredientTitles, setIngredientTitles] = useState(null);
 
-  // Запоминаю в ingredientTitles массив ссылок на DOM элементы заголовков ингредиентов
   useEffect(() => {
     setIngredientTitles(Array.from(ingredientsListSectionRef.current.querySelectorAll('h3')));
     prevActiveTitleRef.current = 'Булки'
   }, [])
 
   const {ingredients} = useSelector((store) => {
-    const ingredients = store.ingredients.map( (ingredient) => {
+    const ingredients = store.main.ingredients.map( (ingredient) => {
       if (ingredient.type === 'bun') {
-        return ingredient._id === store.burger.bun._id ? {...ingredient, count: 2} : {...ingredient, count:0}
+        return ingredient._id === store.main.burger.bun._id ? {...ingredient, count: 2} : {...ingredient, count:0}
       } else {
-        const ingredientCount = store.burger.fillings.filter( (filling) => ingredient._id === filling._id).length;
+        const ingredientCount = store.main.burger.fillings.filter( (filling) => ingredient._id === filling._id).length;
         return {...ingredient, count: ingredientCount}
       }
     } );
@@ -73,7 +72,6 @@ function BurgerIngredients() {
   const partItemRefClickHandler = (e) => {
     setActiveTitle(e.currentTarget.textContent);
 
-    // Прокручиваю список, чтобы выбранный в табе ингредиент отобразился вверху списка
     ingredientTitles.find((ingredientHeader) => (e.currentTarget.textContent === ingredientHeader.textContent)).scrollIntoView();
   };
 
@@ -86,8 +84,6 @@ function BurgerIngredients() {
   }
 
   const ingredientsListScrollHandler = (e) => {
-
-    // Создаю массив расстояний от заголовка ингридиента до верхней границы элемента-контэйнера
     const distance = ingredientTitles.map(
       (ingredientTitle) =>
         (Math.abs(ingredientTitle.getBoundingClientRect().top - ingredientsListSectionRef.current.getBoundingClientRect().top))

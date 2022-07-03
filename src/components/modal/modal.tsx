@@ -6,7 +6,6 @@ import {ModalPropsType} from './modal.d';
 import {MouseEvent} from 'react';
 import {CloseIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components'
 import ModalOverlay from '../modal-overlay/modal-overlay';
-import {hideIngredientDetail} from '../../services/actions/action';
 
 const MODAL_PORTAL = document.getElementById('modals');
 
@@ -27,6 +26,7 @@ function Modal(props: ModalPropsType) {
   }
 
   const handleModalClick = (event: MouseEvent<HTMLDivElement>): void => event.stopPropagation();
+
 
   return ReactDOM.createPortal(
     <ModalOverlay onCloseClick={onClosePopup}>

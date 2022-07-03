@@ -1,4 +1,4 @@
-import {IngredientData} from '../../types/ingredient-data.d';
+import {IngredientData} from '../../types/ingredient-data';
 
 type BuilderProps = {
   data: IngredientData[]

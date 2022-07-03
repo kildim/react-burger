@@ -1,32 +1,35 @@
 //@ts-nocheck
+import styles from '../ingredient/ingredient.module.css';
 import React from 'react';
-import IngredientDetailStyle from '../ingredient-detail/ingredient-detail.module.css';
 import {useSelector} from 'react-redux';
+import {useHistory, useParams} from 'react-router-dom';
 
 const TERM_DEFINITION_STYLE = 'text text_type_main-small text_color_inactive';
 const DEFINITION_DESCRIPTION_STYLE = 'text text_type_digits-default text_color_inactive'
+const TITLE_STYLE = "text text_type_main-large"
 
-function IngredientDetail() {
-  const {name, calories, proteins, fat, carbohydrates, image} = useSelector((state) => ({
-    name: state.main.ingredient.name,
-    calories: state.main.ingredient.calories,
-    proteins: state.main.ingredient.proteins,
-    fat: state.main.ingredient.fat,
-    carbohydrates: state.main.ingredient.carbohydrates,
-    image: state.main.ingredient.image,
-  }));
 
-  return (
-    <>
-      <div className={IngredientDetailStyle.content}>
+function Ingredient() {
+  const {id} = useParams()
+  const history = useHistory();
+
+  const ingredient = useSelector((state) => state.main.ingredients.find((ingredient) => ingredient._id === id));
+  const {name, calories, proteins, fat, carbohydrates, image} = {...ingredient}
+
+  return history.location.state ? null
+    :
+   (
+    <section >
+      <div className={styles.content}>
+        <h1 className={TITLE_STYLE}>Детали ингредиента</h1>
         <img src={image}
-          alt={`${name} ingredient illustration`}
+          alt={`ingredient illustration`}
           width={480}
           height={240}
         />
         <span className={'mt-4 text text_type_main-medium'}>{name}</span>
-        <div className={`${IngredientDetailStyle.characteristics_container} mt-8 mb-15`}>
-          <dl className={IngredientDetailStyle.characteristics}>
+        <div className={`mt-8 mb-15`}>
+          <dl className={styles.characteristics}>
             <dt className={TERM_DEFINITION_STYLE}>Калории,ккал</dt>
             <dd className={DEFINITION_DESCRIPTION_STYLE}>{calories}</dd>
             <dt className={TERM_DEFINITION_STYLE}>Белки, г</dt>
@@ -38,8 +41,8 @@ function IngredientDetail() {
           </dl>
         </div>
       </div>
-    </>
+    </section>
   )
 }
 
-export default IngredientDetail;
+export default Ingredient;

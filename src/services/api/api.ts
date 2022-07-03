@@ -3,24 +3,23 @@
 import {
   loadIngredients,
   setIsLoading,
-  setFetchError,
   loadOrder,
-  dropOrder,
   showOrderDetail,
   hideOrderDetail,
   clearBurger,
+  showErrorMessage,
 } from '../actions/action';
 import {API_URL} from '../../constants/env-config';
-import {ok} from 'assert';
-
-const checkResponse = (res) => res.ok ? res.json() : Promise.reject(res.status);
+import {checkResponse} from '../../utils/utils'
 
 const fetchIngredients = () => (dispatch, _getState) => {
   dispatch(setIsLoading(true));
   fetch(`${API_URL}/ingredients`)
     .then(checkResponse)
     .then((res) => dispatch(loadIngredients(res.data)))
-    .catch((error) => dispatch(setFetchError({isError: true, errorMessage: error})))
+    .catch((error) => {
+      dispatch(showErrorMessage(error))
+    })
     .finally(() => dispatch(setIsLoading(false)))
 }
 
@@ -44,10 +43,9 @@ const fetchOrder = (ingredientsIds) => (dispatch, _getState) => {
     })
     .catch((error) => {
       dispatch(hideOrderDetail());
-      dispatch(setFetchError({isError: true, errorMessage: error}));
+      dispatch(showErrorMessage({errorMessage: error}));
     })
     .finally(() => dispatch(setIsLoading(false)))
 }
-
 
 export {fetchIngredients, fetchOrder};

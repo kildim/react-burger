@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import IngredientDetail from '../ingredient-detail/ingredient-detail';
 import OrderDetail from '../order-detail/order-detail';
 import {fetchIngredients} from '../../services/api/api';
-import {BrowserRouter as Router, Switch, Route, Redirect} from 'react-router-dom';
+import {BrowserRouter as Router, Switch, Route, Redirect, useHistory} from 'react-router-dom';
 import Loader from '../loader/loader';
 import SignIn from '../../pages/sign-in/sign-in';
 import Register from '../../pages/register/register';
@@ -23,11 +23,13 @@ import {getCookie} from '../../utils/utils';
 import {setAuthChecked} from '../../services/actions/auth-action';
 import {useAuth} from '../../services/auth/auth';
 import Modal from '../modal/modal';
+import {hideIngredientDetail, hideOrderDetail, showIngredientDetail} from '../../services/actions/action';
 
 function App() {
 
   const dispatch = useDispatch();
   const {getUserData} = useAuth();
+  const history = useHistory();
 
   useEffect(() => {
       dispatch(fetchIngredients());
@@ -50,6 +52,17 @@ function App() {
     isLoading: store.main.isLoading,
     showErrorMessage: store.main.showErrorMessage,
   }));
+  const {showOrderDetail} = useSelector((state) => ({showOrderDetail: state.main.showOrderDetail}));
+  const {showIngredientDetail} = useSelector((state) => ({showIngredientDetail: state.main.showIngredientDetail}))
+
+
+  const handleCloseOrderDetailPopup = () => {
+    dispatch(hideOrderDetail())
+  }
+  const handleCloseIngredientDetailPopup = () => {
+    dispatch(hideIngredientDetail())
+    history.replace('/');
+  }
 
   return (
     isLoading ? <Loader/> :
@@ -85,8 +98,19 @@ function App() {
                 </Route>
               </Switch>
             </main>
-            <OrderDetail/>
-            <IngredientDetail/>
+            {
+              showOrderDetail &&
+              <Modal header={''} onClosePopup={handleCloseOrderDetailPopup}>
+                <OrderDetail/>
+              </Modal>
+            }
+            {
+              showIngredientDetail &&
+              <Modal header={'Детали ингредиента'} onClosePopup={handleCloseIngredientDetailPopup}>
+                <IngredientDetail/>
+              </Modal>
+            }
+
             <RecoverPasswordNotification/>
             <ResetPasswordNotification/>
           </>

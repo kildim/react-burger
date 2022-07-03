@@ -1,17 +1,12 @@
 //@ts-nocheck
 import React from 'react';
 import IngredientDetailStyle from '../ingredient-detail/ingredient-detail.module.css';
-import {useDispatch, useSelector} from 'react-redux';
-import {hideIngredientDetail} from '../../services/actions/action';
-import Modal from '../modal/modal';
-import {useHistory} from 'react-router-dom';
+import {useSelector} from 'react-redux';
 
 const TERM_DEFINITION_STYLE = 'text text_type_main-small text_color_inactive';
 const DEFINITION_DESCRIPTION_STYLE = 'text text_type_digits-default text_color_inactive'
 
 function IngredientDetail() {
-  const dispatch = useDispatch();
-  const {showIngredientDetail} = useSelector((state) => ({showIngredientDetail: state.main.showIngredientDetail}))
   const {name, calories, proteins, fat, carbohydrates, image} = useSelector((state) => ({
     name: state.main.ingredient.name,
     calories: state.main.ingredient.calories,
@@ -21,15 +16,8 @@ function IngredientDetail() {
     image: state.main.ingredient.image,
   }));
 
-  const history = useHistory();
-
-  const handleClosePopup = () => {
-    dispatch(hideIngredientDetail())
-    history.replace('/');
-  }
-
-  return showIngredientDetail &&
-    <Modal header={'Детали ингредиента'} onClosePopup={handleClosePopup}>
+  return (
+    <>
       <div className={IngredientDetailStyle.content}>
         <img src={image}
           alt={`${name} ingredient illustration`}
@@ -50,7 +38,8 @@ function IngredientDetail() {
           </dl>
         </div>
       </div>
-    </Modal>
+    </>
+  )
 }
 
 export default IngredientDetail;

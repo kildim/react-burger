@@ -1,4 +1,3 @@
-// @ts-nocheck
 import React, {useEffect} from 'react';
 import Error from '../error/error';
 import AppHeader from '../app-header/app-header';
@@ -8,7 +7,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import IngredientDetail from '../ingredient-detail/ingredient-detail';
 import OrderDetail from '../order-detail/order-detail';
 import {fetchIngredients} from '../../services/api/api';
-import {BrowserRouter as Router, Switch, Route, Redirect, useHistory} from 'react-router-dom';
+import {Switch, Route, Redirect, useHistory} from 'react-router-dom';
 import Loader from '../loader/loader';
 import SignIn from '../../pages/sign-in/sign-in';
 import Register from '../../pages/register/register';
@@ -23,7 +22,8 @@ import {getCookie} from '../../utils/utils';
 import {setAuthChecked} from '../../services/actions/auth-action';
 import {useAuth} from '../../services/auth/auth';
 import Modal from '../modal/modal';
-import {hideIngredientDetail, hideOrderDetail, showIngredientDetail} from '../../services/actions/action';
+import {hideIngredientDetail, hideOrderDetail} from '../../services/actions/action';
+import {RootState} from '../../index';
 
 function App() {
 
@@ -44,16 +44,13 @@ function App() {
       } else {
         dispatch(setAuthChecked(true));
       }
-    }, []
+    }, [dispatch, getUserData]
   )
 
-  const {isLoading, showErrorMessage} = useSelector((store) => ({
-    //@ts-ignore
-    isLoading: store.main.isLoading,
-    showErrorMessage: store.main.showErrorMessage,
-  }));
-  const {showOrderDetail} = useSelector((state) => ({showOrderDetail: state.main.showOrderDetail}));
-  const {showIngredientDetail} = useSelector((state) => ({showIngredientDetail: state.main.showIngredientDetail}))
+  const showErrorMessage = useSelector<RootState>((store) => (store.main.showErrorMessage));
+  const isLoading = useSelector<RootState>((store) => (store.main.isLoading));
+  const showOrderDetail = useSelector<RootState>((state) => (state.main.showOrderDetail));
+  const showIngredientDetail = useSelector<RootState>((state) => (state.main.showIngredientDetail));
 
 
   const handleCloseOrderDetailPopup = () => {

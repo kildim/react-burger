@@ -1,4 +1,4 @@
-// @ts-nocheck
+// ts-nocheck
 import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 import FillingIngredient from '../filling-ingredient/filling-ingredient'
@@ -11,14 +11,18 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useDrop} from 'react-dnd';
 import {addToBurger} from '../../services/actions/action';
 import {fetchOrder} from '../../services/api/api';
-import {Redirect, useHistory} from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
+import {RootState} from '../../index';
 
 function BurgerConstructor() {
-  const {bun, fillings} = useSelector((store) => ({
-    bun: store.main.burger.bun,
-    fillings: store.main.burger.fillings,
-    order: store.main.order,
-  }))
+  // const {bun, fillings} = useSelector<RootState>((store) => ({
+  //   bun: store.main.burger.bun,
+  //   fillings: store.main.burger.fillings,
+  //   order: store.main.order,
+  // }))
+  const bun = useSelector<RootState>((store) => store.main.burger.bun)
+  const fillings = useSelector<RootState>((store) => store.main.burger.fillings)
+
   const isAuthenticated = useSelector((store) => store.auth.isAuthenticated)
 
   const amount = useMemo(() => {

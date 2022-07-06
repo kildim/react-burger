@@ -17,6 +17,8 @@ const store = configureStore({
   middleware: [thunk],
 })
 
+export type RootState = ReturnType<typeof store.getState>;
+
 createRoot(document.getElementById('root')).render(
   <Router>
     <Provider store={store}>

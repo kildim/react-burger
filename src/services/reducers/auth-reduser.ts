@@ -24,6 +24,7 @@ const authReducer = createReducer(preloadedAuthState, (builder) => {
       state.passwordRecoverStatus = null;
     }))
     .addCase(showResetPasswordNotification, ((state, action) => {
+      console.log('reducer showResetPasswordNotification')
       state.showPasswordResetNotification = true;
       state.passwordResetStatus = action.payload;
     }))

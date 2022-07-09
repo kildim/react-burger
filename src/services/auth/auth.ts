@@ -69,7 +69,7 @@ export function useAuth() {
         }
       })
       .catch((error) => {
-        dispatch(showErrorMessage({errorMessage: error}));
+        dispatch(showErrorMessage({errorMessage: error.message}));
       })
       .finally(() => dispatch(setIsLoading(false)))
   }
@@ -88,10 +88,12 @@ export function useAuth() {
     fetch(`${API_URL}/password-reset/reset`, options)
       .then(checkResponse)
       .then((res) => {
-        dispatch(showResetPasswordNotification(res))
+        if (res.success) {
+          dispatch(showResetPasswordNotification(res))
+        }
       })
       .catch((error) => {
-        dispatch(showErrorMessage({errorMessage: error}));
+        dispatch(showErrorMessage({errorMessage: error.message}));
       })
       .finally(() => dispatch(setIsLoading(false)))
   }

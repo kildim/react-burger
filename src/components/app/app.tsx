@@ -19,7 +19,11 @@ import RecoverPasswordNotification from '../RecoverPasswordNotification/RecoverP
 import ResetPasswordNotification from '../ResetPasswordNotification/ResetPasswordNotification';
 import ProtectedRoute from '../protected-route/protected-route';
 import {getCookie} from '../../utils/utils';
-import {hideRecoverPasswordNotification, setAuthChecked} from '../../services/actions/auth-action';
+import {
+  hideRecoverPasswordNotification,
+  hideResetPasswordNotification,
+  setAuthChecked
+} from '../../services/actions/auth-action';
 import {useAuth} from '../../services/auth/auth';
 import Modal from '../modal/modal';
 import {hideIngredientDetail, hideOrderDetail} from '../../services/actions/action';
@@ -56,6 +60,12 @@ function App() {
     return state.auth.passwordRecoverStatus?.success ? 'Письмо с сылкой успешно выслано на почту!' : 'Сервер не подтвердил отправку письма на почту!'
   })
   const passwordRecoverStatus = useSelector<RootState, boolean>((state) => state.auth.passwordRecoverStatus?.success);
+  const showPasswordResetNotification = useSelector<RootState, boolean>((state) => state.auth.showPasswordResetNotification);
+  const passwordResetNotification = useSelector<RootState, string>((state) => {
+    return state.auth.passwordResetStatus?.success ? 'Пароль сброшен успешно!' : 'Сервер не подтвердил сброс пароля!';
+  })
+  const passwordResetStatus = useSelector<RootState, boolean>((state) => state.auth.passwordResetStatus?.success);
+
 
   const handleCloseOrderDetailPopup = () => {
     dispatch(hideOrderDetail())
@@ -69,7 +79,14 @@ function App() {
     if (passwordRecoverStatus) {
       history.push('/reset-password')
     }
-    console.log('handleClosePasswordRecoverNotificationPopup')
+  }
+  const handleCloseResetPasswordNotificationPopup = () => {
+    console.log('handleCloseResetPasswordNotificationPopup')
+
+    dispatch(hideResetPasswordNotification());
+    if (passwordResetStatus) {
+      history.push('/login')
+    }
   }
 
   return (
@@ -124,8 +141,12 @@ function App() {
                 <RecoverPasswordNotification onClosePopup={handleClosePasswordRecoverNotificationPopup}/>
               </Modal>
             }
-
-            {/*<ResetPasswordNotification/>*/}
+            {
+              showPasswordResetNotification &&
+              <Modal header={passwordResetNotification} onClosePopup={handleCloseResetPasswordNotificationPopup}>
+                <ResetPasswordNotification onClosePopup={handleCloseResetPasswordNotificationPopup}/>
+              </Modal>
+            }
           </>
         )
   )

@@ -7,7 +7,9 @@ export const preloadedAuthState = {
   passwordRecoverStatus: {
     success: false,
   },
-  showResetPasswordNotification: false,
-  passwordResetStatus: {},
+  showPasswordResetNotification: false,
+  passwordResetStatus: {
+    success: false,
+  },
   showPasswordRecoverNotification: false,
 }

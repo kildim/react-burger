@@ -23,7 +23,7 @@ const showResetPasswordNotification = createAction(
 )
 
 const hideResetPasswordNotification = createAction(
-  AuthAction.HideResetPasswordNotification, (notification) => ({
+  AuthAction.HideResetPasswordNotification, () => ({
     type: AuthAction.HideResetPasswordNotification,
     payload: null,
   })

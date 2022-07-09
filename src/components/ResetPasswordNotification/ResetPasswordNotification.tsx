@@ -30,7 +30,7 @@ function ResetPasswordNotification() {
     <Modal header={notification} onClosePopup={handleClosePopup}>
       <div className={'mb-10 mt-10'}>
         <Button type="primary" size="medium" onClick={handleClosePopup}>
-          Ok
+          Отлично
         </Button>
       </div>
     </Modal>

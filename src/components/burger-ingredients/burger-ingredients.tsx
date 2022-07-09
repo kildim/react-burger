@@ -33,7 +33,7 @@ function BurgerIngredients() {
   const ingredients = useSelector<RootState, TIngredient[]>((store) => {
     const ingredients = store.main.ingredients.map((ingredient: TIngredient) => {
       if (ingredient.type === 'bun') {
-        return ingredient._id === store.main.burger.bun._id ? {...ingredient, count: 2} : {...ingredient, count: 0}
+        return ( ingredient._id === store.main.burger.bun._id) ? {...ingredient, count: 2} : {...ingredient, count: 0}
       } else {
         const ingredientCount = store.main.burger.fillings.filter((filling: TIngredient) => ingredient._id === filling._id).length;
         return {...ingredient, count: ingredientCount}

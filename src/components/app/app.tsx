@@ -19,7 +19,7 @@ import RecoverPasswordNotification from '../RecoverPasswordNotification/RecoverP
 import ResetPasswordNotification from '../ResetPasswordNotification/ResetPasswordNotification';
 import ProtectedRoute from '../protected-route/protected-route';
 import {getCookie} from '../../utils/utils';
-import {setAuthChecked} from '../../services/actions/auth-action';
+import {hideRecoverPasswordNotification, setAuthChecked} from '../../services/actions/auth-action';
 import {useAuth} from '../../services/auth/auth';
 import Modal from '../modal/modal';
 import {hideIngredientDetail, hideOrderDetail} from '../../services/actions/action';
@@ -51,7 +51,11 @@ function App() {
   const isLoading = useSelector<RootState>((store) => (store.main.isLoading));
   const showOrderDetail = useSelector<RootState>((state) => (state.main.showOrderDetail));
   const showIngredientDetail = useSelector<RootState>((state) => (state.main.showIngredientDetail));
-
+  const showPasswordRecoverNotification = useSelector<RootState, boolean>((state) => state.auth.showPasswordRecoverNotification)
+  const passwordRecoverNotification = useSelector<RootState, string>((state) => {
+    return state.auth.passwordRecoverStatus?.success ? 'Письмо с сылкой успешно выслано на почту!' : 'Сервер не подтвердил отправку письма на почту!'
+  })
+  const passwordRecoverStatus = useSelector<RootState, boolean>((state) => state.auth.passwordRecoverStatus?.success);
 
   const handleCloseOrderDetailPopup = () => {
     dispatch(hideOrderDetail())
@@ -59,6 +63,13 @@ function App() {
   const handleCloseIngredientDetailPopup = () => {
     dispatch(hideIngredientDetail())
     history.replace('/');
+  }
+  const handleClosePasswordRecoverNotificationPopup = () => {
+    dispatch(hideRecoverPasswordNotification());
+    if (passwordRecoverStatus) {
+      history.push('/reset-password')
+    }
+    console.log('handleClosePasswordRecoverNotificationPopup')
   }
 
   return (
@@ -104,12 +115,17 @@ function App() {
             {
               showIngredientDetail &&
               <Modal header={'Детали ингредиента'} onClosePopup={handleCloseIngredientDetailPopup}>
-                <IngredientDetail/>
+                <IngredientDetail />
+              </Modal>
+            }
+            {
+              showPasswordRecoverNotification &&
+              <Modal header={passwordRecoverNotification} onClosePopup={handleClosePasswordRecoverNotificationPopup}>
+                <RecoverPasswordNotification onClosePopup={handleClosePasswordRecoverNotificationPopup}/>
               </Modal>
             }
 
-            <RecoverPasswordNotification/>
-            <ResetPasswordNotification/>
+            {/*<ResetPasswordNotification/>*/}
           </>
         )
   )

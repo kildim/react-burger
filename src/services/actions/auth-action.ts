@@ -9,7 +9,7 @@ const showRecoverPasswordNotification = createAction(
 )
 
 const hideRecoverPasswordNotification = createAction(
-  AuthAction.HideRecoverPasswordNotification, (notification) => ({
+  AuthAction.HideRecoverPasswordNotification, () => ({
     type: AuthAction.HideRecoverPasswordNotification,
     payload: null,
   })

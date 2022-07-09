@@ -9,7 +9,7 @@ import {useRef} from 'react';
 import type {XYCoord} from 'dnd-core';
 import {TIngredient} from '../../types/tingredient';
 
-type FillingIngredientPropsType = {
+type TFillingIngredientPropsType = {
   filling: TIngredient,
 }
 
@@ -20,7 +20,7 @@ type DragDropItemType = {
   index?: number
 }
 
-function FillingIngredient(props: FillingIngredientPropsType) {
+function FillingIngredient(props: TFillingIngredientPropsType) {
   const {name, price, image, _id, uniqueIndex} = props.filling;
 
   const ref = useRef<HTMLDivElement>(null);

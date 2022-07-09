@@ -67,7 +67,7 @@ function BurgerConstructor() {
   return (
     <section className={constructorStyle.grid} ref={dropTargetRef}>
       {
-        bun._id !== null &&
+        bun._id !== undefined &&
         <section className={constructorStyle.upper_cover}>
           <div className={constructorStyle.element_wrapper}>
             <ConstructorElement
@@ -87,7 +87,7 @@ function BurgerConstructor() {
         </section>
       }
       {
-        bun._id !== null &&
+        bun._id !== undefined &&
         <section className={constructorStyle.bottom_cover}>
           <div className={constructorStyle.element_wrapper}>
             <ConstructorElement

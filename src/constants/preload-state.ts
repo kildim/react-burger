@@ -2,7 +2,7 @@ import {TIngredient} from '../types/tingredient';
 
 export const preloadBurger = {
   bun: {} as TIngredient,
-  fillings: []
+  fillings: [] as TIngredient[]
 }
 
 export const preloadedState = {

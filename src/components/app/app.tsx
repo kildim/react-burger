@@ -59,12 +59,12 @@ function App() {
   const passwordRecoverNotification = useSelector<RootState, string>((state) => {
     return state.auth.passwordRecoverStatus?.success ? 'Письмо с сылкой успешно выслано на почту!' : 'Сервер не подтвердил отправку письма на почту!'
   })
-  const passwordRecoverStatus = useSelector<RootState, boolean>((state) => state.auth.passwordRecoverStatus?.success);
+  const passwordRecoverStatus = useSelector<RootState, boolean | undefined>((state) => state.auth.passwordRecoverStatus?.success);
   const showPasswordResetNotification = useSelector<RootState, boolean>((state) => state.auth.showPasswordResetNotification);
   const passwordResetNotification = useSelector<RootState, string>((state) => {
     return state.auth.passwordResetStatus?.success ? 'Пароль сброшен успешно!' : 'Сервер не подтвердил сброс пароля!';
   })
-  const passwordResetStatus = useSelector<RootState, boolean>((state) => state.auth.passwordResetStatus?.success);
+  const passwordResetStatus = useSelector<RootState, boolean | undefined>((state) => state.auth.passwordResetStatus?.success);
 
 
   const handleCloseOrderDetailPopup = () => {

@@ -7,12 +7,12 @@ import {useDispatch} from 'react-redux';
 import {removeFilling, replaceFillings} from '../../services/actions/action';
 import {useDrag, useDrop} from 'react-dnd';
 import {useRef} from 'react';
-import type { Identifier, XYCoord } from 'dnd-core'
+import type {XYCoord} from 'dnd-core'
 
 function FillingIngredient(props: FillingIngredientPropsType) {
   const {name, price, image, _id, uniqueIndex} = props.filling;
 
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
   const [, dropFilling] = useDrop({
     accept: 'filling',
@@ -29,7 +29,7 @@ function FillingIngredient(props: FillingIngredientPropsType) {
       }
 
 
-      // @ts-ignore
+      // ts-ignore
       const hoverBoundingRect = ref.current?.getBoundingClientRect()
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2

@@ -1,5 +1,7 @@
 export const preloadBurger = {
-  bun: {},
+  bun: {
+    _id: ''
+  },
   fillings: []
 }
 

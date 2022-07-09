@@ -1,9 +1,12 @@
-// @ts-nocheck
 import IngredientsList from '../ingredients-list/ingredients-list';
 
 import ingredientsStyle from './burger-ingredients.module.css';
 import {useSelector} from 'react-redux';
-import {useEffect, useRef, useState} from 'react';
+import {SyntheticEvent, useEffect, useRef, useState} from 'react';
+
+import {RootState} from '../../index';
+import {TIngredient} from '../../types/tingredient';
+
 
 const SELECTED_PART_ITEM = `${ingredientsStyle.part_item} ${ingredientsStyle.part_item__selected}`;
 const INACTIVE_PART_ITEM = `${ingredientsStyle.part_item}`;
@@ -12,90 +15,142 @@ const SELECTED_REF = `${ingredientsStyle.part_ref} text text_type_main-default`;
 
 
 function BurgerIngredients() {
-  const ingredientsListSectionRef = useRef(null);
-  const tabsListRef = useRef(null);
-  const prevActiveTitleRef = useRef(null);
-  const [ingredientTitles, setIngredientTitles] = useState(null);
+  const ingredientsListSectionRef = useRef<HTMLElement>(null);
+  const tabsListRef = useRef<HTMLUListElement>(null);
+  const prevActiveTitleRef = useRef<string | null>(null);
+  const [ingredientTitles, setIngredientTitles] = useState<Array<HTMLHeadingElement> | null >(null);
 
   useEffect(() => {
-    setIngredientTitles(Array.from(ingredientsListSectionRef.current.querySelectorAll('h3')));
-    prevActiveTitleRef.current = 'Булки'
+    if (ingredientsListSectionRef.current === null) {
+      console.error('Ошибка связи с DOM');
+    } else {
+      const ingredientsHeadings = Array.from(ingredientsListSectionRef.current.querySelectorAll('h3'));
+      setIngredientTitles(ingredientsHeadings);
+      prevActiveTitleRef.current = 'Булки'
+    }
   }, [])
 
-  const {ingredients} = useSelector((store) => {
-    const ingredients = store.main.ingredients.map( (ingredient) => {
+  const ingredients = useSelector<RootState, TIngredient[]>((store) => {
+    const ingredients = store.main.ingredients.map((ingredient: TIngredient) => {
       if (ingredient.type === 'bun') {
-        return ingredient._id === store.main.burger.bun._id ? {...ingredient, count: 2} : {...ingredient, count:0}
+        return ingredient._id === store.main.burger.bun._id ? {...ingredient, count: 2} : {...ingredient, count: 0}
       } else {
-        const ingredientCount = store.main.burger.fillings.filter( (filling) => ingredient._id === filling._id).length;
+        const ingredientCount = store.main.burger.fillings.filter((filling: TIngredient) => ingredient._id === filling._id).length;
         return {...ingredient, count: ingredientCount}
       }
-    } );
-    return  {ingredients}
+    });
+    return ingredients
   })
 
   if (ingredients.length === 0) {
     return null
   }
 
+
   const unSelectTabsListItems = () => {
-    tabsListRef.current.querySelectorAll('li').forEach((listItem) => {
-      const listItemRef = listItem.firstChild;
+    if (tabsListRef.current === null) {
+      console.error('Ошибка связи с DOM')
+    } else {
+      tabsListRef.current.querySelectorAll('li').forEach((listItem) => {
+        const listItemRef = listItem.firstChild as HTMLLIElement | null;
 
-      listItem.classList.remove(`${ingredientsStyle.part_item__selected}`);
-      listItemRef.classList.remove(`${ingredientsStyle.part_ref}`);
-      listItemRef.classList.add(`${ingredientsStyle.part_ref__unselected}`, 'text_color_inactive')
-    })
+        listItem.classList.remove(`${ingredientsStyle.part_item__selected}`);
+        if (listItemRef === null) {
+          console.error('Ошибка связи с DOM')
+        } else {
+          listItemRef.classList.remove(`${ingredientsStyle.part_ref}`);
+          listItemRef.classList.add(`${ingredientsStyle.part_ref__unselected}`, 'text_color_inactive')
+        }
+      })
+    }
   }
 
-  const findTabItemByText = (tabText) => {
-    const tabsItems = Array.from(tabsListRef.current.querySelectorAll('li'));
-    return tabsItems.find( (tabsItem) => (tabsItem.firstChild.textContent === tabText))
+  const findTabItemByText = (tabText: string | null): HTMLLIElement | undefined => {
+    if (tabsListRef.current === null) {
+      console.error('Ошибка связи с DOM')
+    } else {
+      const tabsItems = Array.from(tabsListRef.current.querySelectorAll('li'));
+
+      return tabsItems.find((tabsItem) => {
+        if (tabsItem.firstChild === null) {
+          return false
+        } else {
+          return tabsItem.firstChild.textContent === tabText
+        }
+      })
+    }
   }
 
-  const addPartItemRefSelection = (partItem) => {
+  const addPartItemRefSelection = (partItem: HTMLAnchorElement) => {
     partItem.classList.remove(`${ingredientsStyle.part_ref__unselected}`, `${ingredientsStyle.text_color_inactive}`);
     partItem.classList.add(`${ingredientsStyle.part_ref}`);
   }
 
-  const addPartItemSelection = (activeTabItem) => {
+  const addPartItemSelection = (activeTabItem: HTMLLIElement) => {
     activeTabItem.classList.add(`${ingredientsStyle.part_item__selected}`)
   }
 
-  const setActiveTitle = (activeTitleText) => {
+  const setActiveTitle = (activeTitleText: string | null) => {
     const activeTabItem = findTabItemByText(activeTitleText);
-    unSelectTabsListItems();
-    addPartItemRefSelection(activeTabItem.firstChild);
-    addPartItemSelection(activeTabItem);
+    if (!activeTabItem) {
+      console.error('Ошибка связи с DOM')
+    } else {
+      unSelectTabsListItems();
+      addPartItemRefSelection(activeTabItem.firstChild as HTMLAnchorElement);
+      addPartItemSelection(activeTabItem);
+    }
   }
 
-  const partItemRefClickHandler = (e) => {
+  const partItemRefClickHandler = (e: SyntheticEvent) => {
     setActiveTitle(e.currentTarget.textContent);
-
-    ingredientTitles.find((ingredientHeader) => (e.currentTarget.textContent === ingredientHeader.textContent)).scrollIntoView();
+    if (ingredientTitles === null) {
+      console.error('Ошибка связи с DOM')
+    } else {
+      const foundTitle = ingredientTitles.find((ingredientHeader) => (e.currentTarget.textContent === ingredientHeader.textContent));
+      if (!foundTitle) {
+        console.error('Не найден foundTitle')
+      } else {
+        foundTitle.scrollIntoView();
+      }
+    }
   };
 
-  const partItemClickHandler = (e) => {
+  const partItemClickHandler = (e: SyntheticEvent) => {
     e.currentTarget.classList.add(`${ingredientsStyle.part_item__selected}`);
   }
 
-  const partsListClickHandler = (e) => {
+  const partsListClickHandler = (_e: SyntheticEvent) => {
     unSelectTabsListItems();
   }
 
-  const ingredientsListScrollHandler = (e) => {
-    const distance = ingredientTitles.map(
-      (ingredientTitle) =>
-        (Math.abs(ingredientTitle.getBoundingClientRect().top - ingredientsListSectionRef.current.getBoundingClientRect().top))
-    );
+  const ingredientsListScrollHandler = (_e: SyntheticEvent) => {
+    if (ingredientTitles === null) {
+      console.error('Ошибка связи с DOM')
+    } else {
+      const distance = ingredientTitles.map(
+        (ingredientTitle) => {
+          if (ingredientsListSectionRef.current === null) {
+            console.error("ingredientsListSectionRef is null")
+            return 0;
+          } else {
+            return Math.abs(ingredientTitle.getBoundingClientRect().top - ingredientsListSectionRef.current.getBoundingClientRect().top)
+          }
+        }
+      );
 
-    const min = Math.min(...distance);
-    const upSideTitleIndex = distance.indexOf(min);
-    const activeTitle = ingredientTitles[upSideTitleIndex].textContent;
+      const min = Math.min(...distance);
+      const upSideTitleIndex = distance.indexOf(min);
+      const activeTitle = ingredientTitles[upSideTitleIndex].textContent;
 
-    if ( activeTitle !== prevActiveTitleRef.current) {
-      prevActiveTitleRef.current = activeTitle;
-      setActiveTitle(prevActiveTitleRef.current)
+      if (prevActiveTitleRef.current === null) {
+        console.error('Ошибка связи с DOM')
+      } else {
+        if (activeTitle !== prevActiveTitleRef.current) {
+          prevActiveTitleRef.current = activeTitle;
+          setActiveTitle(prevActiveTitleRef.current)
+        }
+      }
+
     }
   }
 

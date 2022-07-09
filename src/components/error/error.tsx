@@ -1,13 +1,15 @@
-// @ts-nocheck
 import ErrorStyles from './error.module.css';
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {hideErrorMessage} from '../../services/actions/action';
 import Modal from '../modal/modal';
+import {RootState} from '../../index';
+
+type TErrorState = {showErrorMessage: boolean, errorMessage: string | null}
 
 function Error() {
   const dispatch = useDispatch();
-  const {showErrorMessage, errorMessage} = useSelector((state) => ({showErrorMessage: state.main.showErrorMessage, errorMessage: state.main.errorMessage}))
+  const {showErrorMessage, errorMessage} = useSelector<RootState, TErrorState>((state) => ({showErrorMessage: state.main.showErrorMessage, errorMessage: state.main.errorMessage}));
 
 
   const handleClosePopup = () => {

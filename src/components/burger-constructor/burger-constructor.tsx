@@ -1,11 +1,9 @@
-// ts-nocheck
 import {ConstructorElement, Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 import FillingIngredient from '../filling-ingredient/filling-ingredient'
 
 import constructorStyle from './burger-constructor.module.css';
 import React, {useMemo} from 'react';
-import {IngredientData} from '../../types/ingredient-data';
 
 import {useDispatch, useSelector} from 'react-redux';
 import {useDrop} from 'react-dnd';
@@ -13,6 +11,7 @@ import {addToBurger} from '../../services/actions/action';
 import {fetchOrder} from '../../services/api/api';
 import {useHistory} from 'react-router-dom';
 import {RootState} from '../../index';
+import {TIngredient} from '../../types/tingredient';
 
 function BurgerConstructor() {
   // const {bun, fillings} = useSelector<RootState>((store) => ({
@@ -20,9 +19,10 @@ function BurgerConstructor() {
   //   fillings: store.main.burger.fillings,
   //   order: store.main.order,
   // }))
-  const bun = useSelector<RootState>((store) => store.main.burger.bun)
-  const fillings = useSelector<RootState>((store) => store.main.burger.fillings)
+  const bun = useSelector<RootState>((store) => store.main.burger.bun) as TIngredient
+  const fillings = useSelector<RootState>((store) => store.main.burger.fillings) as Array<TIngredient>
 
+  // @ts-ignore
   const isAuthenticated = useSelector((store) => store.auth.isAuthenticated)
 
   const amount = useMemo(() => {
@@ -36,6 +36,7 @@ function BurgerConstructor() {
   const dispatch = useDispatch();
   const history = useHistory();
 
+  // @ts-ignore
   const [{canDrop, isOver}, dropTargetRef] = useDrop(() => ({
     accept: 'ingredient',
     drop: ({_id}) => {
@@ -84,7 +85,7 @@ function BurgerConstructor() {
       {
         fillings.length !== 0 &&
         <section className={constructorStyle.filling}>
-          {fillings.map((item: IngredientData) => <FillingIngredient filling={item} key={item.uniqueIndex}/>)}
+          {fillings.map((item) => <FillingIngredient filling={item} key={item.uniqueIndex}/>)}
         </section>
       }
       {

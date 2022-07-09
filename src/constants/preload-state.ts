@@ -1,10 +1,12 @@
+import {TIngredient} from '../types/tingredient';
+
 export const preloadBurger = {
-  bun: {_id: null},
+  bun: {} as TIngredient,
   fillings: []
 }
 
 export const preloadedState = {
-  ingredients: [],
+  ingredients: [] as TIngredient[],
   burger: preloadBurger,
   currentIngredient: {},
   order: {

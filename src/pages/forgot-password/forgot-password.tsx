@@ -1,4 +1,3 @@
-//@ts-nocheck
 import styles from './forgot-password.module.css';
 import {Input, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Link} from 'react-router-dom';
@@ -11,8 +10,8 @@ function ForgotPassword() {
   const {postRememberPasswordNotification} = useAuth();
   const dispatch = useDispatch();
 
-  const handleEmailInputChange = useCallback((e) => setEmail(e.target.value));
-  const handleRememberPasswordButtonClick = useCallback((e) => dispatch(postRememberPasswordNotification(email)))
+  const handleEmailInputChange = useCallback((e) => setEmail(e.target.value),[]);
+  const handleRememberPasswordButtonClick = useCallback((e) => dispatch(postRememberPasswordNotification(email)), [])
 
   return (
     <section className={styles.content}>

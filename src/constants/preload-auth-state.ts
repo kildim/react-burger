@@ -1,6 +1,6 @@
 export const preloadedAuthState = {
-  nick: null,
-  email: null,
+  nick: '',
+  email: '',
   isAuthenticated:false,
   isUserDataLoading: false,
   isAuthChecked: false,

@@ -1,19 +1,23 @@
-//@ts-nocheck
 import styles from '../ingredient/ingredient.module.css';
 import React from 'react';
 import {useSelector} from 'react-redux';
 import {useHistory, useParams} from 'react-router-dom';
+import {RootState} from '../../index';
+import {TIngredient} from '../../types/tingredient';
 
 const TERM_DEFINITION_STYLE = 'text text_type_main-small text_color_inactive';
 const DEFINITION_DESCRIPTION_STYLE = 'text text_type_digits-default text_color_inactive'
 const TITLE_STYLE = "text text_type_main-large"
 
+type TLocationParams = {
+  id: string,
+}
 
 function Ingredient() {
-  const {id} = useParams()
+  const {id} = useParams<TLocationParams>()
   const history = useHistory();
 
-  const ingredient = useSelector((state) => state.main.ingredients.find((ingredient) => ingredient._id === id));
+  const ingredient = useSelector<RootState, TIngredient | undefined>((state) => state.main.ingredients.find((ingredient) => ingredient._id === id));
   const {name, calories, proteins, fat, carbohydrates, image} = {...ingredient}
 
   return history.location.state ? null

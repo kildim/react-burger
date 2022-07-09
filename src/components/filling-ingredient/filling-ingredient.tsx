@@ -2,12 +2,23 @@ import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-compon
 import {DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 import fillingIngredientStyle from './filling-ingredient.module.css';
-import {FillingIngredientPropsType, DragDropItemType} from './filling-ingredient.d'
 import {useDispatch} from 'react-redux';
 import {removeFilling, replaceFillings} from '../../services/actions/action';
 import {useDrag, useDrop} from 'react-dnd';
 import {useRef} from 'react';
-import type {XYCoord} from 'dnd-core'
+import type {XYCoord} from 'dnd-core';
+import {TIngredient} from '../../types/tingredient';
+
+type FillingIngredientPropsType = {
+  filling: TIngredient,
+}
+
+type DragDropItemType = {
+  _id: string,
+  uniqueIndex: number,
+  type?: string,
+  index?: number
+}
 
 function FillingIngredient(props: FillingIngredientPropsType) {
   const {name, price, image, _id, uniqueIndex} = props.filling;
@@ -28,20 +39,23 @@ function FillingIngredient(props: FillingIngredientPropsType) {
         return
       }
 
-
-      // ts-ignore
       const hoverBoundingRect = ref.current?.getBoundingClientRect()
       const hoverMiddleY =
         (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
       const clientOffset = monitor.getClientOffset()
       const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top
 
-      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return
+      if (!dragIndex && !dragIndex) {
+        return;
+      } else {
+        if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+          return
+        }
+        if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+          return
+        }
       }
-      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return
-      }
+
       item.index = hoverIndex
 
 
@@ -51,7 +65,7 @@ function FillingIngredient(props: FillingIngredientPropsType) {
   const [{isDragging}, dragFilling] = useDrag({
     type: 'filling',
     item: (): DragDropItemType => {
-      return {_id, uniqueIndex}
+      return {_id, uniqueIndex} as DragDropItemType
     },
     collect: (monitor) => ({
       isDragging: monitor.isDragging()

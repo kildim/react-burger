@@ -21,9 +21,7 @@ function BurgerConstructor() {
   // }))
   const bun = useSelector<RootState>((store) => store.main.burger.bun) as TIngredient
   const fillings = useSelector<RootState>((store) => store.main.burger.fillings) as Array<TIngredient>
-
-  // @ts-ignore
-  const isAuthenticated = useSelector((store) => store.auth.isAuthenticated)
+  const isAuthenticated = useSelector<RootState>((store) => store.auth.isAuthenticated)
 
   const amount = useMemo(() => {
     let amount = fillings.reduce((amount, current) => amount + current.price, 0);

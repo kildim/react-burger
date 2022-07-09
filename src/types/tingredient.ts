@@ -14,18 +14,3 @@ export type TIngredient = {
   _id: string,
   uniqueIndex?: number,
 }
-
-// count: number;
-// calories: string;
-// carbohydrates: string;
-// fat: string;
-// image: string;
-// image_large: string;
-// image_mobile: string;
-// name: string;
-// price: number;
-// proteins: string;
-// type: "main" | "bun" | "sauce";
-// __v: string;
-// _id: string;
-// uniqueIndex?: number | undefined;

@@ -1,12 +1,15 @@
 import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components';
 
 import ingredientStyle from './ingredient.module.css';
-import {IngredientProps} from './ingredient.d'
 import React from 'react';
 
 import {DragPreviewImage, useDrag} from 'react-dnd';
 import {useHistory} from 'react-router-dom';
+import {TIngredient} from '../../types/tingredient';
 
+type IngredientProps = {
+  data: TIngredient,
+}
 
 function Ingredient(props: IngredientProps) {
   const {price = 0, name = '', image = '', _id = null, count = 0} = props.data

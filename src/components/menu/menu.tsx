@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import {BurgerIcon, ListIcon, ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Link, NavLink} from 'react-router-dom';
 

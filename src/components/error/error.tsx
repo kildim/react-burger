@@ -7,7 +7,7 @@ import {RootState} from '../../index';
 
 type TErrorState = {showErrorMessage: boolean, errorMessage: string | null}
 
-function Error() {
+function Error(): JSX.Element {
   const dispatch = useDispatch();
   const {showErrorMessage, errorMessage} = useSelector<RootState, TErrorState>((state) => ({showErrorMessage: state.main.showErrorMessage, errorMessage: state.main.errorMessage}));
 
@@ -16,7 +16,7 @@ function Error() {
     dispatch(hideErrorMessage())
   }
 
-  return showErrorMessage &&
+  return {showErrorMessage} &&
     <Modal header={''} onClosePopup={handleClosePopup}>
       <section>
         <h1 className={ErrorStyles.error}>ERROR</h1>

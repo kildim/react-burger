@@ -1,11 +1,17 @@
-//@ts-nocheck
+//ts-nocheck
 import React from 'react';
 import {useSelector} from 'react-redux';
 import acceptance from '../../images/acceptance.png';
+import {RootState} from '../../index';
+
+type TOrderState = {
+  number: number,
+  status: string
+}
 
 function OrderDetail() {
-  const {number, status} = useSelector((state) => ({
-    number: {...state.main.order.order}.number,
+  const {number, status} = useSelector<RootState, TOrderState>((state) => ({
+    number: state.main.order.order.number,
     status: state.main.order.success ? 'Ваш заказ начали готовить' : 'Ваш заказ отклонён'
   }));
 

@@ -9,7 +9,11 @@ export const preloadedState = {
   ingredients: [],
   burger: preloadBurger,
   currentIngredient: {},
-  order: {},
+  order: {
+    success: false,
+    order: {number: 0}
+
+  },
   isLoading: true,
   errorMessage: null,
   showIngredientDetail: false,

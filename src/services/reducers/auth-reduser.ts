@@ -1,6 +1,4 @@
-// @ts-nocheck
-
-
+// ts-nocheck
 import {createReducer} from '@reduxjs/toolkit';
 import {preloadedAuthState} from '../../constants/preload-auth-state';
 import {

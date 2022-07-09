@@ -1,6 +1,3 @@
-//@ts-nocheck
-
-
 import {
   saveUserProfile, setAuthChecked, setIsAuthenticated, setIsUserDataLoading,
   showRecoverPasswordNotification, showResetPasswordNotification,
@@ -15,14 +12,16 @@ import {useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import {deleteCookie, getCookie, setCookie, checkResponse} from '../../utils/utils';
 import {fetchWithRefresh} from '../../utils/fetch-with-refreash';
+import {ThunkAction} from 'redux-thunk';
+import {RootState} from '../../index';
 export function useAuth() {
-  const nick = useSelector((store) => store.auth.nick);
-  const isAuthenticated = useSelector((store) => store.auth.isAuthenticated)
-  const isAuthChecked = useSelector((store) => store.auth.isAuthChecked);
+  const nick = useSelector<RootState>((store) => store.auth.nick);
+  const isAuthenticated = useSelector<RootState>((store) => store.auth.isAuthenticated)
+  const isAuthChecked = useSelector<RootState>((store) => store.auth.isAuthChecked);
 
   const history = useHistory();
 
-  const getUserData = () => (dispatch, _getState) => {
+  const getUserData = (): ThunkAction<any, any, any, any> => (dispatch, _getState) => {
     const accessToken = getCookie("authorization");
     dispatch(setIsUserDataLoading(true));
     const options = {
@@ -51,7 +50,7 @@ export function useAuth() {
       })
   };
 
-  const postRememberPasswordNotification = (email) => (dispatch, _getState) => {
+  const postRememberPasswordNotification = (email: string): ThunkAction<any, any, any, any> => (dispatch, _getState) => {
     const options = {
       method: 'POST',
       body: JSON.stringify({email: email}),
@@ -74,7 +73,7 @@ export function useAuth() {
       .finally(() => dispatch(setIsLoading(false)))
   }
 
-  const postResetPassword = (requestBody) => (dispatch, _getState) => {
+  const postResetPassword = (requestBody: any): ThunkAction<any, any, any, any> => (dispatch, _getState) => {
     const options = {
       method: 'POST',
       body: JSON.stringify(requestBody),
@@ -98,7 +97,7 @@ export function useAuth() {
       .finally(() => dispatch(setIsLoading(false)))
   }
 
-  const postRegister = (requestBody) => (dispatch, _getState) => {
+  const postRegister = (requestBody: any): ThunkAction<any, any, any, any> => (dispatch, _getState) => {
     const options = {
       method: 'POST',
       body: JSON.stringify(requestBody),
@@ -125,7 +124,7 @@ export function useAuth() {
       .finally(() => dispatch(setIsLoading(false)))
   }
 
-  const signIn = (requestBody) => (dispatch, _getState) => {
+  const signIn = (requestBody: any):ThunkAction<any, any, any, any> => (dispatch, _getState) => {
     const options = {
       method: 'POST',
       body: JSON.stringify(requestBody),
@@ -153,7 +152,7 @@ export function useAuth() {
       .finally(() => dispatch(setIsLoading(false)))
   }
 
-  const signOut = () => (dispatch, _getState) => {
+  const signOut = (): ThunkAction<any, any, any, any> => (dispatch, _getState) => {
     const refreshToken = localStorage.getItem('authorization');
     const options = {
       method: 'POST',

@@ -1,4 +1,4 @@
-// @ts-nocheck
+// ts-nocheck
 import {createReducer, current} from '@reduxjs/toolkit';
 import {preloadBurger, preloadedState} from '../../constants/preload-state';
 import {

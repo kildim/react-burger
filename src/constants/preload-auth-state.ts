@@ -6,10 +6,10 @@ export const preloadedAuthState = {
   isAuthChecked: false,
   passwordRecoverStatus: {
     success: false,
-  },
+  } as {success: boolean} | null,
   showPasswordResetNotification: false,
   passwordResetStatus: {
     success: false,
-  },
+  } as {success: boolean} | null,
   showPasswordRecoverNotification: false,
 }

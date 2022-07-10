@@ -1,6 +1,12 @@
 import { API_URL } from "../constants/env-config";
 import { setCookie,  checkResponse} from "./utils";
 
+type TRequestInit = {
+  headers: {
+    'Content-Type': string,
+    authorization: string}
+}
+
 export const updateToken = () => {
     return fetch(`${API_URL}/auth/token`, {
       method: "POST",
@@ -13,20 +19,20 @@ export const updateToken = () => {
     }).then(checkResponse);
   };
 
-  export const fetchWithRefresh = async (url, options) => {
+  export const fetchWithRefresh = async (url: string, options: TRequestInit) => {
     try {
       const res = await fetch(url, options);
       return await checkResponse(res);
-    } catch (err) {
+    } catch (err: any) {
       if (err.message === "jwt expired") {
-        const refreshData = await updateToken(); //обновляем токен
+        const refreshData = await updateToken();
         if (!refreshData.success) {
           return Promise.reject(refreshData);
         }
         localStorage.setItem("authorization", refreshData.refreshToken);
-        setCookie("authorization", refreshData.accessToken);
+        setCookie("authorization", refreshData.accessToken, {});
         options.headers.authorization = refreshData.accessToken;
-        const res = await fetch(url, options); //повторяем запрос
+        const res = await fetch(url, options);
         return await checkResponse(res);
       } else {
         return Promise.reject(err);

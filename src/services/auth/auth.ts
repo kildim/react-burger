@@ -1,7 +1,6 @@
 import {
   saveUserProfile, setAuthChecked, setIsAuthenticated, setIsUserDataLoading,
   showRecoverPasswordNotification, showResetPasswordNotification,
-  // showResetPasswordNotification
 } from '../actions/auth-action';
 import {
   setIsLoading,
@@ -27,7 +26,7 @@ export function useAuth() {
     const options = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: accessToken,
+        authorization: accessToken || '',
       },
     };
 
@@ -110,7 +109,7 @@ export function useAuth() {
       .then(checkResponse)
       .then((res) => {
         if (res.success) {
-          setCookie('authorization', res.accessToken);
+          setCookie('authorization', res.accessToken, {});
           localStorage.setItem('authorization', res.refreshToken);
           dispatch(saveUserProfile(res.user))
           history.push('/')
@@ -139,7 +138,7 @@ export function useAuth() {
         if (res.success) {
           dispatch(saveUserProfile(res.user));
           dispatch(setIsAuthenticated(true));
-          setCookie('authorization', res.accessToken);
+          setCookie('authorization', res.accessToken, {});
           localStorage.setItem('authorization', res.refreshToken);
         } else {
           throw('Сервер не авторизировал!')

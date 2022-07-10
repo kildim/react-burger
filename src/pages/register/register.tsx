@@ -1,17 +1,18 @@
-//@ts-nocheck
 import styles from './register.module.css';
 import {Input, PasswordInput, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Link} from 'react-router-dom';
-import {useCallback, useState} from 'react';
+import {SyntheticEvent, useCallback, useState} from 'react';
 import {useAuth} from '../../services/auth/auth';
 import {useDispatch} from 'react-redux';
 
 function Register() {
-  const {isAuthenticated, postRegister} = useAuth();
+  const {postRegister} = useAuth();
   const [form, setValue] = useState({email: '', password: '', name: ''});
   const dispatch = useDispatch();
 
-  const onChange = e => {
+  type TFormControlEvent = SyntheticEvent & {target: {name: string, value: string}}
+
+  const onChange = (e: TFormControlEvent) => {
     setValue({...form, [e.target.name]: e.target.value});
   };
   const handleRegisterClick = useCallback(

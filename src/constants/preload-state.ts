@@ -1,13 +1,19 @@
+import {TIngredient} from '../types/tingredient';
+
 export const preloadBurger = {
-  bun: {},
-  fillings: []
+  bun: {} as TIngredient,
+  fillings: [] as TIngredient[]
 }
 
 export const preloadedState = {
-  ingredients: [],
+  ingredients: [] as TIngredient[],
   burger: preloadBurger,
   currentIngredient: {},
-  order: {},
+  order: {
+    success: false,
+    order: {number: 0}
+
+  },
   isLoading: true,
   errorMessage: null,
   showIngredientDetail: false,

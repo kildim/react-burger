@@ -1,10 +1,6 @@
-//@ts-nocheck
-
-
 import {
   saveUserProfile, setAuthChecked, setIsAuthenticated, setIsUserDataLoading,
   showRecoverPasswordNotification, showResetPasswordNotification,
-  // showResetPasswordNotification
 } from '../actions/auth-action';
 import {
   setIsLoading,
@@ -15,20 +11,22 @@ import {useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import {deleteCookie, getCookie, setCookie, checkResponse} from '../../utils/utils';
 import {fetchWithRefresh} from '../../utils/fetch-with-refreash';
+import {ThunkAction} from 'redux-thunk';
+import {RootState} from '../../index';
 export function useAuth() {
-  const nick = useSelector((store) => store.auth.nick);
-  const isAuthenticated = useSelector((store) => store.auth.isAuthenticated)
-  const isAuthChecked = useSelector((store) => store.auth.isAuthChecked);
+  const nick = useSelector<RootState>((store) => store.auth.nick);
+  const isAuthenticated = useSelector<RootState>((store) => store.auth.isAuthenticated)
+  const isAuthChecked = useSelector<RootState>((store) => store.auth.isAuthChecked);
 
   const history = useHistory();
 
-  const getUserData = () => (dispatch, _getState) => {
+  const getUserData = (): ThunkAction<any, any, any, any> => (dispatch, _getState) => {
     const accessToken = getCookie("authorization");
     dispatch(setIsUserDataLoading(true));
     const options = {
       headers: {
         "Content-Type": "application/json",
-        Authorization: accessToken,
+        authorization: accessToken || '',
       },
     };
 
@@ -51,7 +49,7 @@ export function useAuth() {
       })
   };
 
-  const postRememberPasswordNotification = (email) => (dispatch, _getState) => {
+  const postRememberPasswordNotification = (email: string): ThunkAction<any, any, any, any> => (dispatch, _getState) => {
     const options = {
       method: 'POST',
       body: JSON.stringify({email: email}),
@@ -69,12 +67,12 @@ export function useAuth() {
         }
       })
       .catch((error) => {
-        dispatch(showErrorMessage({errorMessage: error}));
+        dispatch(showErrorMessage({errorMessage: error.message}));
       })
       .finally(() => dispatch(setIsLoading(false)))
   }
 
-  const postResetPassword = (requestBody) => (dispatch, _getState) => {
+  const postResetPassword = (requestBody: any): ThunkAction<any, any, any, any> => (dispatch, _getState) => {
     const options = {
       method: 'POST',
       body: JSON.stringify(requestBody),
@@ -88,15 +86,17 @@ export function useAuth() {
     fetch(`${API_URL}/password-reset/reset`, options)
       .then(checkResponse)
       .then((res) => {
-        dispatch(showResetPasswordNotification(res))
+        if (res.success) {
+          dispatch(showResetPasswordNotification(res))
+        }
       })
       .catch((error) => {
-        dispatch(showErrorMessage({errorMessage: error}));
+        dispatch(showErrorMessage({errorMessage: error.message}));
       })
       .finally(() => dispatch(setIsLoading(false)))
   }
 
-  const postRegister = (requestBody) => (dispatch, _getState) => {
+  const postRegister = (requestBody: any): ThunkAction<any, any, any, any> => (dispatch, _getState) => {
     const options = {
       method: 'POST',
       body: JSON.stringify(requestBody),
@@ -109,7 +109,7 @@ export function useAuth() {
       .then(checkResponse)
       .then((res) => {
         if (res.success) {
-          setCookie('authorization', res.accessToken);
+          setCookie('authorization', res.accessToken, {});
           localStorage.setItem('authorization', res.refreshToken);
           dispatch(saveUserProfile(res.user))
           history.push('/')
@@ -123,7 +123,7 @@ export function useAuth() {
       .finally(() => dispatch(setIsLoading(false)))
   }
 
-  const signIn = (requestBody) => (dispatch, _getState) => {
+  const signIn = (requestBody: any):ThunkAction<any, any, any, any> => (dispatch, _getState) => {
     const options = {
       method: 'POST',
       body: JSON.stringify(requestBody),
@@ -138,7 +138,7 @@ export function useAuth() {
         if (res.success) {
           dispatch(saveUserProfile(res.user));
           dispatch(setIsAuthenticated(true));
-          setCookie('authorization', res.accessToken);
+          setCookie('authorization', res.accessToken, {});
           localStorage.setItem('authorization', res.refreshToken);
         } else {
           throw('Сервер не авторизировал!')
@@ -151,7 +151,7 @@ export function useAuth() {
       .finally(() => dispatch(setIsLoading(false)))
   }
 
-  const signOut = () => (dispatch, _getState) => {
+  const signOut = (): ThunkAction<any, any, any, any> => (dispatch, _getState) => {
     const refreshToken = localStorage.getItem('authorization');
     const options = {
       method: 'POST',

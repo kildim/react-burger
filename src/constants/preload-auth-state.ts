@@ -1,11 +1,15 @@
 export const preloadedAuthState = {
-  nick: null,
-  email: null,
+  nick: '',
+  email: '',
   isAuthenticated:false,
   isUserDataLoading: false,
   isAuthChecked: false,
-  passwordRecoverStatus: {},
-  showResetPasswordNotification: false,
-  passwordResetStatus: {},
+  passwordRecoverStatus: {
+    success: false,
+  } as {success: boolean} | null,
+  showPasswordResetNotification: false,
+  passwordResetStatus: {
+    success: false,
+  } as {success: boolean} | null,
   showPasswordRecoverNotification: false,
 }

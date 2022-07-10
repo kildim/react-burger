@@ -1,26 +1,30 @@
-//@ts-nocheck
 import styles from './profile.module.css';
 import {Input} from '@ya.praktikum/react-developer-burger-ui-components';
 import {NavLink} from 'react-router-dom';
 import {useCallback, useState} from 'react';
 import {useAuth} from '../../services/auth/auth';
 import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../../index';
 
 const REF_CLASS = `text text_type_main-large text_color_inactive mb-3 mt-3`;
 
 const ACTIVE_REF_STYLE = {color: 'white', textDecoration: 'none'};
 
+type TUserState = {
+  name: string,
+  email: string
+}
 
 function Profile() {
   const {signOut} = useAuth();
   const dispatch = useDispatch();
-  const {name, email} = useSelector((store) => ({name: store.auth.name, email: store.auth.email}));
+  const {name, email} = useSelector<RootState, TUserState>((store) => ({name: store.auth.nick, email: store.auth.email}));
   const [form, setValue] = useState({email: email, password: '', name: name});
 
 
   const onChange = useCallback(e => {
     setValue({...form, [e.target.name]: e.target.value});
-  });
+  }, []);
   const handleLogoutClick = useCallback(
     e => {
       e.preventDefault();

@@ -9,19 +9,18 @@ import {useHistory, useRouteMatch} from 'react-router-dom';
 import {selectIngredient, showIngredientDetail} from '../../services/actions/action';
 import {useDispatch} from 'react-redux';
 
-const CAPTION_STYLE = `${BuilderStyle.caption} text text_type_main-large`;
 
+const CAPTION_STYLE = `${BuilderStyle.caption} text text_type_main-large`;
 
 function Builder() {
 
-  const history = useHistory();
+  const history = useHistory<{id: number}>();
   const dispatch = useDispatch();
 
   const rootPathIsCurrent = useRouteMatch({path: '/', exact: true})
 
   useEffect(() => {
     if (history.location.state) {
-      // @ts-ignore
       const ingredientId = history.location.state.id;
       dispatch(selectIngredient(ingredientId))
       dispatch(showIngredientDetail())

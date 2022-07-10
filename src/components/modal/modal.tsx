@@ -1,15 +1,19 @@
-//@ts-nocheck
-import React from 'react';
+import React, {ReactNode} from 'react';
 import ReactDOM from 'react-dom';
 import modalStyles from './modal.module.css'
-import {ModalPropsType} from './modal.d';
 import {MouseEvent} from 'react';
 import {CloseIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components'
 import ModalOverlay from '../modal-overlay/modal-overlay';
 
+type TModalProps = {
+  header: string,
+  onClosePopup: () => void,
+  children: ReactNode,
+}
+
 const MODAL_PORTAL = document.getElementById('modals');
 
-function Modal(props: ModalPropsType) {
+function Modal(props: TModalProps):JSX.Element | null {
   const {header, onClosePopup, children} = props;
   React.useEffect(() => {
     const handleEscKeyDown = (event: KeyboardEvent) => {

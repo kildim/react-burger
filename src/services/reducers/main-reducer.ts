@@ -1,4 +1,3 @@
-// @ts-nocheck
 import {createReducer, current} from '@reduxjs/toolkit';
 import {preloadBurger, preloadedState} from '../../constants/preload-state';
 import {
@@ -19,10 +18,33 @@ import {
   showOrderDetail,
 } from '../actions/action';
 import genId from '../../utils/gen-id';
+import {RootState} from '../../index';
+import { WritableDraft } from 'immer/dist/internal';
+import { Action } from '../../constants/actions';
+import { TIngredient } from '../../types/tingredient';
+
+type TState = {
+  ingredients: TIngredient[];
+  burger: {
+    bun: TIngredient;
+    fillings: TIngredient[];
+  };
+  currentIngredient: {};
+  order: {
+    success: boolean;
+    order: { number: number; };
+  };
+  isLoading: boolean;
+  errorMessage: null;
+  showIngredientDetail: boolean;
+  showOrderDetail: boolean;
+  showErrorMessage: boolean;
+  ingredient: {};
+}
 
 const getUniqueIndex = genId();
 
-const addIngredient = (state, action) => {
+const addIngredient = (state: TState, action: { payload: any; type?: Action.AddToBurger; }) => {
   let ingredients = [...current(state).ingredients]
   let ingredientIndex = ingredients.findIndex((ingredient) => ingredient._id === action.payload);
   let bun = {...current(state).burger.bun};
@@ -36,7 +58,7 @@ const addIngredient = (state, action) => {
   return {bun, fillings}
 }
 
-const removeIngredient = (state, action) => {
+const removeIngredient = (state: TState, action: { payload: any; type?: Action.RemoveFilling; }) => {
   const ingredientUniqueIndex = action.payload;
   return current(state).burger.fillings.filter((filling) => filling.uniqueIndex !== ingredientUniqueIndex);
 }
@@ -67,7 +89,7 @@ const mainReducer = createReducer(preloadedState, (builder) => {
       state.order = action.payload.order;
     })
     .addCase(dropOrder, (state, _action) => {
-      state.order = {}
+      state.order = {success: false, order: {number:0}}
     })
     .addCase(showIngredientDetail, (state, _action) => {
       state.showIngredientDetail = true
@@ -85,7 +107,7 @@ const mainReducer = createReducer(preloadedState, (builder) => {
       state.showOrderDetail = false
     })
     .addCase(selectIngredient, (state, action) => {
-      state.ingredient = state.ingredients.find((ingredient) => ingredient._id === action.payload)
+      state.ingredient = state.ingredients.find((ingredient) => ingredient._id === action.payload) as TIngredient
     })
     .addCase(setIsLoading, (state, action) => {
       state.isLoading = action.payload

@@ -1,22 +1,20 @@
-//@ts-nocheck
 import styles from './reset-password.module.css';
 import {Input, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Link} from 'react-router-dom';
-import {useCallback, useState} from 'react';
+import {SyntheticEvent, useCallback, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {useAuth} from '../../services/auth/auth';
 
+type TFormControlEvent = SyntheticEvent & {target: {name: string, value: string}}
+
 function ResetPassword() {
   const [form, setValue] = useState({password: '', token: ''});
-
-  // const [password, setPassword] = useState('');
-  // const [token, setToken] = useState('');
   const {postResetPassword} = useAuth();
 
-  const onChange = useCallback(e => {
+  const onChange = useCallback((e: TFormControlEvent) => {
     setValue({...form, [e.target.name]: e.target.value});
-  });
-  const handleResetPasswordButtonClick = useCallback((e) => dispatch(postResetPassword(form)))
+  }, []);
+  const handleResetPasswordButtonClick = useCallback((e: SyntheticEvent) => dispatch(postResetPassword(form)), [])
 
 
   const dispatch = useDispatch();

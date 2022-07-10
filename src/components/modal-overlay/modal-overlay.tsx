@@ -1,5 +1,10 @@
 import modalOverlayStyles from './modal-overlay.module.css';
-import {ModalOverlayProps} from './modal-overlay.d'
+import {ReactNode} from 'react';
+
+type ModalOverlayProps = {
+  onCloseClick: () => void,
+  children: ReactNode,
+}
 
 function ModalOverlay(props: ModalOverlayProps) {
   const {onCloseClick, children} = props;

@@ -28,6 +28,7 @@ import {useAuth} from '../../services/auth/auth';
 import Modal from '../modal/modal';
 import {hideIngredientDetail, hideOrderDetail} from '../../services/actions/action';
 import {RootState} from '../../index';
+import OrdersList from '../../pages/orders-list/orders-list';
 
 function App() {
 
@@ -81,14 +82,14 @@ function App() {
     }
   }
   const handleCloseResetPasswordNotificationPopup = () => {
-    console.log('handleCloseResetPasswordNotificationPopup')
-
     dispatch(hideResetPasswordNotification());
     if (passwordResetStatus) {
       history.push('/login')
     }
   }
 
+  // @ts-ignore
+  // @ts-ignore
   return (
     isLoading ? <Loader/> :
       showErrorMessage ? <Error/> :
@@ -117,6 +118,9 @@ function App() {
                 <Route path="/ingredient/:id" exact={true}>
                   <Builder/>
                   <Ingredient/>
+                </Route>
+                <Route path="/feed" exact={true}>
+                  <OrdersList />
                 </Route>
                 <Route>
                   <Redirect to={'/'}/>

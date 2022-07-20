@@ -1,5 +1,5 @@
-// @ts-nocheck
 import React from 'react';
+// @ts-ignore
 import {createRoot} from 'react-dom/client';
 import './index.css';
 import App from './components/app/app';
@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import {configureStore} from '@reduxjs/toolkit';
 import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
-import rootReducer from './services/reducers/root-reducer';
+import {rootReducer} from './services/reducers/root-reducer';
 import {BrowserRouter as Router} from 'react-router-dom';
 
 

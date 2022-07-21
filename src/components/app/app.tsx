@@ -88,8 +88,6 @@ function App() {
     }
   }
 
-  // @ts-ignore
-  // @ts-ignore
   return (
     isLoading ? <Loader/> :
       showErrorMessage ? <Error/> :

@@ -9,15 +9,40 @@ import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
 import {rootReducer} from './services/reducers/root-reducer';
 import {BrowserRouter as Router} from 'react-router-dom';
+import {wsReduxMiddleware} from './services/middleware/ws-redux-middleware';
+import {FeedActions} from './constants/feed-actions';
+import {OrdersActions} from './constants/orders-actions';
 
+const feedWsActions = {
+  wsInit: FeedActions.FeedInit,
+  wsClose: FeedActions.FeedClose,
+  onOpen: FeedActions.FeedOnOpen,
+  onClose: FeedActions.FeedOnClose,
+  onError: FeedActions.FeedOnError,
+  onMessage: FeedActions.FeedOnMessage,
+};
+
+const ordersWsActions = {
+  wsInit: OrdersActions.OrdersInit,
+  wsClose: OrdersActions.OrdersClose,
+  onOpen: OrdersActions.OrdersOnOpen,
+  onClose: OrdersActions.OrdersOnClose,
+  onError: OrdersActions.OrdersOnError,
+  onMessage: OrdersActions.OrdersOnMessage,
+};
+
+
+const feedListWebSocket = wsReduxMiddleware(feedWsActions);
+// const ordersListWebSocket = wsReduxMiddleware(ordersWsActions)
 
 const store = configureStore({
   reducer: rootReducer,
   devTools: process.env.NODE_ENV !== 'production',
-  middleware: [thunk],
+  middleware: [thunk, feedListWebSocket],
 })
 
 export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
 createRoot(document.getElementById('root')).render(
   <Router>

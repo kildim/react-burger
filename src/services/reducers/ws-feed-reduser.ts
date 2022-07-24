@@ -1,11 +1,18 @@
 import {createReducer} from '@reduxjs/toolkit';
 import {preloadWsFeedState} from '../../constants/preload-ws-feed-state';
-import {feedInit} from '../actions/feed-action';
+import {feedOnClose, feedOnMessage, feedOnOpen} from '../actions/feed-action';
 
-const wsFeedReduser = createReducer(preloadWsFeedState, (builder) => {
-  builder.addCase(feedInit, ((state, action) => {
-
-  }))
+const wsFeedReducer = createReducer(preloadWsFeedState, (builder) => {
+  builder
+    .addCase(feedOnOpen, (state) => {
+    state.wsFeedOpen = true;
+  })
+    .addCase(feedOnClose, (state) => {
+      state.wsFeedOpen = false;
+    })
+    .addCase(feedOnMessage, (state, action) => {
+      state.wsFeedData = action.payload;
+    })
 })
 
-export {wsFeedReduser}
+export {wsFeedReducer}

@@ -1,3 +1,14 @@
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
+import toObject from 'dayjs/plugin/toObject';
+import 'dayjs/locale/ru';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime)
+dayjs.extend(duration);
+dayjs.extend(toObject);
+// dayjs.extend(locale_ru);
+
+
 export const checkResponse = (res: Response) => res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 
 
@@ -34,4 +45,14 @@ export function setCookie(name: string, value: string | number | boolean, props:
 
 export function deleteCookie(name: string) {
   setCookie(name, '', { expires: -1 });
+}
+
+export function formatOrderTime (time: string) {
+  const updatedAt = dayjs(time);
+  const daysToNow = dayjs.duration(dayjs(time).diff(dayjs())).days();
+  let daysToNowString =  daysToNow === 0 ? 'Сегодня,' : 'Вчера,';
+  if (daysToNow > 1) {
+    daysToNowString = `${daysToNow} дня назад,`
+  }
+  return `${daysToNowString} ${updatedAt.format('HH:mm')} i-GMT${updatedAt.format('Z')} `;
 }

@@ -12,7 +12,32 @@ const feedClose = createAction(FeedActions.FeedClose, () => ({
   payload: null,
 }))
 
+const feedOnOpen = createAction(FeedActions.FeedOnOpen, () => ({
+  type: FeedActions.FeedOnOpen,
+  payload: null,
+}))
+
+const feedOnClose = createAction(FeedActions.FeedOnClose, () => ({
+  type: FeedActions.FeedOnClose,
+  payload: null,
+}))
+
+const feedOnMessage = createAction(FeedActions.FeedOnMessage, (orders) => ({
+  type: FeedActions.FeedOnMessage,
+  payload: orders,
+}))
+
+export type TFeedAction =
+    ReturnType<typeof feedInit>
+  | ReturnType<typeof feedClose>
+  | ReturnType<typeof feedOnOpen>
+  | ReturnType<typeof feedOnClose>
+  | ReturnType<typeof feedOnMessage>;
+
 export {
   feedInit,
-  feedClose
+  feedClose,
+  feedOnOpen,
+  feedOnClose,
+  feedOnMessage,
 }

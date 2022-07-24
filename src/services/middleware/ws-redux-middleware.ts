@@ -1,4 +1,6 @@
 import {Middleware, MiddlewareAPI} from 'redux';
+import {feedClose, feedOnClose, feedOnMessage, feedOnOpen} from '../actions/feed-action';
+import {FeedActions} from '../../constants/feed-actions';
 
 type TWsActions = {
   wsInit: string,
@@ -25,11 +27,28 @@ export const wsReduxMiddleware = (wsActions: TWsActions): Middleware => {
         socket = new WebSocket(payload);
       }
 
+      if (type === wsClose && socket) {
+        console.log('CLOSE');
+        socket.close(wsCloseCode.CLOSE_NORMAL, 'Диспатч wsClose');
+        socket = null;
+      }
       if (socket) {
+        socket.onopen = event => {
+          dispatch(feedOnOpen());
+        };
 
-        if (type === wsClose) {
-          socket.close(wsCloseCode.CLOSE_NORMAL, 'Диспатч wsClose');
+        socket.onclose = event => {
+          dispatch(feedOnClose());
         }
+
+        socket.onmessage = event => {
+          const { data } = event;
+          const parsedData = JSON.parse(data);
+          const { orders } = parsedData;
+
+          dispatch(feedOnMessage(orders));
+        };
+
       }
 
       next(action);

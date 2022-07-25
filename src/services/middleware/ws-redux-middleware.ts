@@ -44,9 +44,9 @@ export const wsReduxMiddleware = (wsActions: TWsActions): Middleware => {
         socket.onmessage = event => {
           const { data } = event;
           const parsedData = JSON.parse(data);
-          const { orders } = parsedData;
+          const { orders, total, totalToday} = parsedData;
 
-          dispatch(feedOnMessage(orders));
+          dispatch(feedOnMessage({orders, total, totalToday}));
         };
 
       }

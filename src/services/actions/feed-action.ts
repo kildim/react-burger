@@ -22,9 +22,9 @@ const feedOnClose = createAction(FeedActions.FeedOnClose, () => ({
   payload: null,
 }))
 
-const feedOnMessage = createAction(FeedActions.FeedOnMessage, (orders) => ({
+const feedOnMessage = createAction(FeedActions.FeedOnMessage, (message) => ({
   type: FeedActions.FeedOnMessage,
-  payload: orders,
+  payload: message,
 }))
 
 export type TFeedAction =

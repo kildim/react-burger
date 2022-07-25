@@ -11,7 +11,9 @@ const wsFeedReducer = createReducer(preloadWsFeedState, (builder) => {
       state.wsFeedOpen = false;
     })
     .addCase(feedOnMessage, (state, action) => {
-      state.wsFeedData = action.payload;
+      state.wsFeedData = action.payload.orders;
+      state.total = action.payload.total;
+      state.totalToday = action.payload.totalToday;
     })
 })
 

@@ -13,3 +13,23 @@
     margin-bottom: 20px;
     grid-column: 1 / -1;
 }
+
+.summaries_grid {
+    display: flex;
+    row-gap: 60px;
+    width: 580px;
+    flex-direction: column;
+}
+
+.process_summary_grid {
+    display: grid;
+    column-gap: 36px;
+    grid-template-columns: 272px 272px;
+    grid-template-rows: 55px 240px;
+    grid-auto-flow: row;
+}
+
+.total_summary.grid {
+    display: flex;
+    flex-direction: column;
+}

@@ -3,6 +3,11 @@ import {TOrder} from '../../types/torder';
 import {formatOrderTime} from '../../utils/utils';
 import IngredientIcon from '../ingredient-icon/ingredient-icon';
 import {STACK_DIMENSION} from '../../constants/env-config';
+import {useEffect} from 'react';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../index';
+import {TIngredient} from '../../types/tingredient';
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 type TCardOrderProps = {
   order: TOrder
@@ -25,8 +30,16 @@ const genStack = (items: string[]) => {
   return result;
 }
 
+const isAMember = (member: string, array: string[]) => array.find((item) => member === item)
+
+
 function CardOrder(props: TCardOrderProps): JSX.Element {
-  const {ingredients, _id, status, name, number, updatedAt} = props.order
+  const {ingredients, _id, status, name, number, updatedAt} = props.order;
+  const nutrients = useSelector<RootState, TIngredient[]>((store) => store.main.ingredients)
+  const orderItems = ingredients.map((ingredient) => nutrients.find((nutrient) => nutrient._id === ingredient))
+  const cost = orderItems.length > 0 ? orderItems.reduce(
+    (accumulator, currentValue) => accumulator + (currentValue ? currentValue.price : 0), 0) : 0;
+
   return (
     <article className={styles.article}>
       <div className={styles.info}>
@@ -38,7 +51,8 @@ function CardOrder(props: TCardOrderProps): JSX.Element {
         <div className={styles.stack}>
           {genStack(ingredients)}
         </div>
-        <p>{ingredients.length}</p>
+        <p className="text text_type_digits-default">{cost}</p>
+        <CurrencyIcon type="primary" />
       </div>
 
     </article>

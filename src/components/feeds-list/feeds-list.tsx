@@ -6,11 +6,13 @@ import {TOrder} from '../../types/torder';
 
 function FeedsList() {
   const feeds = useSelector<RootState, TOrder[]>((state) => state.wsFeed.wsFeedData)
-  console.log(feeds);
-  return (
+  console.log(feeds)
+  return ( feeds.length > 0 ?
     <section className={FeedsListStyles.feeds}>
       {feeds.map((feed) => <CardOrder order={feed} key={feed._id}/>)}
     </section>
+  :
+  null
   )
 };
 

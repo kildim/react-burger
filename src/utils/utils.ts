@@ -54,5 +54,5 @@ export function formatOrderTime (time: string) {
   if (daysToNow > 1) {
     daysToNowString = `${daysToNow} дня назад,`
   }
-  return `${daysToNowString} ${updatedAt.format('HH:mm')} i-GMT${updatedAt.format('Z')} `;
+  return `${daysToNowString} ${updatedAt.format('HH:mm')} i-GMT${updatedAt.format('Z').slice(0, 3)} `;
 }

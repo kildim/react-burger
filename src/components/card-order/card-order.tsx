@@ -38,7 +38,8 @@ function CardOrder(props: TCardOrderProps): JSX.Element {
   const nutrients = useSelector<RootState, TIngredient[]>((store) => store.main.ingredients)
   const orderItems = ingredients.map((ingredient) => nutrients.find((nutrient) => nutrient._id === ingredient))
   const cost = orderItems.length > 0 ? orderItems.reduce(
-    (accumulator, currentValue) => accumulator + (currentValue ? currentValue.price : 0), 0) : 0;
+    (accumulator, currentValue) => accumulator
+      + (currentValue ? currentValue.type === 'bun' ? currentValue.price*2 : currentValue.price : 0), 0) : 0;
 
   return (
     <article className={styles.article}>

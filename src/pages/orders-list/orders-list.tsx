@@ -1,17 +1,20 @@
 import React, {useEffect} from 'react';
 import styles from './orders-list.module.css'
 import {useDispatch, useSelector} from 'react-redux';
-import {feedClose, feedInit} from '../../services/actions/feed-action';
+import {feedClose, feedInit, selectOrder, showOrderComplete} from '../../services/actions/feed-action';
 import FeedsList from '../../components/feeds-list/feeds-list';
 import {RootState} from '../../index';
 import Loader from '../../components/loader/loader';
 import FinishedOrdersList from '../../components/finished-orders-list/finished-orders-list';
 import ProcessingOrdersList from '../../components/processing-orders-list/processing-orders-list';
+import {useHistory} from 'react-router-dom';
 
 const CAPTION_STYLE = `${styles.caption} text text_type_main-large`;
 
 function OrdersList() {
   const dispatch = useDispatch();
+  const history = useHistory<{from: string, id: string}>();
+
   const wsFeedOpen = useSelector<RootState, boolean>((state) => state.wsFeed.wsFeedOpen);
   const total = useSelector<RootState, number>((state) => state.wsFeed.total);
   const totalToday = useSelector<RootState, number>((state) => state.wsFeed.totalToday)
@@ -24,6 +27,15 @@ function OrdersList() {
       dispatch(feedClose())
     })
   }, []);
+
+
+  useEffect(() => {
+    if (history.location.state) {
+      const orderId = history.location.state.id;
+      dispatch(selectOrder(orderId))
+      dispatch(showOrderComplete())
+    }
+  }, [history.location.state])
 
 
   return (

@@ -29,6 +29,8 @@ import Modal from '../modal/modal';
 import {hideIngredientDetail, hideOrderDetail} from '../../services/actions/action';
 import {RootState} from '../../index';
 import OrdersList from '../../pages/orders-list/orders-list';
+import {hideOrderComplete} from '../../services/actions/feed-action';
+import OrderComplete from '../order-complete/order-complete';
 
 function App() {
 
@@ -66,14 +68,15 @@ function App() {
     return state.auth.passwordResetStatus?.success ? 'Пароль сброшен успешно!' : 'Сервер не подтвердил сброс пароля!';
   })
   const passwordResetStatus = useSelector<RootState, boolean | undefined>((state) => state.auth.passwordResetStatus?.success);
+  const showOrderComplete = useSelector<RootState, boolean>((state) => state.wsFeed.showOrderComplete);
 
 
   const handleCloseOrderDetailPopup = () => {
     dispatch(hideOrderDetail())
   }
-  const handleCloseIngredientDetailPopup = () => {
-    dispatch(hideIngredientDetail())
-    history.replace('/');
+  const handleCloseOrderCompletePopup = () => {
+    dispatch(hideOrderComplete())
+    history.replace('/feed');
   }
   const handleClosePasswordRecoverNotificationPopup = () => {
     dispatch(hideRecoverPasswordNotification());
@@ -86,6 +89,10 @@ function App() {
     if (passwordResetStatus) {
       history.push('/login')
     }
+  }
+  const handleCloseIngredientDetailPopup = () => {
+    dispatch(hideIngredientDetail())
+    history.replace('/');
   }
 
   return (
@@ -120,6 +127,11 @@ function App() {
                 <Route path="/feed" exact={true}>
                   <OrdersList />
                 </Route>
+                <Route path="/feed/:id" exact={true}>
+                  {console.log('/feed/:id')}
+                  <OrdersList />
+
+                </Route>
                 <Route>
                   <Redirect to={'/'}/>
                 </Route>
@@ -147,6 +159,12 @@ function App() {
               showPasswordResetNotification &&
               <Modal header={passwordResetNotification} onClosePopup={handleCloseResetPasswordNotificationPopup}>
                 <ResetPasswordNotification onClosePopup={handleCloseResetPasswordNotificationPopup}/>
+              </Modal>
+            }
+            {
+              showOrderComplete &&
+              <Modal header={''} onClosePopup={handleCloseOrderCompletePopup}>
+                <OrderComplete />
               </Modal>
             }
           </>

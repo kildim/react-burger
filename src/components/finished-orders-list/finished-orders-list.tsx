@@ -8,7 +8,7 @@ function FinishedOrdersList() {
   )
   return (
     <div className={styles.grid}>
-      {orders.map((order) => (<p className={styles.finished_orders_digits.concat(" text text_type_digits-default")}>{order}</p>))}
+      {orders.map((order) => (<p className={styles.finished_orders_digits.concat(" text text_type_digits-default")} key={order}>{order}</p>))}
     </div>
   )
 }

@@ -1,6 +1,7 @@
 import {createAction} from '@reduxjs/toolkit';
 import {FeedActions} from '../../constants/feed-actions';
 import {WS_FEED_BASE_URL} from '../../constants/env-config';
+import {Action} from '../../constants/actions';
 
 const feedInit = createAction(FeedActions.FeedInit, () => ({
   type: FeedActions.FeedInit,
@@ -27,11 +28,31 @@ const feedOnMessage = createAction(FeedActions.FeedOnMessage, (message) => ({
   payload: message,
 }))
 
+const hideOrderComplete = createAction(FeedActions.HideOrderComplete, () => ({
+  type: FeedActions.HideOrderComplete,
+  payload: null,
+}));
+
+const showOrderComplete = createAction(FeedActions.ShowOrderComplete, () => ({
+  type: FeedActions.ShowOrderComplete,
+  payload: null,
+}));
+
+const selectOrder = createAction(
+  FeedActions.SelectOrder, (id) => ({
+    type: FeedActions.SelectOrder,
+    payload: id
+  })
+)
+
 export type TFeedAction =
     ReturnType<typeof feedInit>
   | ReturnType<typeof feedClose>
   | ReturnType<typeof feedOnOpen>
   | ReturnType<typeof feedOnClose>
+  | ReturnType<typeof hideOrderComplete>
+  | ReturnType<typeof showOrderComplete>
+  | ReturnType<typeof selectOrder>
   | ReturnType<typeof feedOnMessage>;
 
 export {
@@ -40,4 +61,7 @@ export {
   feedOnOpen,
   feedOnClose,
   feedOnMessage,
+  hideOrderComplete,
+  showOrderComplete,
+  selectOrder,
 }

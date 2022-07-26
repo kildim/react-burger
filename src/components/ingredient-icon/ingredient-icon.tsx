@@ -6,8 +6,8 @@ import {RootState} from '../../index';
 type TIngredientIconProps = {
   ingredient: string,
   stackCount?: number | null,
-  order: number,
-  offset: number,
+  order?: number,
+  offset?: number,
 }
 
 function IngredientIcon(props: TIngredientIconProps): JSX.Element {

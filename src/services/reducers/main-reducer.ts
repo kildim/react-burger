@@ -18,8 +18,6 @@ import {
   showOrderDetail,
 } from '../actions/action';
 import genId from '../../utils/gen-id';
-import {RootState} from '../../index';
-import { WritableDraft } from 'immer/dist/internal';
 import { Action } from '../../constants/actions';
 import { TIngredient } from '../../types/tingredient';
 

@@ -3,11 +3,11 @@ import {TOrder} from '../../types/torder';
 import {formatOrderTime} from '../../utils/utils';
 import IngredientIcon from '../ingredient-icon/ingredient-icon';
 import {STACK_DIMENSION} from '../../constants/env-config';
-import {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../index';
 import {TIngredient} from '../../types/tingredient';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import {useHistory} from 'react-router-dom';
 
 type TCardOrderProps = {
   order: TOrder
@@ -30,19 +30,22 @@ const genStack = (items: string[]) => {
   return result;
 }
 
-const isAMember = (member: string, array: string[]) => array.find((item) => member === item)
-
-
 function CardOrder(props: TCardOrderProps): JSX.Element {
   const {ingredients, _id, status, name, number, updatedAt} = props.order;
-  const nutrients = useSelector<RootState, TIngredient[]>((store) => store.main.ingredients)
+  const nutrients = useSelector<RootState, TIngredient[]>((store) => store.main.ingredients);
+
+  const history = useHistory<{from: string, id: string}>();
+
   const orderItems = ingredients.map((ingredient) => nutrients.find((nutrient) => nutrient._id === ingredient))
   const cost = orderItems.length > 0 ? orderItems.reduce(
     (accumulator, currentValue) => accumulator
       + (currentValue ? currentValue.type === 'bun' ? currentValue.price*2 : currentValue.price : 0), 0) : 0;
+  const handleCardClick = () => {
+    history.replace({pathname: `/feed/${_id}`, state: {from: '/feed', id: _id}})
+  }
 
   return (
-    <article className={styles.article}>
+    <article className={styles.article} onClick={handleCardClick}>
       <div className={styles.info}>
         <p className={"text text_type_digits-default"}>#{number}</p>
         <p className={"text text_type_main-default text_color_inactive"}>{formatOrderTime(updatedAt)}</p>

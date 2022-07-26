@@ -1,0 +1,16 @@
+.order_complete {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 20px 40px;
+}
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.price_wrapper {
+    display: flex;
+}

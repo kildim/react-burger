@@ -23,7 +23,7 @@ export const wsReduxMiddleware = (wsActions: TWsActions): Middleware => {
       const { dispatch, getState } = store;
       const { type, payload } = action;
       const { wsInit, wsClose, onOpen, onClose, onError, onMessage } = wsActions;
-      if (type === wsInit) {
+      if (type === wsInit && socket === null) {
         socket = new WebSocket(payload);
       }
 
@@ -34,6 +34,7 @@ export const wsReduxMiddleware = (wsActions: TWsActions): Middleware => {
       }
       if (socket) {
         socket.onopen = event => {
+          console.log('OPEN');
           dispatch(feedOnOpen());
         };
 

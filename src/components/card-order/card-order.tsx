@@ -30,6 +30,22 @@ const genStack = (items: string[]) => {
   return result;
 }
 
+const translateStatus = (status: string) => {
+  let translation = '';
+  switch (status) {
+    case 'done':
+      translation = 'Выполнен';
+      break;
+    case 'created':
+      translation = 'Создан';
+      break;
+    case 'pending':
+      translation = 'Готовится';
+      break;
+  }
+  return translation
+}
+
 function CardOrder(props: TCardOrderProps): JSX.Element {
   const {ingredients, _id, status, name, number, updatedAt} = props.order;
   const nutrients = useSelector<RootState, TIngredient[]>((store) => store.main.ingredients);
@@ -51,6 +67,7 @@ function CardOrder(props: TCardOrderProps): JSX.Element {
         <p className={"text text_type_main-default text_color_inactive"}>{formatOrderTime(updatedAt)}</p>
       </div>
       <p className={'text text_type_main-medium mt-6'}>{name}</p>
+      <p className={styles.status}>{translateStatus(status)}</p>
       <div className={styles.stackWrapper.concat(' mt-6')}>
         <div className={styles.stack}>
           {genStack(ingredients)}

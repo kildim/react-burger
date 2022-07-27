@@ -34,7 +34,6 @@ export const wsReduxMiddleware = (wsActions: TWsActions): Middleware => {
       }
       if (socket) {
         socket.onopen = event => {
-          console.log('OPEN');
           dispatch(feedOnOpen());
         };
 
@@ -46,7 +45,6 @@ export const wsReduxMiddleware = (wsActions: TWsActions): Middleware => {
           const { data } = event;
           const parsedData = JSON.parse(data);
           const { orders, total, totalToday} = parsedData;
-
           dispatch(feedOnMessage({orders, total, totalToday}));
         };
 

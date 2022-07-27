@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import IngredientDetail from '../ingredient-detail/ingredient-detail';
 import OrderDetail from '../order-detail/order-detail';
 import {fetchIngredients} from '../../services/api/api';
-import {Switch, Route, Redirect, useHistory} from 'react-router-dom';
+import {Switch, Route, Redirect, useHistory, RouteProps} from 'react-router-dom';
 import Loader from '../loader/loader';
 import SignIn from '../../pages/sign-in/sign-in';
 import Register from '../../pages/register/register';
@@ -29,8 +29,10 @@ import Modal from '../modal/modal';
 import {hideIngredientDetail, hideOrderDetail} from '../../services/actions/action';
 import {RootState} from '../../index';
 import OrdersList from '../../pages/orders-list/orders-list';
-import {hideOrderComplete} from '../../services/actions/feed-action';
+import {feedClose, feedInit, hideOrderComplete} from '../../services/actions/feed-action';
 import OrderComplete from '../order-complete/order-complete';
+import OrderExhaustive from '../../pages/order-exhaustive/order-exhaustive';
+import * as Path from 'path';
 
 function App() {
 
@@ -52,10 +54,19 @@ function App() {
         dispatch(setAuthChecked(true));
       }
     }, [dispatch, getUserData]
-  )
+  );
+
+  useEffect(() => {
+    dispatch(feedInit())
+
+    return (() => {
+      dispatch(feedClose())
+    })
+  }, []);
 
   const showErrorMessage = useSelector<RootState>((store) => (store.main.showErrorMessage));
   const isLoading = useSelector<RootState>((store) => (store.main.isLoading));
+  const isFeedDataLoading = useSelector<RootState, boolean>((store) => (store.wsFeed.wsFeedDataLoading));
   const showOrderDetail = useSelector<RootState>((state) => (state.main.showOrderDetail));
   const showIngredientDetail = useSelector<RootState>((state) => (state.main.showIngredientDetail));
   const showPasswordRecoverNotification = useSelector<RootState, boolean>((state) => state.auth.showPasswordRecoverNotification)
@@ -96,7 +107,7 @@ function App() {
   }
 
   return (
-    isLoading ? <Loader/> :
+    isLoading || isFeedDataLoading ? <Loader/> :
       showErrorMessage ? <Error/> :
         (<>
             <AppHeader/>
@@ -117,9 +128,7 @@ function App() {
                 <Route path="/reset-password" exact={true}>
                   <ResetPassword/>
                 </Route>
-                <ProtectedRoute path="/profile">
-                  <Profile/>
-                </ProtectedRoute>
+                <ProtectedRoute path="/profile" render={() => <Profile/>} />
                 <Route path="/ingredient/:id" exact={true}>
                   <Builder/>
                   <Ingredient/>
@@ -128,9 +137,8 @@ function App() {
                   <OrdersList />
                 </Route>
                 <Route path="/feed/:id" exact={true}>
-                  {console.log('/feed/:id')}
                   <OrdersList />
-
+                  <OrderExhaustive />
                 </Route>
                 <Route>
                   <Redirect to={'/'}/>

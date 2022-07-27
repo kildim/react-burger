@@ -1,10 +1,13 @@
+// @ts-nocheck
+
 import styles from './profile.module.css';
 import {Input} from '@ya.praktikum/react-developer-burger-ui-components';
-import {NavLink} from 'react-router-dom';
+import {NavLink, Route, Switch} from 'react-router-dom';
 import {useCallback, useState} from 'react';
 import {useAuth} from '../../services/auth/auth';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../index';
+import OrdersHistory from '../../components/orders-history/orders-history';
 
 const REF_CLASS = `text text_type_main-large text_color_inactive mb-3 mt-3`;
 
@@ -36,34 +39,43 @@ function Profile() {
 
   return (
     <section className={styles.content}>
-      <div className={styles.info}>
-        <Input
-          type={'text'}
-          placeholder={`Имя`}
-          icon={'EditIcon'}
-          value={''}
-          name={'name'}
-          onChange={onChange}
-        />
-        <div className={'p-3'}/>
-        <Input
-          type={'email'}
-          placeholder={'Логин'}
-          icon={'EditIcon'}
-          value={''}
-          name={'email'}
-          onChange={onChange}
-        />
-        <div className={'p-3'}/>
-        <Input
-          type={'password'}
-          placeholder={'Пароль'}
-          icon={'EditIcon'}
-          value={''}
-          name={'password'}
-          onChange={onChange}
-        />
-      </div>
+      <Switch>
+        <Route exact path="/profile">
+          <div className={styles.info}>
+            <Input
+              type={'text'}
+              placeholder={`Имя`}
+              icon={'EditIcon'}
+              value={''}
+              name={'name'}
+              onChange={onChange}
+            />
+            <div className={'p-3'}/>
+            <Input
+              type={'email'}
+              placeholder={'Логин'}
+              icon={'EditIcon'}
+              value={''}
+              name={'email'}
+              onChange={onChange}
+            />
+            <div className={'p-3'}/>
+            <Input
+              type={'password'}
+              placeholder={'Пароль'}
+              icon={'EditIcon'}
+              value={''}
+              name={'password'}
+              onChange={onChange}
+            />
+          </div>
+        </Route>
+        <Route exact path="/profile/orders">
+          <div className={styles.history}>
+            <OrdersHistory />
+          </div>
+        </Route>
+      </Switch>
       <div className={styles.menu}>
         <NavLink to={'/profile'} exact={true} className={REF_CLASS} activeStyle={ACTIVE_REF_STYLE}>Профиль</NavLink>
         <NavLink to={'/profile/orders'} exact={true} className={REF_CLASS} activeStyle={ACTIVE_REF_STYLE}>История

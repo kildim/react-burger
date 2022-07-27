@@ -23,3 +23,12 @@
 a {
     text-decoration: none;
 }
+
+.history {
+    display: inline-flex;
+    flex-direction: column;
+    order: 2;
+    width: 808px;
+    height: 812px;
+    margin-left: 280px;
+}

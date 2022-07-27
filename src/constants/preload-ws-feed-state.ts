@@ -1,7 +1,7 @@
 import {TOrder} from '../types/torder';
 
 export const preloadWsFeedState = {
-  wsFeedOpen: false,
+  wsFeedDataLoading: true,
   wsFeedData: [] as TOrder[],
   total: 0,
   totalToday: 0,

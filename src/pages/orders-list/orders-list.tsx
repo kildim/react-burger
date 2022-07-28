@@ -16,18 +16,18 @@ function OrdersList() {
   const total = useSelector<RootState, number>((state) => state.wsFeed.total);
   const totalToday = useSelector<RootState, number>((state) => state.wsFeed.totalToday)
 
-  const feedPathIsCurrent = useRouteMatch({path: '/feed', exact: true})
+  // const feedPathIsCurrent = useRouteMatch({path: '/feed', exact: true})
+  //
+  // useEffect(() => {
+  //   if (history.location.state) {
+  //     const orderId = history.location.state.id;
+  //     dispatch(selectOrder(orderId))
+  //     dispatch(showOrderComplete())
+  //   }
+  // }, [history.location.state])
 
-  useEffect(() => {
-    if (history.location.state) {
-      const orderId = history.location.state.id;
-      dispatch(selectOrder(orderId))
-      dispatch(showOrderComplete())
-    }
-  }, [history.location.state])
-
-
-  return history.location.state || feedPathIsCurrent !== null ? (
+  // return history.location.state || feedPathIsCurrent !== null ?
+  return  (
       <section className={styles.grid}>
         <h1 className={CAPTION_STYLE}>Лента заказов</h1>
         <FeedsList/>
@@ -49,8 +49,8 @@ function OrdersList() {
         </div>
       </section>
     )
-    :
-    null;
+    // :
+    // null;
 }
 
 export default OrdersList;

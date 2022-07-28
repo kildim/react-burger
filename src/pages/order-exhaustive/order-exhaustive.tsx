@@ -5,28 +5,39 @@ import {useDispatch} from 'react-redux';
 
 import {useEffect} from 'react';
 import {selectOrder} from '../../services/actions/feed-action';
+import {TOrder} from '../../types/torder';
 
 type TLocationParams = {
   id: string,
 }
+type OrderExhaustiveType = {
+  orderId: string
+}
 
-function OrderExhaustive(): JSX.Element | null {
+function OrderExhaustive(props: OrderExhaustiveType): JSX.Element | null {
 
-  const dispatch = useDispatch();
-  const {id} = useParams<TLocationParams>();
-  const history = useHistory();
+  const {orderId} = props
+  // const dispatch = useDispatch();
+  // const {id} = useParams<TLocationParams>();
+  // const history = useHistory();
 
-  useEffect(() => {
-      dispatch(selectOrder(id))
-  }, [])
+  // useEffect(() => {
+  //     dispatch(selectOrder(orderId))
+  // }, [])
 
 
-  return history.location.state ? null
-    :
-    (<div className={style.order_exhaustive}>
-        <OrderComplete />
+  // return history.location.state ? null
+  //   :
+  //   (<div className={style.order_exhaustive}>
+  //       <OrderComplete />
+  //     </div>
+  // )
+  return (
+    <div className={style.order_exhaustive}>
+        <OrderComplete orderId={orderId}/>
       </div>
   )
+
 }
 
 export default OrderExhaustive

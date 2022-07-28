@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import IngredientDetail from '../ingredient-detail/ingredient-detail';
 import OrderDetail from '../order-detail/order-detail';
 import {fetchIngredients} from '../../services/api/api';
-import {Switch, Route, Redirect, useHistory, RouteProps} from 'react-router-dom';
+import {Switch, Route, Redirect, useHistory, RouteProps, RouteComponentProps, matchPath} from 'react-router-dom';
 import Loader from '../loader/loader';
 import SignIn from '../../pages/sign-in/sign-in';
 import Register from '../../pages/register/register';
@@ -33,6 +33,7 @@ import {feedClose, feedInit, hideOrderComplete} from '../../services/actions/fee
 import OrderComplete from '../order-complete/order-complete';
 import OrderExhaustive from '../../pages/order-exhaustive/order-exhaustive';
 import * as Path from 'path';
+import {TOrder} from '../../types/torder';
 
 function App() {
 
@@ -106,6 +107,40 @@ function App() {
     history.replace('/');
   }
 
+  const profileRender = (props: RouteComponentProps) => {
+    // const {location} = props;
+    // console.log(location)
+    // return (<><Profile />
+    //   <Modal header={''} onClosePopup={handleCloseOrderCompletePopup}>
+    //     <OrderComplete orderId={}/>
+    //   </Modal>
+    // </>)
+    return null
+  }
+
+  const orderListRender = (props: RouteComponentProps) => {
+    const locationState = props.location.state;
+    const matchRoute = matchPath<{id: string}>( props.location.pathname, {path: '/feed/:id'});
+    let result: JSX.Element | null = null
+    // const isComeFrom
+    console.log(locationState);
+    console.log(matchRoute);
+    result = matchRoute === null ?  <OrdersList />
+      :
+      locationState === undefined ? <OrderExhaustive orderId={matchRoute.params.id}/>
+        :
+        <>
+          <OrdersList />
+          <Modal
+            header={''}
+            onClosePopup={handleCloseOrderCompletePopup}
+            children={<OrderComplete />}
+            drillProp={{orderId: matchRoute.params.id}}
+          />
+        </>
+    return result;
+  }
+
   return (
     isLoading || isFeedDataLoading ? <Loader/> :
       showErrorMessage ? <Error/> :
@@ -128,18 +163,17 @@ function App() {
                 <Route path="/reset-password" exact={true}>
                   <ResetPassword/>
                 </Route>
-                <ProtectedRoute path="/profile" render={() => <Profile/>} />
+                <ProtectedRoute path="/profile" render={profileRender} />
                 <Route path="/ingredient/:id" exact={true}>
                   <Builder/>
                   <Ingredient/>
                 </Route>
-                <Route path="/feed" exact={true}>
-                  <OrdersList />
-                </Route>
-                <Route path="/feed/:id" exact={true}>
-                  <OrdersList />
-                  <OrderExhaustive />
-                </Route>
+                <Route path="/feed" render={orderListRender} />
+
+                {/*<Route path="/feed/:id" exact={true}>*/}
+                {/*  <OrdersList />*/}
+                {/*  <OrderExhaustive />*/}
+                {/*</Route>*/}
                 <Route>
                   <Redirect to={'/'}/>
                 </Route>
@@ -153,9 +187,8 @@ function App() {
             }
             {
               showIngredientDetail &&
-              <Modal header={'Детали ингредиента'} onClosePopup={handleCloseIngredientDetailPopup}>
-                <IngredientDetail />
-              </Modal>
+              <Modal header={'Детали ингредиента'} onClosePopup={handleCloseIngredientDetailPopup}
+                children={<IngredientDetail />} />
             }
             {
               showPasswordRecoverNotification &&
@@ -170,10 +203,10 @@ function App() {
               </Modal>
             }
             {
-              showOrderComplete &&
-              <Modal header={''} onClosePopup={handleCloseOrderCompletePopup}>
-                <OrderComplete />
-              </Modal>
+              // showOrderComplete &&
+              // <Modal header={''} onClosePopup={handleCloseOrderCompletePopup}>
+              //   <OrderComplete />
+              // </Modal>
             }
           </>
         )

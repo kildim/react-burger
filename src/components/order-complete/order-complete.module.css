@@ -14,3 +14,22 @@
 .price_wrapper {
     display: flex;
 }
+
+.list {
+    list-style: none;
+    max-height: 400px;
+    overflow-y: auto;
+    padding-left: 0;
+    padding-right: 8px;
+}
+
+.list::-webkit-scrollbar {
+    width: 8px;
+    background: #2F2F37;
+}
+
+.list::-webkit-scrollbar-thumb {
+    width: 8px;
+    height: 492px;
+    background: #8585AD;
+}

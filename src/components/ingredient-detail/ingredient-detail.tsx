@@ -6,8 +6,8 @@ import {useSelector} from 'react-redux';
 const TERM_DEFINITION_STYLE = 'text text_type_main-small text_color_inactive';
 const DEFINITION_DESCRIPTION_STYLE = 'text text_type_digits-default text_color_inactive'
 
-function IngredientDetail() {
-
+function IngredientDetail(props) {
+const {q} = props;
   const {name, calories, proteins, fat, carbohydrates, image} = useSelector((state) => ({
     name: state.main.ingredient.name,
     calories: state.main.ingredient.calories,

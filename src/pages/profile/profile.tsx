@@ -8,6 +8,7 @@ import {useAuth} from '../../services/auth/auth';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../index';
 import OrdersHistory from '../../components/orders-history/orders-history';
+import {getCookie} from '../../utils/utils';
 
 const REF_CLASS = `text text_type_main-large text_color_inactive mb-3 mt-3`;
 
@@ -72,6 +73,7 @@ function Profile() {
         </Route>
         <Route exact path="/profile/orders">
           <div className={styles.history}>
+            {console.log(getCookie("authorization")?.slice(7))}
             <OrdersHistory />
           </div>
         </Route>

@@ -9,12 +9,13 @@ type TModalProps = {
   header: string,
   onClosePopup: () => void,
   children: ReactNode,
+  drillProp?: Partial<any>,
 }
 
 const MODAL_PORTAL = document.getElementById('modals');
 
 function Modal(props: TModalProps):JSX.Element | null {
-  const {header, onClosePopup, children} = props;
+  const {header, onClosePopup, children, drillProp} = props;
   React.useEffect(() => {
     const handleEscKeyDown = (event: KeyboardEvent) => {
       if ((event.key === "Escape")) {
@@ -39,7 +40,7 @@ function Modal(props: TModalProps):JSX.Element | null {
           <h1 className={'text text_type_main-large'}>{header}</h1>
           <Button type="secondary" size="small" onClick={onClosePopup}><CloseIcon type="primary"/></Button>
         </div>
-        {children}
+        {React.cloneElement(children as React.ReactElement, drillProp)}
       </div>
     </ModalOverlay>
 , MODAL_PORTAL

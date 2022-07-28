@@ -8,8 +8,13 @@ import {TIngredient} from '../../types/tingredient';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import genId from '../../utils/gen-id';
 
-function OrderComplete(): JSX.Element {
-  const order = useSelector<RootState, TOrder>(state => state.wsFeed.selectedOrder);
+type OrderCompleteType = {
+  orderId?: string
+}
+
+function OrderComplete(props: OrderCompleteType): JSX.Element {
+  const {orderId} = props;
+  const order = useSelector<RootState, TOrder>(state => state.wsFeed.wsFeedData.find((order) => order._id === orderId)  as TOrder);
   const nutrients = useSelector<RootState, TIngredient[]>((store) => store.main.ingredients);
 
   const {number, name, ingredients = [], updatedAt = ''} = order;
@@ -24,7 +29,9 @@ function OrderComplete(): JSX.Element {
       <p className={'text text_type_digits-medium mb-10'}>#{number}</p>
       <p className={'text text_type_main-medium mb-10'}>{name}</p>
       <p className={'text text_type_main-medium'}>Состав:</p>
-      {ingredients.map((ingredient) => (<OrderCompleteCard id={ingredient} key={uniqueId()}/>))}
+      <ul className={styles.list}>
+        {ingredients.map((ingredient) => (<li key={uniqueId()}><OrderCompleteCard id={ingredient}/> </li>))}
+      </ul>
       <div className={styles.footer}>
         <p className={'text text_type_main-default text_color_inactive'}>{formatOrderTime(updatedAt)}</p>
         <div className={styles.price_wrapper}>

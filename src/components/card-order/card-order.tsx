@@ -50,14 +50,14 @@ function CardOrder(props: TCardOrderProps): JSX.Element {
   const {ingredients, _id, status, name, number, updatedAt} = props.order;
   const nutrients = useSelector<RootState, TIngredient[]>((store) => store.main.ingredients);
 
-  const history = useHistory<{from: string, id: string}>();
+  const history = useHistory<{from: string}>();
 
   const orderItems = ingredients.map((ingredient) => nutrients.find((nutrient) => nutrient._id === ingredient))
   const cost = orderItems.length > 0 ? orderItems.reduce(
     (accumulator, currentValue) => accumulator
       + (currentValue ? currentValue.type === 'bun' ? currentValue.price*2 : currentValue.price : 0), 0) : 0;
   const handleCardClick = () => {
-    history.replace({pathname: `/feed/${_id}`, state: {from: '/feed', id: _id}})
+    history.replace({pathname: `/feed/${_id}`, state: {from: '/feed'}})
   }
 
   return (

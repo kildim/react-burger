@@ -32,8 +32,6 @@ import OrdersList from '../../pages/orders-list/orders-list';
 import {feedClose, feedInit, hideOrderComplete} from '../../services/actions/feed-action';
 import OrderComplete from '../order-complete/order-complete';
 import OrderExhaustive from '../../pages/order-exhaustive/order-exhaustive';
-import * as Path from 'path';
-import {TOrder} from '../../types/torder';
 
 function App() {
 
@@ -57,17 +55,17 @@ function App() {
     }, [dispatch, getUserData]
   );
 
-  useEffect(() => {
-    dispatch(feedInit())
-
-    return (() => {
-      dispatch(feedClose())
-    })
-  }, []);
+  // useEffect(() => {
+  //   dispatch(feedInit())
+  //
+  //   return (() => {
+  //     dispatch(feedClose())
+  //   })
+  // }, []);
 
   const showErrorMessage = useSelector<RootState>((store) => (store.main.showErrorMessage));
   const isLoading = useSelector<RootState>((store) => (store.main.isLoading));
-  const isFeedDataLoading = useSelector<RootState, boolean>((store) => (store.wsFeed.wsFeedDataLoading));
+  // const isFeedDataLoading = useSelector<RootState, boolean>((store) => (store.wsFeed.wsFeedDataLoading));
   const showOrderDetail = useSelector<RootState>((state) => (state.main.showOrderDetail));
   const showIngredientDetail = useSelector<RootState>((state) => (state.main.showIngredientDetail));
   const showPasswordRecoverNotification = useSelector<RootState, boolean>((state) => state.auth.showPasswordRecoverNotification)
@@ -80,7 +78,7 @@ function App() {
     return state.auth.passwordResetStatus?.success ? 'Пароль сброшен успешно!' : 'Сервер не подтвердил сброс пароля!';
   })
   const passwordResetStatus = useSelector<RootState, boolean | undefined>((state) => state.auth.passwordResetStatus?.success);
-  const showOrderComplete = useSelector<RootState, boolean>((state) => state.wsFeed.showOrderComplete);
+  // const showOrderComplete = useSelector<RootState, boolean>((state) => state.wsFeed.showOrderComplete);
 
 
   const handleCloseOrderDetailPopup = () => {
@@ -115,16 +113,20 @@ function App() {
     //     <OrderComplete orderId={}/>
     //   </Modal>
     // </>)
-    return null
+    const locationState = props.location.state;
+    const matchRoute = matchPath<{id: string}>( props.location.pathname, {path: '/profile/orders/:id'});
+    let result: JSX.Element | null;
+    result =  matchRoute === null ?  <Profile />
+      :
+      null
+    return result;
   }
 
   const orderListRender = (props: RouteComponentProps) => {
     const locationState = props.location.state;
     const matchRoute = matchPath<{id: string}>( props.location.pathname, {path: '/feed/:id'});
-    let result: JSX.Element | null = null
-    // const isComeFrom
-    console.log(locationState);
-    console.log(matchRoute);
+    let result: JSX.Element | null;
+
     result = matchRoute === null ?  <OrdersList />
       :
       locationState === undefined ? <OrderExhaustive orderId={matchRoute.params.id}/>
@@ -142,7 +144,7 @@ function App() {
   }
 
   return (
-    isLoading || isFeedDataLoading ? <Loader/> :
+    isLoading ? <Loader/> :
       showErrorMessage ? <Error/> :
         (<>
             <AppHeader/>
@@ -169,11 +171,6 @@ function App() {
                   <Ingredient/>
                 </Route>
                 <Route path="/feed" render={orderListRender} />
-
-                {/*<Route path="/feed/:id" exact={true}>*/}
-                {/*  <OrdersList />*/}
-                {/*  <OrderExhaustive />*/}
-                {/*</Route>*/}
                 <Route>
                   <Redirect to={'/'}/>
                 </Route>
@@ -201,12 +198,6 @@ function App() {
               <Modal header={passwordResetNotification} onClosePopup={handleCloseResetPasswordNotificationPopup}>
                 <ResetPasswordNotification onClosePopup={handleCloseResetPasswordNotificationPopup}/>
               </Modal>
-            }
-            {
-              // showOrderComplete &&
-              // <Modal header={''} onClosePopup={handleCloseOrderCompletePopup}>
-              //   <OrderComplete />
-              // </Modal>
             }
           </>
         )

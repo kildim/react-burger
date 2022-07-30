@@ -1,33 +1,34 @@
 import React, {useEffect} from 'react';
 import styles from './orders-list.module.css'
 import {useDispatch, useSelector} from 'react-redux';
-import {selectOrder, showOrderComplete} from '../../services/actions/feed-action';
 import FeedsList from '../../components/feeds-list/feeds-list';
 import {RootState} from '../../index';
 import FinishedOrdersList from '../../components/finished-orders-list/finished-orders-list';
 import ProcessingOrdersList from '../../components/processing-orders-list/processing-orders-list';
 import {useHistory, useRouteMatch} from 'react-router-dom';
+import {feedClose, feedInit} from '../../services/actions/feed-action';
+import Loader from '../../components/loader/loader';
 
 const CAPTION_STYLE = `${styles.caption} text text_type_main-large`;
 
 function OrdersList() {
-  const dispatch = useDispatch();
-  const history = useHistory<{ from: string, id: string }>();
   const total = useSelector<RootState, number>((state) => state.wsFeed.total);
-  const totalToday = useSelector<RootState, number>((state) => state.wsFeed.totalToday)
+  const totalToday = useSelector<RootState, number>((state) => state.wsFeed.totalToday);
+  const isFeedDataLoading = useSelector<RootState, boolean>((store) => (store.wsFeed.wsFeedDataLoading));
 
-  // const feedPathIsCurrent = useRouteMatch({path: '/feed', exact: true})
-  //
-  // useEffect(() => {
-  //   if (history.location.state) {
-  //     const orderId = history.location.state.id;
-  //     dispatch(selectOrder(orderId))
-  //     dispatch(showOrderComplete())
-  //   }
-  // }, [history.location.state])
+  const dispatch = useDispatch();
 
-  // return history.location.state || feedPathIsCurrent !== null ?
+  useEffect(() => {
+    dispatch(feedInit())
+
+    return (() => {
+      dispatch(feedClose())
+    })
+  }, []);
+
   return  (
+    isFeedDataLoading ? <Loader />
+    :
       <section className={styles.grid}>
         <h1 className={CAPTION_STYLE}>Лента заказов</h1>
         <FeedsList/>
@@ -49,8 +50,6 @@ function OrdersList() {
         </div>
       </section>
     )
-    // :
-    // null;
 }
 
 export default OrdersList;

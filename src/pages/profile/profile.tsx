@@ -3,12 +3,14 @@
 import styles from './profile.module.css';
 import {Input} from '@ya.praktikum/react-developer-burger-ui-components';
 import {NavLink, Route, Switch} from 'react-router-dom';
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {useAuth} from '../../services/auth/auth';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../index';
 import OrdersHistory from '../../components/orders-history/orders-history';
 import {getCookie} from '../../utils/utils';
+import {feedClose, feedInit} from '../../services/actions/feed-action';
+import {ordersClose, ordersInit} from '../../services/actions/profile-ws-action';
 
 const REF_CLASS = `text text_type_main-large text_color_inactive mb-3 mt-3`;
 
@@ -36,6 +38,14 @@ function Profile() {
     },
     [signOut]
   );
+
+  useEffect(() => {
+    dispatch(ordersInit())
+
+    return (() => {
+      dispatch(ordersClose())
+    })
+  }, []);
 
 
   return (
@@ -73,7 +83,7 @@ function Profile() {
         </Route>
         <Route exact path="/profile/orders">
           <div className={styles.history}>
-            {console.log(getCookie("authorization")?.slice(7))}
+            {/*{console.log(getCookie("authorization")?.slice(7))}*/}
             <OrdersHistory />
           </div>
         </Route>

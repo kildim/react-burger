@@ -24,6 +24,7 @@ export const wsReduxMiddleware = (wsActions: TWsActions): Middleware => {
       const { type, payload } = action;
       const { wsInit, wsClose, onOpen, onClose, onError, onMessage } = wsActions;
       if (type === wsInit && socket === null) {
+        console.log(payload);
         socket = new WebSocket(payload);
       }
 
@@ -45,8 +46,12 @@ export const wsReduxMiddleware = (wsActions: TWsActions): Middleware => {
           const { data } = event;
           const parsedData = JSON.parse(data);
           const { orders, total, totalToday} = parsedData;
+          console.log(parsedData)
           dispatch(feedOnMessage({orders, total, totalToday}));
         };
+        socket.onerror = (error) => {
+          console.log(error)
+        }
 
       }
 

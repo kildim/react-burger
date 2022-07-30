@@ -1,5 +1,3 @@
-import {selectOrder} from '../services/actions/feed-action';
-
 export enum FeedActions {
   FeedClose = 'FEED_CLOSE',
   FeedOnOpen = 'FEED_ON_OPEN',

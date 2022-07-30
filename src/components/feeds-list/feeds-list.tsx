@@ -8,7 +8,7 @@ function FeedsList() {
   const feeds = useSelector<RootState, TOrder[]>((state) => state.wsFeed.wsFeedData)
   return ( feeds.length > 0 ?
     <section className={FeedsListStyles.feeds}>
-      {feeds.map((feed) => <CardOrder order={feed} key={feed._id}/>)}
+      {feeds.map((feed) => <CardOrder order={feed} key={feed._id} from={'/feed'}/>)}
     </section>
   :
   null

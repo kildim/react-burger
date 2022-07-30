@@ -1,4 +1,4 @@
-export enum OrdersActions {
+export enum ProfileWsActions {
   OrdersClose = 'ORDERS_CLOSE',
   OrdersOnOpen = 'ORDERS_ON_OPEN',
   OrdersOnClose = 'ORDERS_ON_CLOSE',

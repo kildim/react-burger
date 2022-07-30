@@ -11,7 +11,7 @@ import {rootReducer} from './services/reducers/root-reducer';
 import {BrowserRouter as Router} from 'react-router-dom';
 import {wsReduxMiddleware} from './services/middleware/ws-redux-middleware';
 import {FeedActions} from './constants/feed-actions';
-import {OrdersActions} from './constants/orders-actions';
+import {ProfileWsActions} from './constants/profile-ws-actions';
 
 const feedWsActions = {
   wsInit: FeedActions.FeedInit,
@@ -22,23 +22,23 @@ const feedWsActions = {
   onMessage: FeedActions.FeedOnMessage,
 };
 
-const ordersWsActions = {
-  wsInit: OrdersActions.OrdersInit,
-  wsClose: OrdersActions.OrdersClose,
-  onOpen: OrdersActions.OrdersOnOpen,
-  onClose: OrdersActions.OrdersOnClose,
-  onError: OrdersActions.OrdersOnError,
-  onMessage: OrdersActions.OrdersOnMessage,
+const profileWsActions = {
+  wsInit: ProfileWsActions.OrdersInit,
+  wsClose: ProfileWsActions.OrdersClose,
+  onOpen: ProfileWsActions.OrdersOnOpen,
+  onClose: ProfileWsActions.OrdersOnClose,
+  onError: ProfileWsActions.OrdersOnError,
+  onMessage: ProfileWsActions.OrdersOnMessage,
 };
 
 
 const feedListWebSocket = wsReduxMiddleware(feedWsActions);
-// const ordersListWebSocket = wsReduxMiddleware(ordersWsActions)
+const ordersListWebSocket = wsReduxMiddleware(profileWsActions)
 
 const store = configureStore({
   reducer: rootReducer,
   devTools: process.env.NODE_ENV !== 'production',
-  middleware: [thunk, feedListWebSocket],
+  middleware: [thunk, feedListWebSocket, ordersListWebSocket],
 })
 
 export type RootState = ReturnType<typeof store.getState>;

@@ -10,7 +10,8 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import {useHistory} from 'react-router-dom';
 
 type TCardOrderProps = {
-  order: TOrder
+  order: TOrder,
+  from: string
 }
 
 const genStack = (items: string[]) => {
@@ -48,6 +49,7 @@ const translateStatus = (status: string) => {
 
 function CardOrder(props: TCardOrderProps): JSX.Element {
   const {ingredients, _id, status, name, number, updatedAt} = props.order;
+  const from = props.from;
   const nutrients = useSelector<RootState, TIngredient[]>((store) => store.main.ingredients);
 
   const history = useHistory<{from: string}>();
@@ -57,7 +59,7 @@ function CardOrder(props: TCardOrderProps): JSX.Element {
     (accumulator, currentValue) => accumulator
       + (currentValue ? currentValue.type === 'bun' ? currentValue.price*2 : currentValue.price : 0), 0) : 0;
   const handleCardClick = () => {
-    history.replace({pathname: `/feed/${_id}`, state: {from: '/feed'}})
+    history.replace({pathname: `${from}/${_id}`, state: {from: from}})
   }
 
   return (

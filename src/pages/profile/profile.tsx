@@ -1,5 +1,3 @@
-// @ts-nocheck
-
 import styles from './profile.module.css';
 import {Input} from '@ya.praktikum/react-developer-burger-ui-components';
 import {NavLink, Route, Switch} from 'react-router-dom';
@@ -8,8 +6,6 @@ import {useAuth} from '../../services/auth/auth';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../index';
 import OrdersHistory from '../../components/orders-history/orders-history';
-import {getCookie} from '../../utils/utils';
-import {feedClose, feedInit} from '../../services/actions/feed-action';
 import {ordersClose, ordersInit} from '../../services/actions/profile-ws-action';
 
 const REF_CLASS = `text text_type_main-large text_color_inactive mb-3 mt-3`;

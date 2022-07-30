@@ -8,8 +8,16 @@ import {
   showErrorMessage,
 } from '../actions/action';
 import {API_URL} from '../../constants/env-config';
-import {checkResponse} from '../../utils/utils'
+import {checkResponse, getCookie} from '../../utils/utils'
 import {ThunkAction} from 'redux-thunk';
+import {log} from 'util';
+
+type TRequestInit = {
+  headers: {
+    'Content-Type': string,
+    authorization: string
+  }
+}
 
 const fetchIngredients = (): ThunkAction<any, any, any, any> => (dispatch, _getState) => {
   dispatch(setIsLoading(true));
@@ -24,15 +32,24 @@ const fetchIngredients = (): ThunkAction<any, any, any, any> => (dispatch, _getS
 
 
 const fetchOrder = (ingredientsIds: string[]): ThunkAction<any, any, any, any> => (dispatch, _getState) => {
+  let authorisation = getCookie("authorization");
+
+  dispatch(setIsLoading(true));
+  if (authorisation === undefined) {
+    authorisation = '';
+    dispatch(hideOrderDetail());
+    dispatch(showErrorMessage('no Authorization Key'));
+    dispatch(setIsLoading(false));
+  };
   const options = {
     method: 'POST',
     body: JSON.stringify({ingredients: ingredientsIds}),
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': "application/json;charset=utf-8",
+      authorization: authorisation,
     },
   };
 
-  dispatch(setIsLoading(true));
   fetch(`${API_URL}/orders`, options)
     .then(checkResponse)
     .then((res) => {

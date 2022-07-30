@@ -38,6 +38,8 @@ function App() {
   const dispatch = useDispatch();
   const {getUserData} = useAuth();
   const history = useHistory();
+  const isFeedDataLoading = useSelector<RootState, boolean>((store) => (store.wsFeed.wsFeedDataLoading));
+
 
   useEffect(() => {
       dispatch(fetchIngredients());
@@ -54,18 +56,16 @@ function App() {
       }
     }, [dispatch, getUserData]
   );
+  useEffect(() => {
+    dispatch(feedInit())
 
-  // useEffect(() => {
-  //   dispatch(feedInit())
-  //
-  //   return (() => {
-  //     dispatch(feedClose())
-  //   })
-  // }, []);
+    return (() => {
+      dispatch(feedClose())
+    })
+  }, []);
 
   const showErrorMessage = useSelector<RootState>((store) => (store.main.showErrorMessage));
   const isLoading = useSelector<RootState>((store) => (store.main.isLoading));
-  // const isFeedDataLoading = useSelector<RootState, boolean>((store) => (store.wsFeed.wsFeedDataLoading));
   const showOrderDetail = useSelector<RootState>((state) => (state.main.showOrderDetail));
   const showIngredientDetail = useSelector<RootState>((state) => (state.main.showIngredientDetail));
   const showPasswordRecoverNotification = useSelector<RootState, boolean>((state) => state.auth.showPasswordRecoverNotification)
@@ -78,7 +78,6 @@ function App() {
     return state.auth.passwordResetStatus?.success ? 'Пароль сброшен успешно!' : 'Сервер не подтвердил сброс пароля!';
   })
   const passwordResetStatus = useSelector<RootState, boolean | undefined>((state) => state.auth.passwordResetStatus?.success);
-  // const showOrderComplete = useSelector<RootState, boolean>((state) => state.wsFeed.showOrderComplete);
 
 
   const handleCloseOrderDetailPopup = () => {
@@ -87,6 +86,10 @@ function App() {
   const handleCloseOrderCompletePopup = () => {
     dispatch(hideOrderComplete())
     history.replace('/feed');
+  }
+  const handleCloseProfileOrderCompletePopup = () => {
+    dispatch(hideOrderComplete())
+    history.replace('/profile/orders');
   }
   const handleClosePasswordRecoverNotificationPopup = () => {
     dispatch(hideRecoverPasswordNotification());
@@ -106,19 +109,22 @@ function App() {
   }
 
   const profileRender = (props: RouteComponentProps) => {
-    // const {location} = props;
-    // console.log(location)
-    // return (<><Profile />
-    //   <Modal header={''} onClosePopup={handleCloseOrderCompletePopup}>
-    //     <OrderComplete orderId={}/>
-    //   </Modal>
-    // </>)
     const locationState = props.location.state;
     const matchRoute = matchPath<{id: string}>( props.location.pathname, {path: '/profile/orders/:id'});
     let result: JSX.Element | null;
     result =  matchRoute === null ?  <Profile />
       :
-      null
+      locationState === undefined ? <OrderExhaustive orderId={matchRoute.params.id}/>
+        :
+        <>
+          <Profile />
+          <Modal
+            header={''}
+            onClosePopup={handleCloseProfileOrderCompletePopup}
+            children={<OrderComplete />}
+            drillProp={{orderId: matchRoute.params.id}}
+          />
+        </>
     return result;
   }
 
@@ -144,7 +150,7 @@ function App() {
   }
 
   return (
-    isLoading ? <Loader/> :
+    isLoading || isFeedDataLoading ? <Loader/> :
       showErrorMessage ? <Error/> :
         (<>
             <AppHeader/>

@@ -1,11 +1,13 @@
 import style from './order-exhaustive.module.css';
 import OrderComplete from '../../components/order-complete/order-complete';
 import {useHistory, useParams} from 'react-router-dom';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 
-import {useEffect} from 'react';
-import {selectOrder} from '../../services/actions/feed-action';
+import React, {useEffect} from 'react';
+import {feedClose, feedInit, selectOrder} from '../../services/actions/feed-action';
 import {TOrder} from '../../types/torder';
+import Loader from '../../components/loader/loader';
+import {RootState} from '../../index';
 
 type TLocationParams = {
   id: string,
@@ -15,6 +17,10 @@ type OrderExhaustiveType = {
 }
 
 function OrderExhaustive(props: OrderExhaustiveType): JSX.Element | null {
+
+  // const isFeedDataLoading = useSelector<RootState, boolean>((store) => (store.wsFeed.wsFeedDataLoading));
+  // const dispatch = useDispatch();
+
 
   const {orderId} = props
   // const dispatch = useDispatch();
@@ -37,7 +43,6 @@ function OrderExhaustive(props: OrderExhaustiveType): JSX.Element | null {
         <OrderComplete orderId={orderId}/>
       </div>
   )
-
 }
 
 export default OrderExhaustive

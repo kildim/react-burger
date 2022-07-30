@@ -14,21 +14,21 @@ const CAPTION_STYLE = `${styles.caption} text text_type_main-large`;
 function OrdersList() {
   const total = useSelector<RootState, number>((state) => state.wsFeed.total);
   const totalToday = useSelector<RootState, number>((state) => state.wsFeed.totalToday);
-  const isFeedDataLoading = useSelector<RootState, boolean>((store) => (store.wsFeed.wsFeedDataLoading));
+  // const isFeedDataLoading = useSelector<RootState, boolean>((store) => (store.wsFeed.wsFeedDataLoading));
 
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(feedInit())
-
-    return (() => {
-      dispatch(feedClose())
-    })
-  }, []);
+  // useEffect(() => {
+  //   dispatch(feedInit())
+  //
+  //   return (() => {
+  //     dispatch(feedClose())
+  //   })
+  // }, []);
 
   return  (
-    isFeedDataLoading ? <Loader />
-    :
+    // isFeedDataLoading ? <Loader />
+    // :
       <section className={styles.grid}>
         <h1 className={CAPTION_STYLE}>Лента заказов</h1>
         <FeedsList/>

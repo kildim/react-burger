@@ -18,6 +18,14 @@ function OrderComplete(props: OrderCompleteType): JSX.Element {
   const nutrients = useSelector<RootState, TIngredient[]>((store) => store.main.ingredients);
 
   const {number, name, ingredients = [], updatedAt = ''} = order;
+  const uniqueOrderItemsIds = Array.from(new Set(ingredients));
+  const itemsRecord = uniqueOrderItemsIds.map((orderItemId) => (
+    {
+      ingredient: nutrients.find((nutrient) => nutrient._id === orderItemId),
+      count: ingredients.reduce((accumulator, currentValue) =>  accumulator + (currentValue ? (currentValue === orderItemId ? 1 :0) :0), 0)
+    }
+  ));
+  console.log(itemsRecord)
   const orderItems = ingredients.map((ingredient) => nutrients.find((nutrient) => nutrient._id === ingredient))
   const cost = orderItems.length > 0 ? orderItems.reduce(
     (accumulator, currentValue) => accumulator
@@ -30,7 +38,9 @@ function OrderComplete(props: OrderCompleteType): JSX.Element {
       <p className={'text text_type_main-medium mb-10'}>{name}</p>
       <p className={'text text_type_main-medium'}>Состав:</p>
       <ul className={styles.list}>
-        {ingredients.map((ingredient) => (<li key={uniqueId()}><OrderCompleteCard id={ingredient}/> </li>))}
+        {/*{ingredients.map((ingredient) => (<li key={uniqueId()}><OrderCompleteCard id={ingredient}/> </li>))}*/}
+        {itemsRecord.map((item) => (<li key={uniqueId()}><OrderCompleteCard nutrientRecord={item}/> </li>))}
+
       </ul>
       <div className={styles.footer}>
         <p className={'text text_type_main-default text_color_inactive'}>{formatOrderTime(updatedAt)}</p>

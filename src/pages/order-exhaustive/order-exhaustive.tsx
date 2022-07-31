@@ -18,26 +18,7 @@ type OrderExhaustiveType = {
 
 function OrderExhaustive(props: OrderExhaustiveType): JSX.Element | null {
 
-  // const isFeedDataLoading = useSelector<RootState, boolean>((store) => (store.wsFeed.wsFeedDataLoading));
-  // const dispatch = useDispatch();
-
-
   const {orderId} = props
-  // const dispatch = useDispatch();
-  // const {id} = useParams<TLocationParams>();
-  // const history = useHistory();
-
-  // useEffect(() => {
-  //     dispatch(selectOrder(orderId))
-  // }, [])
-
-
-  // return history.location.state ? null
-  //   :
-  //   (<div className={style.order_exhaustive}>
-  //       <OrderComplete />
-  //     </div>
-  // )
   return (
     <div className={style.order_exhaustive}>
         <OrderComplete orderId={orderId}/>

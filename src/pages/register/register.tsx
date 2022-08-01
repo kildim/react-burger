@@ -3,12 +3,13 @@ import {Input, PasswordInput, Button} from '@ya.praktikum/react-developer-burger
 import {Link} from 'react-router-dom';
 import {SyntheticEvent, useCallback, useState} from 'react';
 import {useAuth} from '../../services/auth/auth';
-import {useDispatch} from 'react-redux';
+import {useAppDispatch} from '../../services/app-hooks';
+// import {useDispatch} from 'react-redux';
 
 function Register() {
   const {postRegister} = useAuth();
   const [form, setValue] = useState({email: '', password: '', name: ''});
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   type TFormControlEvent = SyntheticEvent & {target: {name: string, value: string}}
 

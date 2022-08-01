@@ -1,7 +1,8 @@
 import styles from './ingredient-icon.module.css'
-import {useSelector} from 'react-redux';
+// import {useSelector} from 'react-redux';
 import {TIngredient} from '../../types/tingredient';
 import {RootState} from '../../index';
+import {useAppSelector} from '../../services/app-hooks';
 
 type TIngredientIconProps = {
   ingredient: string,
@@ -14,7 +15,7 @@ function IngredientIcon(props: TIngredientIconProps): JSX.Element {
   const {ingredient, stackCount = 0, order = 0, offset = 0} = props;
 
 
-  const icon = useSelector<RootState, string>((store) => {
+  const icon = useAppSelector((store) => {
     const found = store.main.ingredients.find((nutrient) => nutrient._id === ingredient);
     return found?.image || '';
   })

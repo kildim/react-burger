@@ -1,12 +1,14 @@
 import styles from './profile.module.css';
 import {Input} from '@ya.praktikum/react-developer-burger-ui-components';
 import {NavLink, Route, Switch} from 'react-router-dom';
-import {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useAuth} from '../../services/auth/auth';
-import {useDispatch, useSelector} from 'react-redux';
+// import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from '../../index';
 import OrdersHistory from '../../components/orders-history/orders-history';
 import {ordersClose, ordersInit} from '../../services/actions/profile-ws-action';
+import Loader from '../../components/loader/loader';
+import {useAppDispatch, useAppSelector} from '../../services/app-hooks';
 
 const REF_CLASS = `text text_type_main-large text_color_inactive mb-3 mt-3`;
 
@@ -19,9 +21,11 @@ type TUserState = {
 
 function Profile() {
   const {signOut} = useAuth();
-  const dispatch = useDispatch();
-  const {name, email} = useSelector<RootState, TUserState>((store) => ({name: store.auth.nick, email: store.auth.email}));
+  const dispatch = useAppDispatch();
+  const {name, email} = useAppSelector((store) => ({name: store.auth.nick, email: store.auth.email}));
   const [form, setValue] = useState({email: email, password: '', name: name});
+  const isProfileDataLoading = useAppSelector((store) => (store.wsProfile.wsProfileDataLoading));
+
 
 
   const onChange = useCallback(e => {
@@ -45,6 +49,8 @@ function Profile() {
 
 
   return (
+    isProfileDataLoading ? <Loader />
+      :
     <section className={styles.content}>
       <Switch>
         <Route exact path="/profile">

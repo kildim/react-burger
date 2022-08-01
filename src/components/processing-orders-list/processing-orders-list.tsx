@@ -1,10 +1,11 @@
 import styles from './processing-orders-list.module.css';
-import {useSelector} from 'react-redux';
+// import {useSelector} from 'react-redux';
 import {RootState} from '../../index';
 import genId from '../../utils/gen-id';
+import {useAppSelector} from '../../services/app-hooks';
 
 function ProcessingOrdersList() {
-  const orders = useSelector<RootState, string[]>((store) =>
+  const orders = useAppSelector((store) =>
     store.wsFeed.wsFeedData.filter((order) => order.status === 'created').map((order) => order.number.toString())
   )
   const uniqueID = genId();

@@ -1,7 +1,7 @@
 import styles from './order-complete-card.module.css';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
-import {useSelector} from 'react-redux';
+// import {useSelector} from 'react-redux';
 import {RootState} from '../../index';
 import {TIngredient} from '../../types/tingredient';
 import IngredientIcon from '../ingredient-icon/ingredient-icon';

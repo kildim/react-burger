@@ -1,11 +1,12 @@
 import IngredientsList from '../ingredients-list/ingredients-list';
 
 import ingredientsStyle from './burger-ingredients.module.css';
-import {useSelector} from 'react-redux';
+// import {useSelector} from 'react-redux';
 import {SyntheticEvent, useEffect, useRef, useState} from 'react';
 
 import {RootState} from '../../index';
 import {TIngredient} from '../../types/tingredient';
+import {useAppSelector} from '../../services/app-hooks';
 
 
 const SELECTED_PART_ITEM = `${ingredientsStyle.part_item} ${ingredientsStyle.part_item__selected}`;
@@ -30,7 +31,7 @@ function BurgerIngredients() {
     }
   }, [])
 
-  const ingredients = useSelector<RootState, TIngredient[]>((store) => {
+  const ingredients = useAppSelector((store) => {
     const ingredients = store.main.ingredients.map((ingredient: TIngredient) => {
       if (ingredient.type === 'bun') {
         return ( ingredient._id === store.main.burger.bun._id) ? {...ingredient, count: 2} : {...ingredient, count: 0}

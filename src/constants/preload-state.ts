@@ -1,4 +1,5 @@
 import {TIngredient} from '../types/tingredient';
+import {TOrder} from '../types/torder';
 
 export const preloadBurger = {
   bun: {} as TIngredient,
@@ -15,9 +16,11 @@ export const preloadedState = {
 
   },
   isLoading: true,
+  isOrderLoading: true,
   errorMessage: null,
   showIngredientDetail: false,
   showOrderDetail: false,
   showErrorMessage: false,
-  ingredient: {},
+  ingredient: {} as TIngredient,
+  selectedOrder: {} as TOrder,
 }

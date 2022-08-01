@@ -1,14 +1,13 @@
 import {Middleware, MiddlewareAPI} from 'redux';
-import {feedClose, feedOnClose, feedOnMessage, feedOnOpen} from '../actions/feed-action';
-import {FeedActions} from '../../constants/feed-actions';
+import {ActionCreatorWithPayload} from '@reduxjs/toolkit';
 
-type TWsActions = {
-  wsInit: string,
-  wsClose: string,
-  onOpen: string,
-  onClose: string,
-  onError: string,
-  onMessage: string,
+export type TWsActions = {
+  wsInit: ActionCreatorWithPayload<string>,
+  wsClose: ActionCreatorWithPayload<null>,
+  onOpen: ActionCreatorWithPayload<null>,
+  onClose: ActionCreatorWithPayload<null>,
+  onError: ActionCreatorWithPayload<string>,
+  onMessage: ActionCreatorWithPayload<unknown>,
 }
 
 const wsCloseCode = {
@@ -21,36 +20,36 @@ export const wsReduxMiddleware = (wsActions: TWsActions): Middleware => {
     let socket: WebSocket | null  = null
     return (next) => (action) => {
       const { dispatch, getState } = store;
-      const { type, payload } = action;
-      const { wsInit, wsClose, onOpen, onClose, onError, onMessage } = wsActions;
-      if (type === wsInit && socket === null) {
-        console.log(payload);
-        socket = new WebSocket(payload);
+
+      if (wsActions.wsInit.match(action) && socket === null) {
+        socket = new WebSocket(action.payload);
       }
 
-      if (type === wsClose && socket) {
-        console.log('CLOSE');
+      if (wsActions.wsClose.match(action) && socket) {
         socket.close(wsCloseCode.CLOSE_NORMAL, 'Диспатч wsClose');
         socket = null;
       }
       if (socket) {
         socket.onopen = event => {
-          dispatch(feedOnOpen());
+          dispatch(wsActions.onOpen(null));
         };
 
         socket.onclose = event => {
-          dispatch(feedOnClose());
+          if (event.code !== wsCloseCode.CLOSE_NORMAL) {
+            console.log('error')
+            dispatch(wsActions.onError(event.code.toString()));
+          }
+          dispatch(wsActions.onClose(null));
         }
 
         socket.onmessage = event => {
           const { data } = event;
           const parsedData = JSON.parse(data);
-          const { orders, total, totalToday} = parsedData;
-          console.log(parsedData)
-          dispatch(feedOnMessage({orders, total, totalToday}));
+          dispatch(wsActions.onMessage(parsedData));
         };
         socket.onerror = (error) => {
           console.log(error)
+          dispatch(wsActions.onError(error.type));
         }
 
       }

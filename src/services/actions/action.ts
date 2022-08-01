@@ -10,6 +10,13 @@ const loadIngredients = createAction(
   }),
 );
 
+const loadSelectedOrder = createAction(
+  Action.LoadSelectedOrder, (order) => ({
+    type: Action.LoadSelectedOrder,
+    payload: order
+  })
+)
+
 const loadOrder = createAction(
   Action.LoadOrder, (order) => ({
     type: Action.LoadOrder,
@@ -96,6 +103,13 @@ const setIsLoading = createAction(
   })
 );
 
+const setIsOrderLoading = createAction(
+  Action.SetIsOrderLoading, (isLoading: boolean) => ({
+    type: Action.SetIsOrderLoading,
+    payload: isLoading,
+  })
+);
+
 const showErrorMessage = createAction(
   Action.ShowErrorMessage, (errorMessage) => ({
       type: Action.ShowErrorMessage,
@@ -111,6 +125,25 @@ const hideErrorMessage = createAction(
     payload: null,
   })
 )
+
+export type TAction =
+    ReturnType<typeof loadIngredients>
+  | ReturnType<typeof addToBurger>
+  | ReturnType<typeof removeFilling>
+  | ReturnType<typeof replaceFillings>
+  | ReturnType<typeof loadOrder>
+  | ReturnType<typeof dropOrder>
+  | ReturnType<typeof showIngredientDetail>
+  | ReturnType<typeof hideIngredientDetail>
+  | ReturnType<typeof selectIngredient>
+  | ReturnType<typeof showOrderDetail>
+  | ReturnType<typeof hideOrderDetail>
+  | ReturnType<typeof setIsLoading>
+  | ReturnType<typeof showErrorMessage>
+  | ReturnType<typeof hideErrorMessage>
+  | ReturnType<typeof clearBurger>
+  | ReturnType<typeof setIsOrderLoading>
+  | ReturnType<typeof loadSelectedOrder>
 
 export {
   loadIngredients,
@@ -128,4 +161,6 @@ export {
   showErrorMessage,
   hideErrorMessage,
   clearBurger,
+  setIsOrderLoading,
+  loadSelectedOrder,
 }

@@ -3,7 +3,7 @@ import Error from '../error/error';
 import AppHeader from '../app-header/app-header';
 import Builder from '../../pages/builder/builder';
 import './app.module.css';
-import {useDispatch, useSelector} from 'react-redux';
+// import {useAppDispatch, useAppSelector} from 'react-redux';
 import IngredientDetail from '../ingredient-detail/ingredient-detail';
 import OrderDetail from '../order-detail/order-detail';
 import {fetchIngredients} from '../../services/api/api';
@@ -27,18 +27,18 @@ import {
 import {useAuth} from '../../services/auth/auth';
 import Modal from '../modal/modal';
 import {hideIngredientDetail, hideOrderDetail} from '../../services/actions/action';
-import {RootState} from '../../index';
+// import {RootState} from '../../index';
 import OrdersList from '../../pages/orders-list/orders-list';
-import {feedClose, feedInit, hideOrderComplete} from '../../services/actions/feed-action';
+import {hideOrderComplete} from '../../services/actions/feed-action';
 import OrderComplete from '../order-complete/order-complete';
 import OrderExhaustive from '../../pages/order-exhaustive/order-exhaustive';
+import {useAppDispatch, useAppSelector} from '../../services/app-hooks';
 
 function App() {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {getUserData} = useAuth();
   const history = useHistory();
-  const isFeedDataLoading = useSelector<RootState, boolean>((store) => (store.wsFeed.wsFeedDataLoading));
 
 
   useEffect(() => {
@@ -56,28 +56,22 @@ function App() {
       }
     }, [dispatch, getUserData]
   );
-  useEffect(() => {
-    dispatch(feedInit())
 
-    return (() => {
-      dispatch(feedClose())
-    })
-  }, []);
 
-  const showErrorMessage = useSelector<RootState>((store) => (store.main.showErrorMessage));
-  const isLoading = useSelector<RootState>((store) => (store.main.isLoading));
-  const showOrderDetail = useSelector<RootState>((state) => (state.main.showOrderDetail));
-  const showIngredientDetail = useSelector<RootState>((state) => (state.main.showIngredientDetail));
-  const showPasswordRecoverNotification = useSelector<RootState, boolean>((state) => state.auth.showPasswordRecoverNotification)
-  const passwordRecoverNotification = useSelector<RootState, string>((state) => {
+  const showErrorMessage = useAppSelector((store) => (store.main.showErrorMessage));
+  const isLoading = useAppSelector((store) => (store.main.isLoading));
+  const showOrderDetail = useAppSelector((state) => (state.main.showOrderDetail));
+  const showIngredientDetail = useAppSelector((state) => (state.main.showIngredientDetail));
+  const showPasswordRecoverNotification = useAppSelector((state) => state.auth.showPasswordRecoverNotification)
+  const passwordRecoverNotification = useAppSelector((state) => {
     return state.auth.passwordRecoverStatus?.success ? 'Письмо с сылкой успешно выслано на почту!' : 'Сервер не подтвердил отправку письма на почту!'
   })
-  const passwordRecoverStatus = useSelector<RootState, boolean | undefined>((state) => state.auth.passwordRecoverStatus?.success);
-  const showPasswordResetNotification = useSelector<RootState, boolean>((state) => state.auth.showPasswordResetNotification);
-  const passwordResetNotification = useSelector<RootState, string>((state) => {
+  const passwordRecoverStatus = useAppSelector((state) => state.auth.passwordRecoverStatus?.success);
+  const showPasswordResetNotification = useAppSelector((state) => state.auth.showPasswordResetNotification);
+  const passwordResetNotification = useAppSelector((state) => {
     return state.auth.passwordResetStatus?.success ? 'Пароль сброшен успешно!' : 'Сервер не подтвердил сброс пароля!';
   })
-  const passwordResetStatus = useSelector<RootState, boolean | undefined>((state) => state.auth.passwordResetStatus?.success);
+  const passwordResetStatus = useAppSelector((state) => state.auth.passwordResetStatus?.success);
 
 
   const handleCloseOrderDetailPopup = () => {
@@ -150,7 +144,7 @@ function App() {
   }
 
   return (
-    isLoading || isFeedDataLoading ? <Loader/> :
+    isLoading ? <Loader/> :
       showErrorMessage ? <Error/> :
         (<>
             <AppHeader/>

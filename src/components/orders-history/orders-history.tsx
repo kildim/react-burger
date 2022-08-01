@@ -1,14 +1,15 @@
 import FeedsListStyles from './orders-history.module.css';
 import CardOrder from '../card-order/card-order';
-import {useSelector} from 'react-redux';
+// import {useSelector} from 'react-redux';
 import {RootState} from '../../index';
 import {TOrder} from '../../types/torder';
+import {useAppSelector} from '../../services/app-hooks';
 
 function OrdersHistory() {
-  const feeds = useSelector<RootState, TOrder[]>((state) => state.wsFeed.wsFeedData)
-  return ( feeds.length > 0 ?
+  const orders = useAppSelector((state) => state.wsProfile.wsProfileData)
+  return ( orders.length > 0 ?
     <section className={FeedsListStyles.feeds}>
-      {feeds.map((feed) => <CardOrder order={feed} key={feed._id} from={'/profile/orders'}/>)}
+      {orders.map((order) => <CardOrder order={order} key={order._id} from={'/profile/orders'}/>)}
     </section>
   :
   null

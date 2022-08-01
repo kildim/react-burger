@@ -7,7 +7,8 @@ import {DndProvider} from 'react-dnd';
 import React, {useEffect} from 'react';
 import {useHistory, useRouteMatch} from 'react-router-dom';
 import {selectIngredient, showIngredientDetail} from '../../services/actions/action';
-import {useDispatch} from 'react-redux';
+import {useAppDispatch} from '../../services/app-hooks';
+// import {useDispatch} from 'react-redux';
 
 
 const CAPTION_STYLE = `${BuilderStyle.caption} text text_type_main-large`;
@@ -15,7 +16,7 @@ const CAPTION_STYLE = `${BuilderStyle.caption} text text_type_main-large`;
 function Builder() {
 
   const history = useHistory<{id: number}>();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const rootPathIsCurrent = useRouteMatch({path: '/', exact: true})
 

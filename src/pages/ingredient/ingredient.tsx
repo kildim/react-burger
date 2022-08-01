@@ -1,9 +1,10 @@
 import styles from '../ingredient/ingredient.module.css';
 import React from 'react';
-import {useSelector} from 'react-redux';
+// import {useSelector} from 'react-redux';
 import {useHistory, useParams} from 'react-router-dom';
 import {RootState} from '../../index';
 import {TIngredient} from '../../types/tingredient';
+import {useAppSelector} from '../../services/app-hooks';
 
 const TERM_DEFINITION_STYLE = 'text text_type_main-small text_color_inactive';
 const DEFINITION_DESCRIPTION_STYLE = 'text text_type_digits-default text_color_inactive'
@@ -17,7 +18,7 @@ function Ingredient() {
   const {id} = useParams<TLocationParams>()
   const history = useHistory();
 
-  const ingredient = useSelector<RootState, TIngredient | undefined>((state) => state.main.ingredients.find((ingredient) => ingredient._id === id));
+  const ingredient = useAppSelector((state) => state.main.ingredients.find((ingredient) => ingredient._id === id));
   const {name, calories, proteins, fat, carbohydrates, image} = {...ingredient}
 
   return history.location.state ? null

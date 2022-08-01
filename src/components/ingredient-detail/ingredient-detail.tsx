@@ -1,14 +1,12 @@
-//@ts-nocheck
 import React from 'react';
 import IngredientDetailStyle from '../ingredient-detail/ingredient-detail.module.css';
-import {useSelector} from 'react-redux';
+import {useAppSelector} from '../../services/app-hooks';
 
 const TERM_DEFINITION_STYLE = 'text text_type_main-small text_color_inactive';
 const DEFINITION_DESCRIPTION_STYLE = 'text text_type_digits-default text_color_inactive'
 
-function IngredientDetail(props) {
-const {q} = props;
-  const {name, calories, proteins, fat, carbohydrates, image} = useSelector((state) => ({
+function IngredientDetail() {
+  const {name, calories, proteins, fat, carbohydrates, image} = useAppSelector((state) => ({
     name: state.main.ingredient.name,
     calories: state.main.ingredient.calories,
     proteins: state.main.ingredient.proteins,

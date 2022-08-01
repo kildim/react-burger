@@ -16,13 +16,39 @@ const ordersClose = createAction(ProfileWsActions.OrdersClose, () => ({
   payload: null,
 }))
 
+const ordersOnOpen = createAction(ProfileWsActions.OrdersOnOpen, () => ({
+  type: ProfileWsActions.OrdersOnOpen,
+  payload: null,
+}))
+
+const ordersOnError = createAction(ProfileWsActions.OrdersOnError, (error) => ({
+  type: ProfileWsActions.OrdersOnError,
+  payload: error,
+}))
+
+const ordersOnClose = createAction(ProfileWsActions.OrdersOnClose, () => ({
+  type: ProfileWsActions.OrdersOnClose,
+  payload: null,
+}))
+
 const ordersOnMessage = createAction(ProfileWsActions.OrdersOnMessage, (message) => ({
   type: ProfileWsActions.OrdersOnMessage,
   payload: message,
 }))
 
+export type TProfileWsAction =
+    ReturnType<typeof ordersInit>
+  | ReturnType<typeof ordersClose>
+  | ReturnType<typeof ordersOnMessage>
+  | ReturnType<typeof ordersOnOpen>
+  | ReturnType<typeof ordersOnError>
+  | ReturnType<typeof ordersOnClose>
+
 export {
   ordersInit,
   ordersClose,
   ordersOnMessage,
+  ordersOnOpen,
+  ordersOnError,
+  ordersOnClose
 }

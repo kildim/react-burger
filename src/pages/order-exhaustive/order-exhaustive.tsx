@@ -1,7 +1,7 @@
 import style from './order-exhaustive.module.css';
 import OrderComplete from '../../components/order-complete/order-complete';
 import {useHistory, useParams} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
+// import {useDispatch, useSelector} from 'react-redux';
 
 import React, {useEffect} from 'react';
 import {feedClose, feedInit, selectOrder} from '../../services/actions/feed-action';
@@ -21,7 +21,7 @@ function OrderExhaustive(props: OrderExhaustiveType): JSX.Element | null {
   const {orderId} = props
   return (
     <div className={style.order_exhaustive}>
-        <OrderComplete orderId={orderId}/>
+      <OrderComplete orderId={orderId}/>
       </div>
   )
 }

@@ -7,16 +7,17 @@ import {
   showErrorMessage,
 } from '../actions/action';
 import {API_URL} from '../../constants/env-config';
-import {useSelector} from 'react-redux';
+// import {useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import {deleteCookie, getCookie, setCookie, checkResponse} from '../../utils/utils';
 import {fetchWithRefresh} from '../../utils/fetch-with-refreash';
 import {ThunkAction} from 'redux-thunk';
 import {RootState} from '../../index';
+import {useAppSelector} from '../app-hooks';
 export function useAuth() {
-  const nick = useSelector<RootState>((store) => store.auth.nick);
-  const isAuthenticated = useSelector<RootState>((store) => store.auth.isAuthenticated)
-  const isAuthChecked = useSelector<RootState>((store) => store.auth.isAuthChecked);
+  const nick = useAppSelector((store) => store.auth.nick);
+  const isAuthenticated = useAppSelector((store) => store.auth.isAuthenticated)
+  const isAuthChecked = useAppSelector((store) => store.auth.isAuthChecked);
 
   const history = useHistory();
 

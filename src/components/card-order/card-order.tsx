@@ -3,11 +3,12 @@ import {TOrder} from '../../types/torder';
 import {formatOrderTime} from '../../utils/utils';
 import IngredientIcon from '../ingredient-icon/ingredient-icon';
 import {STACK_DIMENSION} from '../../constants/env-config';
-import {useSelector} from 'react-redux';
+// import {useSelector} from 'react-redux';
 import {RootState} from '../../index';
 import {TIngredient} from '../../types/tingredient';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import {useHistory} from 'react-router-dom';
+import {useAppSelector} from '../../services/app-hooks';
 
 type TCardOrderProps = {
   order: TOrder,
@@ -50,7 +51,7 @@ const translateStatus = (status: string) => {
 function CardOrder(props: TCardOrderProps): JSX.Element {
   const {ingredients, _id, status, name, number, updatedAt} = props.order;
   const from = props.from;
-  const nutrients = useSelector<RootState, TIngredient[]>((store) => store.main.ingredients);
+  const nutrients = useAppSelector((store) => store.main.ingredients);
 
   const history = useHistory<{from: string}>();
 
@@ -59,7 +60,7 @@ function CardOrder(props: TCardOrderProps): JSX.Element {
     (accumulator, currentValue) => accumulator
       + (currentValue ? currentValue.type === 'bun' ? currentValue.price*2 : currentValue.price : 0), 0) : 0;
   const handleCardClick = () => {
-    history.replace({pathname: `${from}/${_id}`, state: {from: from}})
+    history.replace({pathname: `${from}/${number}`, state: {from: from}})
   }
 
   return (

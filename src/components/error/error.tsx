@@ -1,15 +1,16 @@
 import ErrorStyles from './error.module.css';
 import React from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+// import {useDispatch, useSelector} from 'react-redux';
 import {hideErrorMessage} from '../../services/actions/action';
 import Modal from '../modal/modal';
 import {RootState} from '../../index';
+import {useAppDispatch, useAppSelector} from '../../services/app-hooks';
 
 type TErrorState = {showErrorMessage: boolean, errorMessage: string | null}
 
 function Error(): JSX.Element {
-  const dispatch = useDispatch();
-  const {showErrorMessage, errorMessage} = useSelector<RootState, TErrorState>((state) => ({showErrorMessage: state.main.showErrorMessage, errorMessage: state.main.errorMessage}));
+  const dispatch = useAppDispatch();
+  const {showErrorMessage, errorMessage} = useAppSelector((state) => ({showErrorMessage: state.main.showErrorMessage, errorMessage: state.main.errorMessage}));
 
 
   const handleClosePopup = () => {

@@ -2,9 +2,9 @@ import {createAction} from '@reduxjs/toolkit';
 import {FeedActions} from '../../constants/feed-actions';
 import {WS_BASE_URL} from '../../constants/env-config';
 
-const feedInit = createAction(FeedActions.FeedInit, () => ({
+const feedInit = createAction(FeedActions.FeedInit, (baseUrl) => ({
   type: FeedActions.FeedInit,
-  payload: WS_BASE_URL + '/all'
+  payload: baseUrl,
 }))
 
 const feedClose = createAction(FeedActions.FeedClose, () => ({
@@ -15,6 +15,11 @@ const feedClose = createAction(FeedActions.FeedClose, () => ({
 const feedOnOpen = createAction(FeedActions.FeedOnOpen, () => ({
   type: FeedActions.FeedOnOpen,
   payload: null,
+}))
+
+const feedOnError = createAction(FeedActions.FeedOnOpen, (error) => ({
+  type: FeedActions.FeedOnOpen,
+  payload: error,
 }))
 
 const feedOnClose = createAction(FeedActions.FeedOnClose, () => ({
@@ -60,6 +65,7 @@ export {
   feedOnOpen,
   feedOnClose,
   feedOnMessage,
+  feedOnError,
   hideOrderComplete,
   showOrderComplete,
   selectOrder,

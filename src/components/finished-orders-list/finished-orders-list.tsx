@@ -1,9 +1,10 @@
 import styles from './finished-orders-list.module.css';
-import {useSelector} from 'react-redux';
+// import {useSelector} from 'react-redux';
 import {RootState} from '../../index';
+import {useAppSelector} from '../../services/app-hooks';
 
 function FinishedOrdersList() {
-  const orders = useSelector<RootState, string[]>((store) =>
+  const orders = useAppSelector((store) =>
     store.wsFeed.wsFeedData.filter((order) => order.status === 'done').map((order) => order.number.toString())
   )
   return (

@@ -2,15 +2,16 @@ import styles from './sign-in.module.css';
 import {Input, PasswordInput, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Link, useHistory, useLocation} from 'react-router-dom';
 import {SyntheticEvent, useCallback, useState} from 'react';
-import {useDispatch} from 'react-redux';
+// import {useDispatch} from 'react-redux';
 import {useAuth} from '../../services/auth/auth';
+import {useAppDispatch} from '../../services/app-hooks';
 
 type TFormControlEvent = SyntheticEvent & {target: {name: string, value: string}};
 type TLocationPath = {from: {pathname: string}}  | undefined;
 
 function SignIn() {
   const {isAuthenticated, signIn} = useAuth();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const history = useHistory();
   const location = useLocation<TLocationPath>();
 

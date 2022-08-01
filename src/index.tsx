@@ -9,26 +9,34 @@ import thunk from 'redux-thunk';
 import {Provider} from 'react-redux';
 import {rootReducer} from './services/reducers/root-reducer';
 import {BrowserRouter as Router} from 'react-router-dom';
-import {wsReduxMiddleware} from './services/middleware/ws-redux-middleware';
+import {TWsActions, wsReduxMiddleware} from './services/middleware/ws-redux-middleware';
 import {FeedActions} from './constants/feed-actions';
 import {ProfileWsActions} from './constants/profile-ws-actions';
+import {feedClose, feedInit, feedOnClose, feedOnError, feedOnMessage, feedOnOpen} from './services/actions/feed-action';
+import {
+  ordersClose,
+  ordersInit,
+  ordersOnClose,
+  ordersOnError, ordersOnMessage,
+  ordersOnOpen
+} from './services/actions/profile-ws-action';
 
-const feedWsActions = {
-  wsInit: FeedActions.FeedInit,
-  wsClose: FeedActions.FeedClose,
-  onOpen: FeedActions.FeedOnOpen,
-  onClose: FeedActions.FeedOnClose,
-  onError: FeedActions.FeedOnError,
-  onMessage: FeedActions.FeedOnMessage,
+const feedWsActions: TWsActions = {
+  wsInit: feedInit,
+  wsClose: feedClose,
+  onOpen: feedOnOpen,
+  onClose: feedOnClose,
+  onError: feedOnError,
+  onMessage: feedOnMessage,
 };
 
-const profileWsActions = {
-  wsInit: ProfileWsActions.OrdersInit,
-  wsClose: ProfileWsActions.OrdersClose,
-  onOpen: ProfileWsActions.OrdersOnOpen,
-  onClose: ProfileWsActions.OrdersOnClose,
-  onError: ProfileWsActions.OrdersOnError,
-  onMessage: ProfileWsActions.OrdersOnMessage,
+const profileWsActions: TWsActions = {
+  wsInit: ordersInit,
+  wsClose: ordersClose,
+  onOpen: ordersOnOpen,
+  onClose: ordersOnClose,
+  onError: ordersOnError,
+  onMessage: ordersOnMessage,
 };
 
 
@@ -42,7 +50,7 @@ const store = configureStore({
 })
 
 export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+// export type AppDispatch = typeof store.dispatch;
 
 createRoot(document.getElementById('root')).render(
   <Router>

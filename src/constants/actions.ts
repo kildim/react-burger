@@ -14,4 +14,6 @@ export enum Action {
   ShowOrderDetail = 'SHOW_ORDER_DETAIL',
   HideOrderDetail = 'HIDE_ORDER_DETAIL',
   ClearBurger = 'CLEAR_BURGER',
+  SetIsOrderLoading = 'SET_IS_ORDER_LOADING',
+  LoadSelectedOrder = 'LOAD_SELECTED_ORDER',
 }

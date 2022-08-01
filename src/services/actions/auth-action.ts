@@ -67,6 +67,17 @@ const postPasswordRecoverRequest = createAction(
   }),
 );
 
+export type TAuthAction =
+    ReturnType<typeof showRecoverPasswordNotification>
+  | ReturnType<typeof hideRecoverPasswordNotification>
+  | ReturnType<typeof showResetPasswordNotification>
+  | ReturnType<typeof hideResetPasswordNotification>
+  | ReturnType<typeof postPasswordRecoverRequest>
+  | ReturnType<typeof saveUserProfile>
+  | ReturnType<typeof setIsAuthenticated>
+  | ReturnType<typeof setIsUserDataLoading>
+  | ReturnType<typeof setAuthChecked>
+
 export{
   showRecoverPasswordNotification,
   hideRecoverPasswordNotification,

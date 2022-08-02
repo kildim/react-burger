@@ -1,7 +1,8 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
+// import {useSelector} from 'react-redux';
 import acceptance from '../../images/acceptance.png';
 import {RootState} from '../../index';
+import {useAppSelector} from '../../services/app-hooks';
 
 type TOrderState = {
   number: number,
@@ -9,7 +10,7 @@ type TOrderState = {
 }
 
 function OrderDetail() {
-  const {number, status} = useSelector<RootState, TOrderState>((state) => ({
+  const {number, status} = useAppSelector((state) => ({
     number: state.main.order.order.number,
     status: state.main.order.success ? 'Ваш заказ начали готовить' : 'Ваш заказ отклонён'
   }));

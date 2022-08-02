@@ -8,7 +8,7 @@
 
 .menu_list {
     display: flex;
-    justify-self: start;
+    justify-self: flex-start;
     align-items: center;
     gap: 50px;
     list-style: none;

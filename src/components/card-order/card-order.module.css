@@ -1,0 +1,33 @@
+.article {
+    width: auto;
+    min-height: 110px;
+    background: #1C1C21;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.04), 0px 0px 2px rgba(0, 0, 0, 0.06), 0px 0px 1px rgba(0, 0, 0, 0.04);
+    border-radius: 40px;
+    margin-bottom: 16px;
+    padding: 24px;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.stackWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stack {
+    position: relative;
+    width: 384px;
+    height: 64px;
+    /*display: grid;*/
+    /*grid-template-columns: repeat(6, 55px);*/
+
+}
+
+.status {
+    color: #00CCCC;
+}

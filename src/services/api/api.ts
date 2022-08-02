@@ -5,13 +5,22 @@ import {
   showOrderDetail,
   hideOrderDetail,
   clearBurger,
-  showErrorMessage,
+  showErrorMessage, setIsOrderLoading, loadSelectedOrder, TAction,
 } from '../actions/action';
 import {API_URL} from '../../constants/env-config';
-import {checkResponse} from '../../utils/utils'
+import {checkResponse, getCookie} from '../../utils/utils'
 import {ThunkAction} from 'redux-thunk';
+import {log} from 'util';
+import {RootState} from '../../index';
 
-const fetchIngredients = (): ThunkAction<any, any, any, any> => (dispatch, _getState) => {
+type TRequestInit = {
+  headers: {
+    'Content-Type': string,
+    authorization: string
+  }
+}
+
+const fetchIngredients = (): ThunkAction<void, RootState, unknown, TAction> => (dispatch, _getState) => {
   dispatch(setIsLoading(true));
   fetch(`${API_URL}/ingredients`)
     .then(checkResponse)
@@ -23,16 +32,25 @@ const fetchIngredients = (): ThunkAction<any, any, any, any> => (dispatch, _getS
 }
 
 
-const fetchOrder = (ingredientsIds: string[]): ThunkAction<any, any, any, any> => (dispatch, _getState) => {
+const fetchOrder = (ingredientsIds: string[]): ThunkAction<void, RootState, unknown, TAction> => (dispatch, _getState) => {
+  let authorisation = getCookie("authorization");
+
+  dispatch(setIsLoading(true));
+  if (authorisation === undefined) {
+    authorisation = '';
+    dispatch(hideOrderDetail());
+    dispatch(showErrorMessage('no Authorization Key'));
+    dispatch(setIsLoading(false));
+  };
   const options = {
     method: 'POST',
     body: JSON.stringify({ingredients: ingredientsIds}),
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': "application/json;charset=utf-8",
+      authorization: authorisation,
     },
   };
 
-  dispatch(setIsLoading(true));
   fetch(`${API_URL}/orders`, options)
     .then(checkResponse)
     .then((res) => {
@@ -47,4 +65,21 @@ const fetchOrder = (ingredientsIds: string[]): ThunkAction<any, any, any, any> =
     .finally(() => dispatch(setIsLoading(false)))
 }
 
-export {fetchIngredients, fetchOrder};
+const fetchOrderByNum = (orderId: string | undefined): ThunkAction<void, RootState, unknown, TAction> => (dispatch, _getState) => {
+  if (orderId === undefined) {
+    dispatch(showErrorMessage({errorMessage: 'Не указан номер заказа!'}))
+  };
+  dispatch(setIsOrderLoading(true));
+  fetch(`${API_URL}/orders/${orderId}`)
+    .then(checkResponse)
+    .then((res) => {
+      dispatch(loadSelectedOrder(res.orders[0]))
+    })
+    .catch((error) => {
+      dispatch(showErrorMessage(error))
+    })
+    .finally(() => dispatch(setIsOrderLoading(false)))
+
+};
+
+export {fetchIngredients, fetchOrder, fetchOrderByNum};

@@ -5,13 +5,14 @@ import FillingIngredient from '../filling-ingredient/filling-ingredient'
 import constructorStyle from './burger-constructor.module.css';
 import React, {useMemo} from 'react';
 
-import {useDispatch, useSelector} from 'react-redux';
+// import {useDispatch, useSelector} from 'react-redux';
 import {useDrop} from 'react-dnd';
 import {addToBurger} from '../../services/actions/action';
 import {fetchOrder} from '../../services/api/api';
 import {useHistory} from 'react-router-dom';
 import {RootState} from '../../index';
 import {TIngredient} from '../../types/tingredient';
+import {useAppDispatch, useAppSelector} from '../../services/app-hooks';
 
 function BurgerConstructor() {
   // const {bun, fillings} = useSelector<RootState>((store) => ({
@@ -19,9 +20,9 @@ function BurgerConstructor() {
   //   fillings: store.main.burger.fillings,
   //   order: store.main.order,
   // }))
-  const bun = useSelector<RootState>((store) => store.main.burger.bun) as TIngredient
-  const fillings = useSelector<RootState>((store) => store.main.burger.fillings) as Array<TIngredient>
-  const isAuthenticated = useSelector<RootState>((store) => store.auth.isAuthenticated)
+  const bun = useAppSelector((store) => store.main.burger.bun) as TIngredient
+  const fillings = useAppSelector((store) => store.main.burger.fillings) as Array<TIngredient>
+  const isAuthenticated = useAppSelector((store) => store.auth.isAuthenticated)
 
   const amount = useMemo(() => {
     let amount = fillings.reduce((amount, current) => amount + current.price, 0);
@@ -31,7 +32,7 @@ function BurgerConstructor() {
     return amount;
   }, [fillings, bun]);
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const history = useHistory();
 
   // @ts-ignore

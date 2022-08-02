@@ -8,18 +8,16 @@ import {
   hideIngredientDetail,
   hideOrderDetail,
   loadIngredients,
-  loadOrder,
+  loadOrder, loadSelectedOrder,
   removeFilling,
   replaceFillings,
   selectIngredient,
-  setIsLoading,
+  setIsLoading, setIsOrderLoading,
   showErrorMessage,
   showIngredientDetail,
   showOrderDetail,
 } from '../actions/action';
 import genId from '../../utils/gen-id';
-import {RootState} from '../../index';
-import { WritableDraft } from 'immer/dist/internal';
 import { Action } from '../../constants/actions';
 import { TIngredient } from '../../types/tingredient';
 
@@ -112,14 +110,20 @@ const mainReducer = createReducer(preloadedState, (builder) => {
     .addCase(setIsLoading, (state, action) => {
       state.isLoading = action.payload
     })
-    .addCase(showErrorMessage, ((state, action) => {
+    .addCase(showErrorMessage, (state, action) => {
       state.showErrorMessage = true;
       state.errorMessage = action.payload.errorMessage;
-    }))
-    .addCase(hideErrorMessage, ((state, _action) => {
+    })
+    .addCase(hideErrorMessage, (state, _action) => {
       state.showErrorMessage = false;
       state.errorMessage = null;
-    }))
+    })
+    .addCase(setIsOrderLoading, (state, action) => {
+      state.isOrderLoading = action.payload
+    })
+    .addCase(loadSelectedOrder, (state, action) => {
+      state.selectedOrder = action.payload
+    })
 })
 
 export {mainReducer};

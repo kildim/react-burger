@@ -3,11 +3,11 @@ import Error from '../error/error';
 import AppHeader from '../app-header/app-header';
 import Builder from '../../pages/builder/builder';
 import './app.module.css';
-import {useDispatch, useSelector} from 'react-redux';
+// import {useAppDispatch, useAppSelector} from 'react-redux';
 import IngredientDetail from '../ingredient-detail/ingredient-detail';
 import OrderDetail from '../order-detail/order-detail';
 import {fetchIngredients} from '../../services/api/api';
-import {Switch, Route, Redirect, useHistory} from 'react-router-dom';
+import {Switch, Route, Redirect, useHistory, RouteProps, RouteComponentProps, matchPath} from 'react-router-dom';
 import Loader from '../loader/loader';
 import SignIn from '../../pages/sign-in/sign-in';
 import Register from '../../pages/register/register';
@@ -27,13 +27,19 @@ import {
 import {useAuth} from '../../services/auth/auth';
 import Modal from '../modal/modal';
 import {hideIngredientDetail, hideOrderDetail} from '../../services/actions/action';
-import {RootState} from '../../index';
+// import {RootState} from '../../index';
+import OrdersList from '../../pages/orders-list/orders-list';
+import {hideOrderComplete} from '../../services/actions/feed-action';
+import OrderComplete from '../order-complete/order-complete';
+import OrderExhaustive from '../../pages/order-exhaustive/order-exhaustive';
+import {useAppDispatch, useAppSelector} from '../../services/app-hooks';
 
 function App() {
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const {getUserData} = useAuth();
   const history = useHistory();
+
 
   useEffect(() => {
       dispatch(fetchIngredients());
@@ -49,30 +55,35 @@ function App() {
         dispatch(setAuthChecked(true));
       }
     }, [dispatch, getUserData]
-  )
+  );
 
-  const showErrorMessage = useSelector<RootState>((store) => (store.main.showErrorMessage));
-  const isLoading = useSelector<RootState>((store) => (store.main.isLoading));
-  const showOrderDetail = useSelector<RootState>((state) => (state.main.showOrderDetail));
-  const showIngredientDetail = useSelector<RootState>((state) => (state.main.showIngredientDetail));
-  const showPasswordRecoverNotification = useSelector<RootState, boolean>((state) => state.auth.showPasswordRecoverNotification)
-  const passwordRecoverNotification = useSelector<RootState, string>((state) => {
+
+  const showErrorMessage = useAppSelector((store) => (store.main.showErrorMessage));
+  const isLoading = useAppSelector((store) => (store.main.isLoading));
+  const showOrderDetail = useAppSelector((state) => (state.main.showOrderDetail));
+  const showIngredientDetail = useAppSelector((state) => (state.main.showIngredientDetail));
+  const showPasswordRecoverNotification = useAppSelector((state) => state.auth.showPasswordRecoverNotification)
+  const passwordRecoverNotification = useAppSelector((state) => {
     return state.auth.passwordRecoverStatus?.success ? 'Письмо с сылкой успешно выслано на почту!' : 'Сервер не подтвердил отправку письма на почту!'
   })
-  const passwordRecoverStatus = useSelector<RootState, boolean | undefined>((state) => state.auth.passwordRecoverStatus?.success);
-  const showPasswordResetNotification = useSelector<RootState, boolean>((state) => state.auth.showPasswordResetNotification);
-  const passwordResetNotification = useSelector<RootState, string>((state) => {
+  const passwordRecoverStatus = useAppSelector((state) => state.auth.passwordRecoverStatus?.success);
+  const showPasswordResetNotification = useAppSelector((state) => state.auth.showPasswordResetNotification);
+  const passwordResetNotification = useAppSelector((state) => {
     return state.auth.passwordResetStatus?.success ? 'Пароль сброшен успешно!' : 'Сервер не подтвердил сброс пароля!';
   })
-  const passwordResetStatus = useSelector<RootState, boolean | undefined>((state) => state.auth.passwordResetStatus?.success);
+  const passwordResetStatus = useAppSelector((state) => state.auth.passwordResetStatus?.success);
 
 
   const handleCloseOrderDetailPopup = () => {
     dispatch(hideOrderDetail())
   }
-  const handleCloseIngredientDetailPopup = () => {
-    dispatch(hideIngredientDetail())
-    history.replace('/');
+  const handleCloseOrderCompletePopup = () => {
+    dispatch(hideOrderComplete())
+    history.replace('/feed');
+  }
+  const handleCloseProfileOrderCompletePopup = () => {
+    dispatch(hideOrderComplete())
+    history.replace('/profile/orders');
   }
   const handleClosePasswordRecoverNotificationPopup = () => {
     dispatch(hideRecoverPasswordNotification());
@@ -81,12 +92,55 @@ function App() {
     }
   }
   const handleCloseResetPasswordNotificationPopup = () => {
-    console.log('handleCloseResetPasswordNotificationPopup')
-
     dispatch(hideResetPasswordNotification());
     if (passwordResetStatus) {
       history.push('/login')
     }
+  }
+  const handleCloseIngredientDetailPopup = () => {
+    dispatch(hideIngredientDetail())
+    history.replace('/');
+  }
+
+  const profileRender = (props: RouteComponentProps) => {
+    const locationState = props.location.state;
+    const matchRoute = matchPath<{id: string}>( props.location.pathname, {path: '/profile/orders/:id'});
+    let result: JSX.Element | null;
+    result =  matchRoute === null ?  <Profile />
+      :
+      locationState === undefined ? <OrderExhaustive orderId={matchRoute.params.id}/>
+        :
+        <>
+          <Profile />
+          <Modal
+            header={''}
+            onClosePopup={handleCloseProfileOrderCompletePopup}
+            children={<OrderComplete />}
+            drillProp={{orderId: matchRoute.params.id}}
+          />
+        </>
+    return result;
+  }
+
+  const orderListRender = (props: RouteComponentProps) => {
+    const locationState = props.location.state;
+    const matchRoute = matchPath<{id: string}>( props.location.pathname, {path: '/feed/:id'});
+    let result: JSX.Element | null;
+
+    result = matchRoute === null ?  <OrdersList />
+      :
+      locationState === undefined ? <OrderExhaustive orderId={matchRoute.params.id}/>
+        :
+        <>
+          <OrdersList />
+          <Modal
+            header={''}
+            onClosePopup={handleCloseOrderCompletePopup}
+            children={<OrderComplete />}
+            drillProp={{orderId: matchRoute.params.id}}
+          />
+        </>
+    return result;
   }
 
   return (
@@ -111,13 +165,12 @@ function App() {
                 <Route path="/reset-password" exact={true}>
                   <ResetPassword/>
                 </Route>
-                <ProtectedRoute path="/profile">
-                  <Profile/>
-                </ProtectedRoute>
+                <ProtectedRoute path="/profile" render={profileRender} />
                 <Route path="/ingredient/:id" exact={true}>
                   <Builder/>
                   <Ingredient/>
                 </Route>
+                <Route path="/feed" render={orderListRender} />
                 <Route>
                   <Redirect to={'/'}/>
                 </Route>
@@ -131,9 +184,8 @@ function App() {
             }
             {
               showIngredientDetail &&
-              <Modal header={'Детали ингредиента'} onClosePopup={handleCloseIngredientDetailPopup}>
-                <IngredientDetail />
-              </Modal>
+              <Modal header={'Детали ингредиента'} onClosePopup={handleCloseIngredientDetailPopup}
+                children={<IngredientDetail />} />
             }
             {
               showPasswordRecoverNotification &&

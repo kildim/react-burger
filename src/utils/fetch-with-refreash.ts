@@ -4,7 +4,8 @@ import { setCookie,  checkResponse} from "./utils";
 type TRequestInit = {
   headers: {
     'Content-Type': string,
-    authorization: string}
+    authorization: string
+  }
 }
 
 export const updateToken = () => {

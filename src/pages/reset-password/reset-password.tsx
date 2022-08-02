@@ -2,8 +2,9 @@ import styles from './reset-password.module.css';
 import {Input, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import {Link} from 'react-router-dom';
 import {SyntheticEvent, useCallback, useState} from 'react';
-import {useDispatch} from 'react-redux';
+// import {useDispatch} from 'react-redux';
 import {useAuth} from '../../services/auth/auth';
+import {useAppDispatch} from '../../services/app-hooks';
 
 type TFormControlEvent = SyntheticEvent & {target: {name: string, value: string}}
 
@@ -17,7 +18,7 @@ function ResetPassword() {
   const handleResetPasswordButtonClick = useCallback((e: SyntheticEvent) => dispatch(postResetPassword(form)), [])
 
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   return (
     <section className={styles.content}>

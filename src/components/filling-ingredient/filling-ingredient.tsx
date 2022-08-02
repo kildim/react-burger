@@ -2,12 +2,13 @@ import {ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-compon
 import {DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 import fillingIngredientStyle from './filling-ingredient.module.css';
-import {useDispatch} from 'react-redux';
+// import {useDispatch} from 'react-redux';
 import {removeFilling, replaceFillings} from '../../services/actions/action';
 import {useDrag, useDrop} from 'react-dnd';
 import {useRef} from 'react';
 import type {XYCoord} from 'dnd-core';
 import {TIngredient} from '../../types/tingredient';
+import {useAppDispatch} from '../../services/app-hooks';
 
 type TFillingIngredientPropsType = {
   filling: TIngredient,
@@ -24,7 +25,7 @@ function FillingIngredient(props: TFillingIngredientPropsType) {
   const {name, price, image, _id, uniqueIndex} = props.filling;
 
   const ref = useRef<HTMLDivElement>(null);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [, dropFilling] = useDrop({
     accept: 'filling',
     hover: (item: DragDropItemType, monitor) => {

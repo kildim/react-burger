@@ -6,9 +6,11 @@ import {TAuthAction} from './actions/auth-action';
 import {TFeedAction} from './actions/feed-action';
 import {TProfileWsAction} from './actions/profile-ws-action';
 
-type AppThunk<ReturnType = void > = ThunkAction<ReturnType, RootState, unknown, TAction>;
-type AppDispatch<ReturnType = void > = (action: TAction | AppThunk | TAuthAction | TFeedAction | TProfileWsAction) => ReturnType;
+type TAppAction = TAction | TAuthAction | TFeedAction | TProfileWsAction;
 
-// export const useAppDispatch<ReturnType = void >: () => AppDispatch = useDispatch
+export type AppThunk<ReturnType = void > = ThunkAction<ReturnType, RootState, unknown, TAppAction>;
+export type AppDispatch<ReturnType = void > = (action: TAppAction | AppThunk) => ReturnType;
+
+
 export const useAppDispatch = () => dispatchHook<AppDispatch>()
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector

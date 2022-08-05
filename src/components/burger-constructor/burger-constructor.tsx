@@ -5,21 +5,14 @@ import FillingIngredient from '../filling-ingredient/filling-ingredient'
 import constructorStyle from './burger-constructor.module.css';
 import React, {useMemo} from 'react';
 
-// import {useDispatch, useSelector} from 'react-redux';
 import {useDrop} from 'react-dnd';
 import {addToBurger} from '../../services/actions/action';
 import {fetchOrder} from '../../services/api/api';
 import {useHistory} from 'react-router-dom';
-import {RootState} from '../../index';
 import {TIngredient} from '../../types/tingredient';
 import {useAppDispatch, useAppSelector} from '../../services/app-hooks';
 
 function BurgerConstructor() {
-  // const {bun, fillings} = useSelector<RootState>((store) => ({
-  //   bun: store.main.burger.bun,
-  //   fillings: store.main.burger.fillings,
-  //   order: store.main.order,
-  // }))
   const bun = useAppSelector((store) => store.main.burger.bun) as TIngredient
   const fillings = useAppSelector((store) => store.main.burger.fillings) as Array<TIngredient>
   const isAuthenticated = useAppSelector((store) => store.auth.isAuthenticated)
@@ -66,7 +59,7 @@ function BurgerConstructor() {
   }
 
   return (
-    <section className={constructorStyle.grid} ref={dropTargetRef}>
+    <section className={constructorStyle.grid} ref={dropTargetRef} >
       {
         bun._id !== undefined &&
         <section className={constructorStyle.upper_cover}>

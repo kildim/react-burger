@@ -10,15 +10,7 @@ import {
 import {API_URL} from '../../constants/env-config';
 import {checkResponse, getCookie} from '../../utils/utils'
 import {ThunkAction} from 'redux-thunk';
-import {log} from 'util';
 import {RootState} from '../../index';
-
-type TRequestInit = {
-  headers: {
-    'Content-Type': string,
-    authorization: string
-  }
-}
 
 const fetchIngredients = (): ThunkAction<void, RootState, unknown, TAction> => (dispatch, _getState) => {
   dispatch(setIsLoading(true));

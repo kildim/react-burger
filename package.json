@@ -1,4 +1,5 @@
 {
+  "homepage": "https://kildim.github.io/react-burger/",
   "name": "react-burger",
   "version": "0.1.0",
   "private": true,
@@ -48,6 +49,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.3.3"
+    "@types/react-router-dom": "^5.3.3",
+    "gh-pages": "^4.0.0"
   }
 }

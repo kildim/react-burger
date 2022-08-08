@@ -1,4 +1,5 @@
-Приложение доступно в интернете по адресу: [http://kildim.nomoredomains.sbs](http://kildim.nomoredomains.sbs)
+Приложение доступно в интернете по адресу: [http://kildim.nomoredomains.sbs](http://kildim.nomoredomains.sbs)\
+Github Pages: [https://kildim.github.io/react-burger/](https://kildim.github.io/react-burger/)\
 Репозиторий с кодом приложения: [https://github.com/kildim/react-burger](https://github.com/kildim/react-burger)
 
 # О приложении React-Burger.

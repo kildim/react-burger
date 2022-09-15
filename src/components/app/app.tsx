@@ -3,7 +3,6 @@ import Error from '../error/error';
 import AppHeader from '../app-header/app-header';
 import Builder from '../../pages/builder/builder';
 import './app.module.css';
-// import {useAppDispatch, useAppSelector} from 'react-redux';
 import IngredientDetail from '../ingredient-detail/ingredient-detail';
 import OrderDetail from '../order-detail/order-detail';
 import {fetchIngredients} from '../../services/api/api';
@@ -27,7 +26,6 @@ import {
 import {useAuth} from '../../services/auth/auth';
 import Modal from '../modal/modal';
 import {hideIngredientDetail, hideOrderDetail} from '../../services/actions/action';
-// import {RootState} from '../../index';
 import OrdersList from '../../pages/orders-list/orders-list';
 import {hideOrderComplete} from '../../services/actions/feed-action';
 import OrderComplete from '../order-complete/order-complete';
